@@ -1,0 +1,30 @@
+body{
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+h1, h2, h3{
+  font-weight: 300;
+}
+
+h2{
+  color: #777;
+}
+
+a, a:link, a:visited{
+  color: #5d7da7;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #232d5f;
+  text-decoration: underline;
+}
+
+footer{
+  color: #aaa;
+  font-size: 12px;
+  font-weight: 300;
+  padding: 20px;
+  padding-top: 40px;
+}

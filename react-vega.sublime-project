@@ -1,0 +1,26 @@
+{
+  "folders":
+  [
+    {
+      "path": ".",
+      "file_exclude_patterns": [
+        "npm-debug.log"
+      ],
+      "folder_exclude_patterns":
+      [
+        ".sass-cache",
+        ".tmp",
+        "node_modules",
+        "bower_components",
+        "coverage",
+        "tmp",
+        "dist",
+        ".publish"
+      ]
+    }
+  ],
+  "settings":
+  {
+    "tab_size": 2
+  }
+}
