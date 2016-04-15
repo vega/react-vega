@@ -54,8 +54,8 @@ gulp.task('webpack', function() {
         umdNamedDefine: false
       },
       externals: {
-        'vega': 'vg',
-        'react': 'React'
+        'vega': 'vega',
+        'react': 'react'
       },
       devtool: argv.debug ? 'eval' : undefined
     })))

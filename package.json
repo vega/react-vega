@@ -44,7 +44,7 @@
     "yargs": "~3.31.0"
   },
   "license": "Apache-2.0",
-  "main": "src/index.js",
+  "main": "dist/react-vega.min.js",
   "files": [
     "src/index.js",
     "dist/*.*"
@@ -54,7 +54,11 @@
     "build": "gulp build --production",
     "start": "gulp --debug",
     "test": "karma start --single-run",
-    "tdd": "karma start"
+    "tdd": "karma start",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push ; git push --tags; pkgfiles",
+    "prepublish": "pkgfiles"
   },
   "dependencies": {
     "react": "~15.0.1",
