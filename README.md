@@ -8,6 +8,8 @@
 
 Convert Vega spec into React class conveniently
 
+**Demo**: http://kristw.github.io/linked-highlighting-react-vega-redux/
+
 ### Install
 
 ```bash
