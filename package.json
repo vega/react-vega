@@ -55,7 +55,6 @@
     "start": "gulp --debug",
     "test": "karma start --single-run",
     "tdd": "karma start",
-    "preversion": "npm test",
     "version": "npm run build && git add -A dist",
     "postversion": "git push ; git push --tags; pkgfiles",
     "prepublish": "pkgfiles"
