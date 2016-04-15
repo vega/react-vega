@@ -77,7 +77,7 @@ ReactDOM.render(
 
 ### Approach#2 Use `<Vega>` generic class and pass in `spec` for dynamic component.
 
-Provides a bit more flexibility.
+Provides a bit more flexibility, but at the cost of extra checks for spec changes.
 
 #### main.js
 
@@ -138,7 +138,7 @@ However, for `data`. There is a slight different. As it takes an Object with key
 
 - data
 
-Any signal defined in the spec can be listened to via these listeners. 
+Any signal defined in the spec can be listened to via these listeners.
 
 - onSignal[...] - Include all signals defined in the spec automatically.
 

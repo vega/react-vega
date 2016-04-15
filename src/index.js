@@ -40,16 +40,18 @@ const Vega = React.createClass({
     this._initialize(spec);
   },
   componentWillReceiveProps(nextProps){
-    const newSpec = checkSpec(nextProps.spec);
-    const newSpecString = JSON.stringify(newSpec);
-    const isNewSpec = this.state.specString!==newSpecString;
+    if(!this.props.isSpecFixed){
+      const newSpec = checkSpec(nextProps.spec);
+      const newSpecString = JSON.stringify(newSpec);
+      const isNewSpec = this.state.specString!==newSpecString;
 
-    if(isNewSpec){
-      this._clearListeners(this.state.vis, this.state.spec);
-      this._initialize(newSpec);
+      if(isNewSpec){
+        this._clearListeners(this.state.vis, this.state.spec);
+        this._initialize(newSpec);
+      }
+
+      this.setState({ isNewSpec });
     }
-
-    this.setState({ isNewSpec });
   },
   componentDidUpdate(prevProps, prevState){
     if(!this.state.isNewSpec){
@@ -80,8 +82,13 @@ const Vega = React.createClass({
 
       self._update(vis, spec);
       // store the vis object to be used on later updates
-      const specString = JSON.stringify(spec);
-      self.setState({vis, spec, specString});
+      if(self.props.isSpecFixed){
+        self.setState({vis, spec});
+      }
+      else{
+        const specString = JSON.stringify(spec);
+        self.setState({vis, spec, specString});
+      }
     });
   },
   _clearListeners(vis, spec){
@@ -152,7 +159,7 @@ export function createClassFromSpec(name, spec){
     },
     render(){
       return (
-        <Vega spec={this.state.spec} {...this.props} />
+        <Vega spec={this.state.spec} isSpecFixed={true} {...this.props} />
       );
     }
   });
