@@ -6,7 +6,7 @@
 
 <!--[![Build Status][travis-image]][travis-url]-->
 
-Convert Vega spec into React class conveniently
+Convert Vega spec into React class conveniently, inspired by this [tutorial](https://medium.com/@pbesh/react-and-vega-an-alternative-visualization-example-cd76e07dc1cd#.omslw1xy8) by @pbeshai
 
 **Demo**: http://kristw.github.io/linked-highlighting-react-vega-redux/
 
