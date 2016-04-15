@@ -15,13 +15,13 @@ See your site at [localhost:7000](http://localhost:7000). It will automagically 
 Run this command to test once.
 
 ```
-gulp test
+npm test
 ```
 
 Or run this command to test and retest when files are changed.
 
 ```
-gulp tdd
+npm run tdd
 ```
 
 Test coverage will be generated to ```coverage``` directory.
