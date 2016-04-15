@@ -59,6 +59,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	exports.createClassFromSpec = createClassFromSpec;
 
 	var _react = __webpack_require__(1);
@@ -84,8 +87,129 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return !!functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 	}
 
+	function checkSpec(spec) {
+	  return isFunction(spec) ? spec() : spec;
+	}
+
+	var Vega = _react2.default.createClass({
+	  displayName: 'Vega',
+	  propTypes: {
+	    spec: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.func]),
+	    width: _react.PropTypes.number,
+	    height: _react.PropTypes.number,
+	    padding: _react.PropTypes.object,
+	    viewport: _react.PropTypes.array,
+	    renderer: _react.PropTypes.string,
+	    data: _react.PropTypes.any
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      vis: null,
+	      spec: null
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    var spec = checkSpec(this.props.spec);
+	    this._initialize(spec);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (!this.props.isSpecFixed) {
+	      var newSpec = checkSpec(nextProps.spec);
+	      var newSpecString = JSON.stringify(newSpec);
+	      var isNewSpec = this.state.specString !== newSpecString;
+
+	      if (isNewSpec) {
+	        this._clearListeners(this.state.vis, this.state.spec);
+	        this._initialize(newSpec);
+	      }
+
+	      this.setState({ isNewSpec: isNewSpec });
+	    }
+	  },
+	  componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	    if (!this.state.isNewSpec) {
+	      this._update(this.state.vis, this.state.spec);
+	    }
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this._clearListeners(this.state.vis, this.state.spec);
+	  },
+	  _initialize: function _initialize(spec) {
+	    var self = this;
+
+	    // Parse the vega spec and create the vis
+	    _vega2.default.parse.spec(spec, function (chart) {
+	      var vis = chart({ el: self.refs.chartContainer });
+
+	      // Attach listeners onto the signals
+	      if (spec.signals) {
+	        spec.signals.forEach(function (signal) {
+	          vis.onSignal(signal.name, function () {
+	            var listener = self.props[listenerName(signal.name)];
+	            if (listener) {
+	              for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                args[_key] = arguments[_key];
+	              }
+
+	              listener.apply(self, args);
+	            }
+	          });
+	        });
+	      }
+
+	      self._update(vis, spec);
+	      // store the vis object to be used on later updates
+	      if (self.props.isSpecFixed) {
+	        self.setState({ vis: vis, spec: spec });
+	      } else {
+	        var specString = JSON.stringify(spec);
+	        self.setState({ vis: vis, spec: spec, specString: specString });
+	      }
+	    });
+	  },
+	  _clearListeners: function _clearListeners(vis, spec) {
+	    // Remove listeners from the signals
+	    if (vis && spec && spec.signals) {
+	      spec.signals.forEach(function (signal) {
+	        return vis.offSignal(signal.name);
+	      });
+	    }
+	  },
+	  _update: function _update(vis, spec) {
+	    var props = this.props;
+	    if (vis && spec) {
+	      vis.width(props.width || spec.width).height(props.height || spec.height).padding(props.padding || spec.padding).viewport(props.viewport || spec.viewport);
+	      if (props.renderer) {
+	        vis.renderer(props.renderer);
+	      }
+	      this._updateData(vis, spec);
+	      vis.update();
+	    }
+	  },
+	  _updateData: function _updateData(vis, spec) {
+	    // TODO: Can check if data changes
+	    var props = this.props;
+	    if (vis && spec && spec.data && props.data) {
+	      spec.data.forEach(function (d) {
+	        vis.data(d.name).remove(function () {
+	          return true;
+	        });
+	        if (props.data[d.name]) {
+	          vis.data(d.name).insert(props.data[d.name]);
+	        }
+	      });
+	    }
+	  },
+
+	  // dummy render method that creates the container Vega draws inside
+	  render: function render() {
+	    return _react2.default.createElement('div', { ref: 'chartContainer' });
+	  }
+	});
+
+	exports.default = Vega;
 	function createClassFromSpec(name, spec) {
-	  spec = isFunction(spec) ? spec() : spec;
+	  spec = checkSpec(spec);
 
 	  var propTypes = {
 	    width: _react.PropTypes.number,
@@ -104,85 +228,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return _react2.default.createClass({
 	    displayName: name,
 	    propTypes: propTypes,
-	    getDefaultProps: function getDefaultProps() {
-	      return {
-	        width: spec.width,
-	        height: spec.height,
-	        padding: spec.padding,
-	        viewport: null,
-	        renderer: 'svg'
-	      };
+	    getInitialState: function getInitialState() {
+	      return { spec: spec };
 	    },
-	    componentDidMount: function componentDidMount() {
-	      var _this = this;
-
-	      var self = this;
-
-	      // Parse the vega spec and create the vis
-	      _vega2.default.parse.spec(spec, function (chart) {
-	        var vis = chart({ el: _this.refs.chartContainer });
-
-	        // Attach listeners onto the signals
-	        if (spec.signals) {
-	          spec.signals.forEach(function (signal) {
-	            vis.onSignal(signal.name, function () {
-	              var listener = self.props[listenerName(signal.name)];
-	              if (listener) {
-	                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	                  args[_key] = arguments[_key];
-	                }
-
-	                listener.apply(self, args);
-	              }
-	            });
-	          });
-	        }
-
-	        var props = self.props;
-	        vis.width(props.width).height(props.height).padding(props.padding).viewport(props.viewport).renderer(props.renderer);
-	        self.updateData(vis);
-	        vis.update();
-
-	        // store the vis object to be used on later updates
-	        self.vis = vis;
-	      });
-	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	      var vis = this.vis;
-	      if (vis) {
-	        var props = this.props;
-	        vis.width(props.width).height(props.height).padding(props.padding).viewport(props.viewport).renderer(props.renderer);
-	        this.updateData(vis);
-	        vis.update();
-	      }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	      var vis = this.vis;
-	      // Remove listeners from the signals
-	      if (vis && spec.signals) {
-	        spec.signals.forEach(function (signal) {
-	          return vis.offSignal(signal.name);
-	        });
-	      }
-	    },
-	    updateData: function updateData(vis) {
-	      var props = this.props;
-	      if (spec.data) {
-	        spec.data.forEach(function (d) {
-	          vis.data(d.name).remove(function () {
-	            return true;
-	          });
-	          if (props.data && props.data[d.name]) {
-	            vis.data(d.name).insert(props.data[d.name]);
-	          }
-	        });
-	      }
-	      return vis;
-	    },
-
-	    // dummy render method that creates the container vega draws inside
 	    render: function render() {
-	      return _react2.default.createElement('div', { ref: 'chartContainer' });
+	      return _react2.default.createElement(Vega, _extends({ spec: this.state.spec, isSpecFixed: true }, this.props));
 	    }
 	  });
 	};
