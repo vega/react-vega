@@ -8,6 +8,11 @@
 
 Convert Vega spec into React class conveniently, inspired by this [tutorial](https://medium.com/@pbesh/react-and-vega-an-alternative-visualization-example-cd76e07dc1cd#.omslw1xy8) by @pbeshai
 
+Examples
+
+- https://jsfiddle.net/kristw/htg4uron/
+- https://jsfiddle.net/kristw/qr8a1v8d/
+
 ## Install
 
 ```bash
