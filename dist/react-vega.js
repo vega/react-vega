@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["reactVega"] = factory(require("react"), require("vega"));
 	else
-		root["reactVega"] = factory(root["react"], root["vega"]);
+		root["reactVega"] = factory(root["react"], root["vg"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
