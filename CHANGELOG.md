@@ -1,5 +1,8 @@
 # react-vega
 
+## v0.1.2
+- Fix bug with umd export when using global
+
 ## v0.1.1
 - Fix bug with umd export when using global
 
