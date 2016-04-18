@@ -49,7 +49,7 @@ gulp.task('webpack', function() {
       output: {
         filename: 'react-vega.js',
         sourceMapFilename: '[file].map',
-        library: 'reactVega',
+        library: 'ReactVega',
         libraryTarget: 'umd',
         umdNamedDefine: false
       },

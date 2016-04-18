@@ -1,5 +1,8 @@
 # react-vega
 
+## v1.0.0
+- Change global export name to `ReactVega` instead of `reactVega`
+
 ## v0.1.2
 - Fix bug with umd export when using global
 

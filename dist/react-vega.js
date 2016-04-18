@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react", "vega"], factory);
 	else if(typeof exports === 'object')
-		exports["reactVega"] = factory(require("react"), require("vega"));
+		exports["ReactVega"] = factory(require("react"), require("vega"));
 	else
-		root["reactVega"] = factory(root["React"], root["vg"]);
+		root["ReactVega"] = factory(root["React"], root["vg"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
