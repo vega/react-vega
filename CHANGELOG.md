@@ -1,5 +1,8 @@
 # react-vega
 
+## v1.0.1
+- Avoid clearing data when that field is not set in the input.
+
 ## v1.0.0
 - Change global export name to `ReactVega` instead of `reactVega`
 

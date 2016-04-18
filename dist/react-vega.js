@@ -191,11 +191,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var props = this.props;
 	    if (vis && spec && spec.data && props.data) {
 	      spec.data.forEach(function (d) {
-	        vis.data(d.name).remove(function () {
-	          return true;
-	        });
 	        if (props.data[d.name]) {
-	          vis.data(d.name).insert(props.data[d.name]);
+	          vis.data(d.name).remove(function () {
+	            return true;
+	          }).insert(props.data[d.name]);
 	        }
 	      });
 	    }

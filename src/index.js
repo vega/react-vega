@@ -117,9 +117,10 @@ const Vega = React.createClass({
     const props = this.props;
     if(vis && spec && spec.data && props.data){
       spec.data.forEach(d => {
-        vis.data(d.name).remove(()=>true);
         if(props.data[d.name]){
-          vis.data(d.name).insert(props.data[d.name]);
+          vis.data(d.name)
+            .remove(()=>true)
+            .insert(props.data[d.name]);
         }
       });
     }
