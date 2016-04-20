@@ -1,5 +1,8 @@
 # react-vega
 
+## v1.1.0
+- Support function as data and add static `getSpec()`
+
 ## v1.0.1
 - Avoid clearing data when that field is not set in the input.
 

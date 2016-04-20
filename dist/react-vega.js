@@ -100,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    padding: _react.PropTypes.object,
 	    viewport: _react.PropTypes.array,
 	    renderer: _react.PropTypes.string,
-	    data: _react.PropTypes.any
+	    data: _react.PropTypes.object
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
@@ -191,10 +191,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var props = this.props;
 	    if (vis && spec && spec.data && props.data) {
 	      spec.data.forEach(function (d) {
-	        if (props.data[d.name]) {
-	          vis.data(d.name).remove(function () {
-	            return true;
-	          }).insert(props.data[d.name]);
+	        var newData = props.data[d.name];
+	        if (newData) {
+	          if (isFunction(newData)) {
+	            newData(vis.data(d.name));
+	          } else {
+	            vis.data(d.name).remove(function () {
+	              return true;
+	            }).insert(newData);
+	          }
 	        }
 	      });
 	    }
@@ -216,7 +221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    padding: _react.PropTypes.object,
 	    viewport: _react.PropTypes.array,
 	    renderer: _react.PropTypes.string,
-	    data: _react.PropTypes.any
+	    data: _react.PropTypes.object
 	  };
 	  if (spec.signals) {
 	    spec.signals.forEach(function (signal) {
@@ -227,6 +232,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return _react2.default.createClass({
 	    displayName: name,
 	    propTypes: propTypes,
+	    statics: {
+	      getSpec: function getSpec() {
+	        return spec;
+	      }
+	    },
 	    getInitialState: function getInitialState() {
 	      return { spec: spec };
 	    },

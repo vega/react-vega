@@ -27,7 +27,7 @@ const Vega = React.createClass({
     padding: PropTypes.object,
     viewport: PropTypes.array,
     renderer: PropTypes.string,
-    data: PropTypes.any
+    data: PropTypes.object
   },
   getInitialState(){
     return {
@@ -117,10 +117,16 @@ const Vega = React.createClass({
     const props = this.props;
     if(vis && spec && spec.data && props.data){
       spec.data.forEach(d => {
-        if(props.data[d.name]){
-          vis.data(d.name)
-            .remove(()=>true)
-            .insert(props.data[d.name]);
+        const newData = props.data[d.name];
+        if(newData){
+          if(isFunction(newData)){
+            newData(vis.data(d.name));
+          }
+          else{
+            vis.data(d.name)
+              .remove(()=>true)
+              .insert(newData);
+          }
         }
       });
     }
@@ -144,7 +150,7 @@ export function createClassFromSpec(name, spec){
     padding: PropTypes.object,
     viewport: PropTypes.array,
     renderer: PropTypes.string,
-    data: PropTypes.any
+    data: PropTypes.object
   };
   if(spec.signals){
     spec.signals.forEach(signal => {
@@ -155,6 +161,9 @@ export function createClassFromSpec(name, spec){
   return React.createClass({
     displayName: name,
     propTypes: propTypes,
+    statics: {
+      getSpec(){ return spec; }
+    },
     getInitialState(){
       return { spec };
     },

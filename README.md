@@ -8,11 +8,6 @@
 
 Convert Vega spec into React class conveniently, inspired by this [tutorial](https://medium.com/@pbesh/react-and-vega-an-alternative-visualization-example-cd76e07dc1cd#.omslw1xy8) by @pbeshai
 
-Examples
-
-- https://jsfiddle.net/kristw/htg4uron/
-- https://jsfiddle.net/kristw/qr8a1v8d/
-
 ## Install
 
 ```bash
@@ -82,7 +77,7 @@ ReactDOM.render(
 
 ### Approach#2 Use `<Vega>` generic class and pass in `spec` for dynamic component.
 
-Provides a bit more flexibility, but at the cost of extra checks for spec changes.
+Provides a bit more flexibility.
 
 #### main.js
 
@@ -129,29 +124,49 @@ ReactDOM.render(
 
 ### Props
 
-React class `Vega` and any output from `createClassFromSpec` have these properties
+React class `Vega` and any output class from `createClassFromSpec` have these properties:
 
-These properties corresponds to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
+- **width**:Number
+- **height**:Number
+- **padding**:Object
+- **viewport**:Array
+- **renderer**:String
 
-- width
-- height
-- padding
-- viewport
-- renderer
+These five properties above correspond to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
 
-However, for `data`. There is a slight different. As it takes an Object with keys being dataset names defined in the spec's data field.
+- **data**:Object
 
-- data
+For `data`, this property takes an Object with keys being dataset names defined in the spec's data field, such as:
 
-Any signal defined in the spec can be listened to via these listeners.
+```javascript
+var barData = {
+  table: [{"x": 1,  "y": 28}, {"x": 2,  "y": 55}, ...]
+};
+```
 
-- onSignal[...] - Include all signals defined in the spec automatically.
+Each value can be an *array* or `function(dataset){...}`. If the value is a function, Vega's `vis.data(dataName)` will be passed as the argument `dataset`.
 
-For example, to listen to signal `hover`, add handler for onSignal+capitalize(`hover`)
+```javascript
+var barData = {
+  table: function(dataset){...}
+};
+```
+In the example above, `vis.data('table')` will be passed as `dataset`.
+
+- **onSignal***XXX* - Include all signals defined in the spec automatically.
+
+All signals defined in the spec can be listened to via these properties.
+For example, to listen to signal *hover*, attach a listener to `onSignal+capitalize('hover')`
 
 ```javascript
  <Vega spec={spec} data={barData} onSignalHover={handleHover}/>
 ```
+
+### Static function
+
+Any class created from `createClassFromSpec` will have this method.
+
+- Chart.**getSpec()** - return `spec`
 
 ## License
 
