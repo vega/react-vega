@@ -1,5 +1,8 @@
 # react-vega
 
+## v1.1.1
+- Fix bug to call `vis.update()` before setting new data
+
 ## v1.1.0
 - Support function as data and add static `getSpec()`
 
