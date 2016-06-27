@@ -190,6 +190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // TODO: Can check if data changes
 	    var props = this.props;
 	    if (vis && spec && spec.data && props.data) {
+	      vis.update();
 	      spec.data.forEach(function (d) {
 	        var newData = props.data[d.name];
 	        if (newData) {
@@ -207,7 +208,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  // dummy render method that creates the container Vega draws inside
 	  render: function render() {
-	    return _react2.default.createElement('div', { ref: 'chartContainer' });
+	    return _react2.default.createElement('div', { ref: 'chartContainer', __self: this
+	    });
 	  }
 	});
 
@@ -241,7 +243,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return { spec: spec };
 	    },
 	    render: function render() {
-	      return _react2.default.createElement(Vega, _extends({ spec: this.state.spec, isSpecFixed: true }, this.props));
+	      return _react2.default.createElement(Vega, _extends({ spec: this.state.spec, isSpecFixed: true }, this.props, {
+	        __self: this
+	      }));
 	    }
 	  });
 	};

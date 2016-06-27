@@ -116,6 +116,7 @@ const Vega = React.createClass({
     // TODO: Can check if data changes
     const props = this.props;
     if(vis && spec && spec.data && props.data){
+      vis.update();
       spec.data.forEach(d => {
         const newData = props.data[d.name];
         if(newData){
