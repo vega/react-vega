@@ -38,9 +38,6 @@ module.exports = function(){
     },
     plugins: [
       new webpack.ResolverPlugin(
-        new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('package.json', ['main'])
-      ),
-      new webpack.ResolverPlugin(
         new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin('bower.json', ['main'])
       )
     ]

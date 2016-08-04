@@ -11,8 +11,13 @@
   "engines": {
     "node": "~5.2"
   },
+  "dependencies": {
+    "vega": "~2.5.2"
+  },
+  "peerDependencies": {
+    "react": "^15.3.0"
+  },
   "devDependencies": {
-    "babel-cli": "^6.6.5",
     "babel-core": "~6.3.21",
     "babel-loader": "~6.2.0",
     "babel-plugin-transform-object-assign": "^6.1.12",
@@ -39,6 +44,7 @@
     "karma-webpack": "~1.7.0",
     "phantomjs": "~1.9.18",
     "pkgfiles": "^2.3.0",
+    "react": "^15.3.0",
     "run-sequence": "~1.1.5",
     "webpack": "~1.12.9",
     "webpack-stream": "~3.1.0",
@@ -59,9 +65,5 @@
     "version": "npm run build && git add -A dist",
     "postversion": "git push ; git push --tags; pkgfiles",
     "prepublish": "pkgfiles"
-  },
-  "dependencies": {
-    "react": "~15.0.1",
-    "vega": "~2.5.2"
   }
 }
