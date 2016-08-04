@@ -170,13 +170,76 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._clearListeners(this.state.vis, this.state.spec);
 	    }
 	  }, {
+	    key: 'createVis',
+	    value: function createVis(spec) {
+	      var _this2 = this;
+
+	      if (spec) {
+	        // Parse the vega spec and create the vis
+	        _vega2.default.parse.spec(spec, function (chart) {
+	          var vis = chart({ el: _this2.element });
+
+	          // Attach listeners onto the signals
+	          if (spec.signals) {
+	            spec.signals.forEach(function (signal) {
+	              vis.onSignal(signal.name, function () {
+	                var listener = self.props[listenerName(signal.name)];
+	                if (listener) {
+	                  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                    args[_key] = arguments[_key];
+	                  }
+
+	                  listener.apply(self, args);
+	                }
+	              });
+	            });
+	          }
+
+	          // store the vis object to be used on later updates
+	          _this2.vis = vis;
+	          self.updateVis(spec);
+	        });
+	      } else {
+	        this.clearListeners(this.state.spec);
+	        this.vis = null;
+	      }
+	    }
+	  }, {
+	    key: 'updateVis',
+	    value: function updateVis(spec) {
+	      if (this.vis) {
+	        var props = this.props;
+	        vis.width(props.width || spec.width).height(props.height || spec.height).padding(props.padding || spec.padding).viewport(props.viewport || spec.viewport);
+	        if (props.renderer) {
+	          vis.renderer(props.renderer);
+	        }
+	        this._updateData(vis, spec);
+	        vis.update();
+	      }
+	    }
+
+	    // Remove listeners from the signals
+
+	  }, {
+	    key: 'clearListeners',
+	    value: function clearListeners(spec) {
+	      var vis = this.vis;
+	      if (vis && spec && spec.signals) {
+	        spec.signals.forEach(function (signal) {
+	          return vis.offSignal(signal.name);
+	        });
+	      }
+	    }
+	  }, {
 	    key: '_initialize',
 	    value: function _initialize(spec) {
+	      var _this3 = this;
+
 	      var self = this;
 
 	      // Parse the vega spec and create the vis
 	      _vega2.default.parse.spec(spec, function (chart) {
-	        var vis = chart({ el: self.refs.chartContainer });
+	        var vis = chart({ el: _this3.element });
 
 	        // Attach listeners onto the signals
 	        if (spec.signals) {
@@ -184,8 +247,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            vis.onSignal(signal.name, function () {
 	              var listener = self.props[listenerName(signal.name)];
 	              if (listener) {
-	                for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	                  args[_key] = arguments[_key];
+	                for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	                  args[_key2] = arguments[_key2];
 	                }
 
 	                listener.apply(self, args);
@@ -251,9 +314,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+
 	      return(
 	        // Create the container Vega draws inside
-	        _react2.default.createElement('div', { ref: 'chartContainer', __self: this
+	        _react2.default.createElement('div', { ref: function ref(c) {
+	            return _this4.element = c;
+	          }, __self: this
 	        })
 	      );
 	    }

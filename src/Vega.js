@@ -60,12 +60,66 @@ class Vega extends React.Component {
     this._clearListeners(this.state.vis, this.state.spec);
   }
 
+  createVis(spec) {
+    if(spec){
+      // Parse the vega spec and create the vis
+      vg.parse.spec(spec, chart => {
+        const vis = chart({ el: this.element });
+
+        // Attach listeners onto the signals
+        if (spec.signals) {
+          spec.signals.forEach(signal => {
+            vis.onSignal(signal.name, function (...args) {
+              const listener = self.props[listenerName(signal.name)];
+              if (listener) {
+                listener.apply(self, args);
+              }
+            });
+          });
+        }
+
+        // store the vis object to be used on later updates
+        this.vis = vis;
+        self.updateVis(spec);
+      });
+    }
+    else{
+      this.clearListeners(this.state.spec);
+      this.vis = null;
+    }
+  }
+
+  updateVis(spec){
+    if(this.vis){
+      const props = this.props;
+      vis
+        .width(props.width || spec.width)
+        .height(props.height || spec.height)
+        .padding(props.padding || spec.padding)
+        .viewport(props.viewport || spec.viewport);
+      if (props.renderer) {
+        vis.renderer(props.renderer);
+      }
+      this._updateData(vis, spec);
+      vis.update();
+
+    }
+  }
+
+  // Remove listeners from the signals
+  clearListeners(spec) {
+    const vis = this.vis;
+    if (vis && spec && spec.signals) {
+      spec.signals.forEach(signal => vis.offSignal(signal.name));
+    }
+  }
+
   _initialize(spec) {
     const self = this;
 
     // Parse the vega spec and create the vis
     vg.parse.spec(spec, chart => {
-      const vis = chart({ el: self.refs.chartContainer });
+      const vis = chart({ el: this.element });
 
       // Attach listeners onto the signals
       if (spec.signals) {
@@ -138,7 +192,7 @@ class Vega extends React.Component {
   render() {
     return (
       // Create the container Vega draws inside
-      <div ref="chartContainer" />
+      <div ref={c => this.element = c} />
     );
   }
 }
