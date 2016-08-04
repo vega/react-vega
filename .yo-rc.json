@@ -25,5 +25,10 @@
       "gulp",
       "jshint"
     ]
+  },
+  "generator-summon": {
+    "summon:eslint": {
+      "use-summon:eslint": true
+    }
   }
 }
