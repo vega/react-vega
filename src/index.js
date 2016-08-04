@@ -1,44 +1,41 @@
 import React, { PropTypes } from 'react';
 import vg from 'vega';
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+import {capitalize, isFunction} from './util.js';
 
 function listenerName(signalName) {
   return `onSignal${capitalize(signalName)}`;
-}
-
-function isFunction(functionToCheck) {
-  const getType = {};
-  return !!functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }
 
 function checkSpec(spec) {
   return isFunction(spec) ? spec() : spec;
 }
 
-const Vega = React.createClass({
-  displayName: 'Vega',
-  propTypes: {
-    spec: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    width: PropTypes.number,
-    height: PropTypes.number,
-    padding: PropTypes.object,
-    viewport: PropTypes.array,
-    renderer: PropTypes.string,
-    data: PropTypes.object,
-  },
-  getInitialState() {
-    return {
-      vis: null,
-      spec: null,
+const propTypes = {
+  spec: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.func
+  ]),
+  width: PropTypes.number,
+  height: PropTypes.number,
+  padding: PropTypes.object,
+  viewport: PropTypes.array,
+  renderer: PropTypes.string,
+  data: PropTypes.object,
+};
+
+class Vega extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      spec: null
     };
-  },
+  }
+
   componentDidMount() {
     const spec = checkSpec(this.props.spec);
     this._initialize(spec);
-  },
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.isSpecFixed) {
       const newSpec = checkSpec(nextProps.spec);
@@ -52,15 +49,18 @@ const Vega = React.createClass({
 
       this.setState({ isNewSpec });
     }
-  },
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (!this.state.isNewSpec) {
       this._update(this.state.vis, this.state.spec);
     }
-  },
+  }
+
   componentWillUnmount() {
     this._clearListeners(this.state.vis, this.state.spec);
-  },
+  }
+
   _initialize(spec) {
     const self = this;
 
@@ -90,13 +90,15 @@ const Vega = React.createClass({
         self.setState({ vis, spec, specString });
       }
     });
-  },
+  }
+
   _clearListeners(vis, spec) {
     // Remove listeners from the signals
     if (vis && spec && spec.signals) {
       spec.signals.forEach(signal => vis.offSignal(signal.name));
     }
-  },
+  }
+
   _update(vis, spec) {
     const props = this.props;
     if (vis && spec) {
@@ -111,7 +113,8 @@ const Vega = React.createClass({
       this._updateData(vis, spec);
       vis.update();
     }
-  },
+  }
+
   _updateData(vis, spec) {
     // TODO: Can check if data changes
     const props = this.props;
@@ -131,14 +134,17 @@ const Vega = React.createClass({
         }
       });
     }
-  },
-  // dummy render method that creates the container Vega draws inside
+  }
+
   render() {
     return (
+      // Create the container Vega draws inside
       <div ref="chartContainer" />
     );
-  },
-});
+  }
+}
+
+Vega.propTypes = propTypes;
 
 export default Vega;
 

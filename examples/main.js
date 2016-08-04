@@ -72,6 +72,7 @@ const barSpec = {
 };
 
 const Vega = ReactVega.default;
+const BarChart = ReactVega.createClassFromSpec('BarChart', barSpec);
 
 function handleHover(...args){
   const info = JSON.stringify(args);
@@ -79,6 +80,11 @@ function handleHover(...args){
 }
 
 ReactDOM.render(
-  <Vega data={barData} spec={barSpec} onSignalHover={handleHover}/>,
+  <div>
+    <h3>created with <code>&lt;Vega /&gt;</code></h3>
+    <Vega data={barData} spec={barSpec} onSignalHover={handleHover}/>
+    <h3>created with <code>ReactVega.createClassFromSpec</code></h3>
+    <BarChart data={barData} onSignalHover={handleHover}/>
+  </div>,
   document.getElementById('bar-container')
 );
