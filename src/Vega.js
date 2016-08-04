@@ -1,20 +1,13 @@
 import React, { PropTypes } from 'react';
 import vg from 'vega';
-import {capitalize, isFunction} from './util.js';
-
-function listenerName(signalName) {
-  return `onSignal${capitalize(signalName)}`;
-}
-
-function readSpec(spec) {
-  return isFunction(spec) ? spec() : spec;
-}
+import { capitalize, isFunction } from './util.js';
 
 const propTypes = {
   spec: PropTypes.oneOfType([
     PropTypes.object,
-    PropTypes.func
+    PropTypes.func,
   ]),
+  isSpecFixed: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
   padding: PropTypes.object,
@@ -23,45 +16,86 @@ const propTypes = {
   data: PropTypes.object,
 };
 
+const defaultProps = {
+  isSpecFixed: false,
+};
+
 class Vega extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spec: readSpec(this.props.spec)
+      isSpecFixed: props.isSpecFixed,
+      spec: Vega.readSpec(this.props.spec),
     };
   }
 
   componentDidMount() {
-    this._initialize(this.state.spec);
+    this.createVis(this.state.spec);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.isSpecFixed) {
-      const newSpec = readSpec(nextProps.spec);
-      const newSpecString = JSON.stringify(newSpec);
-      const isNewSpec = this.state.specString !== newSpecString;
+    const isSpecFixed = Boolean(nextProps.isSpecFixed);
+    const isSpecFixedChange = this.state.isSpecFixed !== isSpecFixed;
+    if (isSpecFixedChange) {
+      this.setState({ isSpecFixed });
+    }
 
-      if (isNewSpec) {
-        this._clearListeners(this.state.vis, this.state.spec);
-        this._initialize(newSpec);
+    if (!this.state.isSpecFixed || isSpecFixedChange) {
+      const newSpec = Vega.readSpec(nextProps.spec);
+      if (!Vega.isSameSpec(this.state.spec, newSpec)) {
+        this.setState({ spec: newSpec });
       }
-
-      this.setState({ isNewSpec });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!this.state.isNewSpec) {
-      this._update(this.state.vis, this.state.spec);
+    if (this.state.spec !== prevState.spec) {
+      this.clearListeners(this.state.spec);
+      this.createVis(this.state.spec);
+    } else if (this.vis) {
+      const props = this.props;
+      const spec = this.state.spec;
+      let changed = false;
+
+      // update view properties
+      [
+        'width',
+        'height',
+        'padding',
+        'viewport',
+        'renderer',
+      ].forEach(field => {
+        if (props[field] !== prevProps[field]) {
+          this.vis[field](props[field] || spec[field]);
+          changed = true;
+        }
+      });
+
+      // update data
+      if (spec.data && props.data) {
+        this.vis.update();
+        spec.data.forEach(d => {
+          const oldData = prevProps.data[d.name];
+          const newData = props.data[d.name];
+          if (!Vega.isSameData(oldData, newData)) {
+            this.updateData(d.name, newData);
+          }
+        });
+      }
+
+      if (changed) {
+        this.vis.update();
+      }
     }
   }
 
   componentWillUnmount() {
-    this._clearListeners(this.state.vis, this.state.spec);
+    this.clearListeners(this.state.spec);
   }
 
   createVis(spec) {
-    if(spec){
+    if (spec) {
+      const props = this.props;
       // Parse the vega spec and create the vis
       vg.parse.spec(spec, chart => {
         const vis = chart({ el: this.element });
@@ -69,10 +103,10 @@ class Vega extends React.Component {
         // Attach listeners onto the signals
         if (spec.signals) {
           spec.signals.forEach(signal => {
-            vis.onSignal(signal.name, function (...args) {
-              const listener = self.props[listenerName(signal.name)];
+            vis.onSignal(signal.name, (...args) => {
+              const listener = this.props[Vega.listenerName(signal.name)];
               if (listener) {
-                listener.apply(self, args);
+                listener.apply(this, args);
               }
             });
           });
@@ -80,29 +114,39 @@ class Vega extends React.Component {
 
         // store the vis object to be used on later updates
         this.vis = vis;
-        self.updateVis(spec);
+
+        vis
+          .width(props.width || spec.width)
+          .height(props.height || spec.height)
+          .padding(props.padding || spec.padding)
+          .viewport(props.viewport || spec.viewport);
+        if (props.renderer) {
+          vis.renderer(props.renderer);
+        }
+        if (spec.data && props.data) {
+          vis.update();
+          spec.data.forEach(d => {
+            this.updateData(d.name, props.data[d.name]);
+          });
+        }
+        vis.update();
       });
-    }
-    else{
+    } else {
       this.clearListeners(this.state.spec);
       this.vis = null;
     }
+    return this;
   }
 
-  updateVis(spec){
-    if(this.vis){
-      const props = this.props;
-      vis
-        .width(props.width || spec.width)
-        .height(props.height || spec.height)
-        .padding(props.padding || spec.padding)
-        .viewport(props.viewport || spec.viewport);
-      if (props.renderer) {
-        vis.renderer(props.renderer);
+  updateData(name, value) {
+    if (value) {
+      if (isFunction(value)) {
+        value(this.vis.data(name));
+      } else {
+        this.vis.data(name)
+          .remove(() => true)
+          .insert(value);
       }
-      this._updateData(vis, spec);
-      vis.update();
-
     }
   }
 
@@ -112,81 +156,7 @@ class Vega extends React.Component {
     if (vis && spec && spec.signals) {
       spec.signals.forEach(signal => vis.offSignal(signal.name));
     }
-  }
-
-  _initialize(spec) {
-    const self = this;
-
-    // Parse the vega spec and create the vis
-    vg.parse.spec(spec, chart => {
-      const vis = chart({ el: this.element });
-
-      // Attach listeners onto the signals
-      if (spec.signals) {
-        spec.signals.forEach(signal => {
-          vis.onSignal(signal.name, function (...args) {
-            const listener = self.props[listenerName(signal.name)];
-            if (listener) {
-              listener.apply(self, args);
-            }
-          });
-        });
-      }
-
-      self._update(vis, spec);
-      // store the vis object to be used on later updates
-      if (self.props.isSpecFixed) {
-        self.setState({ vis, spec });
-      }
-      else {
-        const specString = JSON.stringify(spec);
-        self.setState({ vis, spec, specString });
-      }
-    });
-  }
-
-  _clearListeners(vis, spec) {
-    // Remove listeners from the signals
-    if (vis && spec && spec.signals) {
-      spec.signals.forEach(signal => vis.offSignal(signal.name));
-    }
-  }
-
-  _update(vis, spec) {
-    const props = this.props;
-    if (vis && spec) {
-      vis
-        .width(props.width || spec.width)
-        .height(props.height || spec.height)
-        .padding(props.padding || spec.padding)
-        .viewport(props.viewport || spec.viewport);
-      if (props.renderer) {
-        vis.renderer(props.renderer);
-      }
-      this._updateData(vis, spec);
-      vis.update();
-    }
-  }
-
-  _updateData(vis, spec) {
-    // TODO: Can check if data changes
-    const props = this.props;
-    if (vis && spec && spec.data && props.data) {
-      vis.update();
-      spec.data.forEach(d => {
-        const newData = props.data[d.name];
-        if (newData) {
-          if (isFunction(newData)) {
-            newData(vis.data(d.name));
-          }
-          else {
-            vis.data(d.name)
-              .remove(() => true)
-              .insert(newData);
-          }
-        }
-      });
-    }
+    return this;
   }
 
   render() {
@@ -197,9 +167,26 @@ class Vega extends React.Component {
   }
 }
 
-Vega.listenerName = listenerName;
-Vega.readSpec = readSpec;
+Vega.isSameData = function isSameData(a, b) {
+  return a === b && !isFunction(a);
+};
+
+Vega.isSameSpec = function isSameSpec(a, b) {
+  const specA = Vega.readSpec(a);
+  const specB = Vega.readSpec(b);
+  return specA === specB
+    || JSON.stringify(specA) === JSON.stringify(specB);
+};
+
+Vega.listenerName = function listenerName(signalName) {
+  return `onSignal${capitalize(signalName)}`;
+};
+
+Vega.readSpec = function readSpec(spec) {
+  return isFunction(spec) ? spec() : spec;
+};
+
 Vega.propTypes = propTypes;
+Vega.defaultProps = defaultProps;
 
 export default Vega;
-

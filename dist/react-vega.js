@@ -104,22 +104,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function listenerName(signalName) {
-	  return 'onSignal' + (0, _util.capitalize)(signalName);
-	}
-
-	function readSpec(spec) {
-	  return (0, _util.isFunction)(spec) ? spec() : spec;
-	}
-
 	var propTypes = {
 	  spec: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.func]),
+	  isSpecFixed: _react.PropTypes.bool,
 	  width: _react.PropTypes.number,
 	  height: _react.PropTypes.number,
 	  padding: _react.PropTypes.object,
 	  viewport: _react.PropTypes.array,
 	  renderer: _react.PropTypes.string,
 	  data: _react.PropTypes.object
+	};
+
+	var defaultProps = {
+	  isSpecFixed: false
 	};
 
 	var Vega = function (_React$Component) {
@@ -131,7 +128,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Vega).call(this, props));
 
 	    _this.state = {
-	      spec: readSpec(_this.props.spec)
+	      isSpecFixed: props.isSpecFixed,
+	      spec: Vega.readSpec(_this.props.spec)
 	    };
 	    return _this;
 	  }
@@ -139,82 +137,130 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(Vega, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this._initialize(this.state.spec);
+	      this.createVis(this.state.spec);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (!this.props.isSpecFixed) {
-	        var newSpec = readSpec(nextProps.spec);
-	        var newSpecString = JSON.stringify(newSpec);
-	        var isNewSpec = this.state.specString !== newSpecString;
+	      var isSpecFixed = Boolean(nextProps.isSpecFixed);
+	      var isSpecFixedChange = this.state.isSpecFixed !== isSpecFixed;
+	      if (isSpecFixedChange) {
+	        this.setState({ isSpecFixed: isSpecFixed });
+	      }
 
-	        if (isNewSpec) {
-	          this._clearListeners(this.state.vis, this.state.spec);
-	          this._initialize(newSpec);
+	      if (!this.state.isSpecFixed || isSpecFixedChange) {
+	        var newSpec = Vega.readSpec(nextProps.spec);
+	        if (!Vega.isSameSpec(this.state.spec, newSpec)) {
+	          this.setState({ spec: newSpec });
 	        }
-
-	        this.setState({ isNewSpec: isNewSpec });
 	      }
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps, prevState) {
-	      if (!this.state.isNewSpec) {
-	        this._update(this.state.vis, this.state.spec);
+	      var _this2 = this;
+
+	      if (this.state.spec !== prevState.spec) {
+	        this.clearListeners(this.state.spec);
+	        this.createVis(this.state.spec);
+	      } else if (this.vis) {
+	        (function () {
+	          var props = _this2.props;
+	          var spec = _this2.state.spec;
+	          var changed = false;
+
+	          // update view properties
+	          ['width', 'height', 'padding', 'viewport', 'renderer'].forEach(function (field) {
+	            if (props[field] !== prevProps[field]) {
+	              _this2.vis[field](props[field] || spec[field]);
+	              changed = true;
+	            }
+	          });
+
+	          // update data
+	          if (spec.data && props.data) {
+	            _this2.vis.update();
+	            spec.data.forEach(function (d) {
+	              var oldData = prevProps.data[d.name];
+	              var newData = props.data[d.name];
+	              if (!Vega.isSameData(oldData, newData)) {
+	                _this2.updateData(d.name, newData);
+	              }
+	            });
+	          }
+
+	          if (changed) {
+	            _this2.vis.update();
+	          }
+	        })();
 	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      this._clearListeners(this.state.vis, this.state.spec);
+	      this.clearListeners(this.state.spec);
 	    }
 	  }, {
 	    key: 'createVis',
 	    value: function createVis(spec) {
-	      var _this2 = this;
+	      var _this3 = this;
 
 	      if (spec) {
-	        // Parse the vega spec and create the vis
-	        _vega2.default.parse.spec(spec, function (chart) {
-	          var vis = chart({ el: _this2.element });
+	        (function () {
+	          var props = _this3.props;
+	          // Parse the vega spec and create the vis
+	          _vega2.default.parse.spec(spec, function (chart) {
+	            var vis = chart({ el: _this3.element });
 
-	          // Attach listeners onto the signals
-	          if (spec.signals) {
-	            spec.signals.forEach(function (signal) {
-	              vis.onSignal(signal.name, function () {
-	                var listener = self.props[listenerName(signal.name)];
-	                if (listener) {
+	            // Attach listeners onto the signals
+	            if (spec.signals) {
+	              spec.signals.forEach(function (signal) {
+	                vis.onSignal(signal.name, function () {
 	                  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
 	                    args[_key] = arguments[_key];
 	                  }
 
-	                  listener.apply(self, args);
-	                }
+	                  var listener = _this3.props[Vega.listenerName(signal.name)];
+	                  if (listener) {
+	                    listener.apply(_this3, args);
+	                  }
+	                });
 	              });
-	            });
-	          }
+	            }
 
-	          // store the vis object to be used on later updates
-	          _this2.vis = vis;
-	          self.updateVis(spec);
-	        });
+	            // store the vis object to be used on later updates
+	            _this3.vis = vis;
+
+	            vis.width(props.width || spec.width).height(props.height || spec.height).padding(props.padding || spec.padding).viewport(props.viewport || spec.viewport);
+	            if (props.renderer) {
+	              vis.renderer(props.renderer);
+	            }
+	            if (spec.data && props.data) {
+	              vis.update();
+	              spec.data.forEach(function (d) {
+	                _this3.updateData(d.name, props.data[d.name]);
+	              });
+	            }
+	            vis.update();
+	          });
+	        })();
 	      } else {
 	        this.clearListeners(this.state.spec);
 	        this.vis = null;
 	      }
+	      return this;
 	    }
 	  }, {
-	    key: 'updateVis',
-	    value: function updateVis(spec) {
-	      if (this.vis) {
-	        var props = this.props;
-	        vis.width(props.width || spec.width).height(props.height || spec.height).padding(props.padding || spec.padding).viewport(props.viewport || spec.viewport);
-	        if (props.renderer) {
-	          vis.renderer(props.renderer);
+	    key: 'updateData',
+	    value: function updateData(name, value) {
+	      if (value) {
+	        if ((0, _util.isFunction)(value)) {
+	          value(this.vis.data(name));
+	        } else {
+	          this.vis.data(name).remove(function () {
+	            return true;
+	          }).insert(value);
 	        }
-	        this._updateData(vis, spec);
-	        vis.update();
 	      }
 	    }
 
@@ -229,87 +275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return vis.offSignal(signal.name);
 	        });
 	      }
-	    }
-	  }, {
-	    key: '_initialize',
-	    value: function _initialize(spec) {
-	      var _this3 = this;
-
-	      var self = this;
-
-	      // Parse the vega spec and create the vis
-	      _vega2.default.parse.spec(spec, function (chart) {
-	        var vis = chart({ el: _this3.element });
-
-	        // Attach listeners onto the signals
-	        if (spec.signals) {
-	          spec.signals.forEach(function (signal) {
-	            vis.onSignal(signal.name, function () {
-	              var listener = self.props[listenerName(signal.name)];
-	              if (listener) {
-	                for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	                  args[_key2] = arguments[_key2];
-	                }
-
-	                listener.apply(self, args);
-	              }
-	            });
-	          });
-	        }
-
-	        self._update(vis, spec);
-	        // store the vis object to be used on later updates
-	        if (self.props.isSpecFixed) {
-	          self.setState({ vis: vis, spec: spec });
-	        } else {
-	          var specString = JSON.stringify(spec);
-	          self.setState({ vis: vis, spec: spec, specString: specString });
-	        }
-	      });
-	    }
-	  }, {
-	    key: '_clearListeners',
-	    value: function _clearListeners(vis, spec) {
-	      // Remove listeners from the signals
-	      if (vis && spec && spec.signals) {
-	        spec.signals.forEach(function (signal) {
-	          return vis.offSignal(signal.name);
-	        });
-	      }
-	    }
-	  }, {
-	    key: '_update',
-	    value: function _update(vis, spec) {
-	      var props = this.props;
-	      if (vis && spec) {
-	        vis.width(props.width || spec.width).height(props.height || spec.height).padding(props.padding || spec.padding).viewport(props.viewport || spec.viewport);
-	        if (props.renderer) {
-	          vis.renderer(props.renderer);
-	        }
-	        this._updateData(vis, spec);
-	        vis.update();
-	      }
-	    }
-	  }, {
-	    key: '_updateData',
-	    value: function _updateData(vis, spec) {
-	      // TODO: Can check if data changes
-	      var props = this.props;
-	      if (vis && spec && spec.data && props.data) {
-	        vis.update();
-	        spec.data.forEach(function (d) {
-	          var newData = props.data[d.name];
-	          if (newData) {
-	            if ((0, _util.isFunction)(newData)) {
-	              newData(vis.data(d.name));
-	            } else {
-	              vis.data(d.name).remove(function () {
-	                return true;
-	              }).insert(newData);
-	            }
-	          }
-	        });
-	      }
+	      return this;
 	    }
 	  }, {
 	    key: 'render',
@@ -329,9 +295,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Vega;
 	}(_react2.default.Component);
 
-	Vega.listenerName = listenerName;
-	Vega.readSpec = readSpec;
+	Vega.isSameData = function isSameData(a, b) {
+	  return a === b && !(0, _util.isFunction)(a);
+	};
+
+	Vega.isSameSpec = function isSameSpec(a, b) {
+	  var specA = Vega.readSpec(a);
+	  var specB = Vega.readSpec(b);
+	  return specA === specB || JSON.stringify(specA) === JSON.stringify(specB);
+	};
+
+	Vega.listenerName = function listenerName(signalName) {
+	  return 'onSignal' + (0, _util.capitalize)(signalName);
+	};
+
+	Vega.readSpec = function readSpec(spec) {
+	  return (0, _util.isFunction)(spec) ? spec() : spec;
+	};
+
 	Vega.propTypes = propTypes;
+	Vega.defaultProps = defaultProps;
 
 	exports.default = Vega;
 
@@ -392,8 +375,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function createClassFromSpec(name, spec) {
-	  spec = _Vega3.default.readSpec(spec);
+	function createClassFromSpec(name, specIn) {
+	  var spec = _Vega3.default.readSpec(specIn);
 
 	  var propTypes = {
 	    width: _react.PropTypes.number,
@@ -425,14 +408,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return Chart;
 	  }(_Vega3.default);
 
-	  Chart.getSpec = function () {
+	  Chart.getSpec = function getSpec() {
 	    return spec;
 	  };
 
 	  Chart.propTypes = propTypes;
 
 	  return Chart;
-	};
+	}
 
 /***/ }
 /******/ ])

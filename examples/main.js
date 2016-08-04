@@ -83,7 +83,7 @@ ReactDOM.render(
   <div>
     <h3>created with <code>&lt;Vega /&gt;</code></h3>
     <Vega data={barData} spec={barSpec} onSignalHover={handleHover}/>
-    <h3>created with <code>ReactVega.createClassFromSpec</code></h3>
+    <h3>created with <code>ReactVega.createClassFromSpec()</code></h3>
     <BarChart data={barData} onSignalHover={handleHover}/>
   </div>,
   document.getElementById('bar-container')

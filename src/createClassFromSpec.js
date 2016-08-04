@@ -1,8 +1,8 @@
-import {PropTypes} from 'react';
+import { PropTypes } from 'react';
 import Vega from './Vega.js';
 
-export default function createClassFromSpec(name, spec) {
-  spec = Vega.readSpec(spec);
+export default function createClassFromSpec(name, specIn) {
+  const spec = Vega.readSpec(specIn);
 
   const propTypes = {
     width: PropTypes.number,
@@ -26,11 +26,11 @@ export default function createClassFromSpec(name, spec) {
     }
   }
 
-  Chart.getSpec = function() {
+  Chart.getSpec = function getSpec() {
     return spec;
   };
 
   Chart.propTypes = propTypes;
 
   return Chart;
-};
+}
