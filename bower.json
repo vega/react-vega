@@ -27,7 +27,7 @@
     "gulp/*.js"
   ],
   "dependencies": {
-    "react": "~15.0.1",
-    "vega": "~2.5.2"
+    "react": "~15.3.0",
+    "vega": "~2.6.1"
   }
 }

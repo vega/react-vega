@@ -135,7 +135,7 @@ const Vega = React.createClass({
   // dummy render method that creates the container Vega draws inside
   render(){
     return (
-      <div ref="chartContainer"></div>
+      <div ref="chartContainer" />
     );
   }
 });

@@ -12,7 +12,7 @@
     "node": "~5.2"
   },
   "dependencies": {
-    "vega": "~2.5.2"
+    "vega": "^2.6.1"
   },
   "peerDependencies": {
     "react": "^15.3.0"
