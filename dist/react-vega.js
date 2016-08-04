@@ -7,7 +7,7 @@
 		exports["ReactVega"] = factory(require("react"), require("vega"));
 	else
 		root["ReactVega"] = factory(root["React"], root["vg"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -59,22 +59,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.createClassFromSpec = undefined;
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	var _Vega = __webpack_require__(1);
+
+	var _Vega2 = _interopRequireDefault(_Vega);
+
+	var _createClassFromSpec2 = __webpack_require__(5);
+
+	var _createClassFromSpec3 = _interopRequireDefault(_createClassFromSpec2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Vega2.default;
+	var createClassFromSpec = exports.createClassFromSpec = _createClassFromSpec3.default;
+
+/***/ },
+/* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	exports.createClassFromSpec = createClassFromSpec;
-
-	var _react = __webpack_require__(1);
+	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _vega = __webpack_require__(2);
+	var _vega = __webpack_require__(3);
 
 	var _vega2 = _interopRequireDefault(_vega);
 
-	var _util = __webpack_require__(3);
+	var _util = __webpack_require__(4);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88,7 +108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return 'onSignal' + (0, _util.capitalize)(signalName);
 	}
 
-	function checkSpec(spec) {
+	function readSpec(spec) {
 	  return (0, _util.isFunction)(spec) ? spec() : spec;
 	}
 
@@ -111,7 +131,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Vega).call(this, props));
 
 	    _this.state = {
-	      spec: null
+	      spec: readSpec(_this.props.spec)
 	    };
 	    return _this;
 	  }
@@ -119,14 +139,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(Vega, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var spec = checkSpec(this.props.spec);
-	      this._initialize(spec);
+	      this._initialize(this.state.spec);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (!this.props.isSpecFixed) {
-	        var newSpec = checkSpec(nextProps.spec);
+	        var newSpec = readSpec(nextProps.spec);
 	        var newSpecString = JSON.stringify(newSpec);
 	        var isNewSpec = this.state.specString !== newSpecString;
 
@@ -243,50 +262,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Vega;
 	}(_react2.default.Component);
 
+	Vega.listenerName = listenerName;
+	Vega.readSpec = readSpec;
 	Vega.propTypes = propTypes;
 
 	exports.default = Vega;
-	function createClassFromSpec(name, spec) {
-	  spec = checkSpec(spec);
-
-	  var propTypes = {
-	    width: _react.PropTypes.number,
-	    height: _react.PropTypes.number,
-	    padding: _react.PropTypes.object,
-	    viewport: _react.PropTypes.array,
-	    renderer: _react.PropTypes.string,
-	    data: _react.PropTypes.object
-	  };
-	  if (spec.signals) {
-	    spec.signals.forEach(function (signal) {
-	      propTypes[listenerName(signal.name)] = _react.PropTypes.func;
-	    });
-	  }
-
-	  return _react2.default.createClass({
-	    displayName: name,
-	    propTypes: propTypes,
-	    statics: {
-	      getSpec: function getSpec() {
-	        return spec;
-	      }
-	    },
-	    getInitialState: function getInitialState() {
-	      return { spec: spec };
-	    },
-	    render: function render() {
-	      return _react2.default.createElement(Vega, _extends({ spec: this.state.spec, isSpecFixed: true }, this.props, {
-	        __self: this
-	      }));
-	    }
-	  });
-	}
-
-/***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ },
 /* 2 */
@@ -296,6 +276,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -313,6 +299,73 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var getType = {};
 	  return !!functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 	}
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = createClassFromSpec;
+
+	var _react = __webpack_require__(2);
+
+	var _Vega2 = __webpack_require__(1);
+
+	var _Vega3 = _interopRequireDefault(_Vega2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function createClassFromSpec(name, spec) {
+	  spec = _Vega3.default.readSpec(spec);
+
+	  var propTypes = {
+	    width: _react.PropTypes.number,
+	    height: _react.PropTypes.number,
+	    padding: _react.PropTypes.object,
+	    viewport: _react.PropTypes.array,
+	    renderer: _react.PropTypes.string,
+	    data: _react.PropTypes.object
+	  };
+	  if (spec.signals) {
+	    spec.signals.forEach(function (signal) {
+	      propTypes[_Vega3.default.listenerName(signal.name)] = _react.PropTypes.func;
+	    });
+	  }
+
+	  var Chart = function (_Vega) {
+	    _inherits(Chart, _Vega);
+
+	    function Chart(props) {
+	      _classCallCheck(this, Chart);
+
+	      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Chart).call(this, props));
+
+	      _this.state.spec = spec;
+	      _this.state.isSpecFixed = true;
+	      return _this;
+	    }
+
+	    return Chart;
+	  }(_Vega3.default);
+
+	  Chart.getSpec = function () {
+	    return spec;
+	  };
+
+	  Chart.propTypes = propTypes;
+
+	  return Chart;
+	};
 
 /***/ }
 /******/ ])
