@@ -16,12 +16,8 @@ export default function createClassFromSpec(name, spec) {
     });
   }
 
-  class Chart extends Vega {
-    constructor(props) {
-      super(props);
-      this.state.spec = spec;
-      this.state.isSpecFixed = true;
-    }
+  function Chart(props) {
+    return <Vega spec={spec} {...props} />;
   }
 
   Chart.getSpec = function getSpec() {

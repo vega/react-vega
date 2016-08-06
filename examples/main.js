@@ -15,7 +15,7 @@ const barData = {
 
 const barSpec = {
   "width": 400,
-  "height": 200,
+  "height": 140,
   "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
   "data": [{ "name": "table" }],
   'signals': [
@@ -69,20 +69,120 @@ const barSpec = {
   ]
 };
 
+const spec2 = {
+  "width": 400,
+  "height": 140,
+  "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
+  "data": [{ "name": "table" }],
+  'signals': [
+    {
+      'name': 'hover', 'init': null,
+      'streams': [
+        {'type': '@bar:mouseover', 'expr': 'datum'},
+        {'type': '@bar:mouseout', 'expr': 'null'}
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "range": "width",
+      "domain": {"data": "table", "field": "x"}
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "range": "height",
+      "domain": {"data": "table", "field": "y"},
+      "nice": true
+    }
+  ],
+  "axes": [
+    {"type": "x", "scale": "x"},
+    {"type": "y", "scale": "y"}
+  ],
+  "marks": [
+    {
+      "type": "symbol",
+      "name": "bar",
+      "from": {"data": "table"},
+      "properties": {
+        "enter": {
+          "x": {"scale": "x", "field": "x"},
+          "y": {"scale": "y", "field": "y"},
+        },
+        "update": {
+          "fill": {"value": "steelblue"}
+        },
+        "hover": {
+          "fill": {"value": "red"}
+        }
+      }
+    }
+  ]
+};
+
 const Vega = ReactVega.default;
 const BarChart = ReactVega.createClassFromSpec('BarChart', barSpec);
 
-function handleHover(...args){
-  const info = JSON.stringify(args);
-  document.getElementById('bar-tip').innerHTML = info;
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      info: '',
+      spec: barSpec,
+      data: barData
+    };
+
+    this.handleHover = this.handleHover.bind(this);
+    this.toggleSpec = this.toggleSpec.bind(this);
+    this.updateData = this.updateData.bind(this);
+  }
+
+  handleHover(...args) {
+    this.setState({
+      info: JSON.stringify(args)
+    });
+  }
+
+  toggleSpec() {
+    if(this.state.spec === barSpec) {
+      this.setState({ spec: spec2 });
+    } else {
+      this.setState({ spec: barSpec });
+    }
+  }
+
+  updateData() {
+    const table = [];
+    for(let i = 1; i <= 20; i++) {
+      table.push({
+        x: i,
+        y: Math.random() * 100
+      });
+    }
+    this.setState({
+      data: { table }
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.toggleSpec}>Toggle Spec</button>
+        <button onClick={this.updateData}>Update data</button>
+        <h3>created with <code>&lt;Vega /&gt;</code></h3>
+        <Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover}/>
+        <h3>created with <code>ReactVega.createClassFromSpec()</code></h3>
+        <BarChart data={this.state.data} onSignalHover={this.handleHover}/>
+        {this.state.info}
+      </div>
+    );
+  }
 }
 
 ReactDOM.render(
-  <div>
-    <h3>created with <code>&lt;Vega /&gt;</code></h3>
-    <Vega data={barData} spec={barSpec} onSignalHover={handleHover}/>
-    <h3>created with <code>ReactVega.createClassFromSpec()</code></h3>
-    <BarChart data={barData} onSignalHover={handleHover}/>
-  </div>,
-  document.getElementById('bar-container')
+  <App />,
+  document.getElementById('app')
 );

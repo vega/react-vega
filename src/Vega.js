@@ -3,8 +3,7 @@ import vg from 'vega';
 import { capitalize, isFunction } from './util.js';
 
 const propTypes = {
-  spec: PropTypes.object,
-  isSpecFixed: PropTypes.bool,
+  spec: PropTypes.object.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   padding: PropTypes.object,
@@ -13,44 +12,18 @@ const propTypes = {
   data: PropTypes.object,
 };
 
-const defaultProps = {
-  isSpecFixed: false,
-};
-
 class Vega extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSpecFixed: props.isSpecFixed,
-      spec: props.spec,
-    };
-  }
-
   componentDidMount() {
-    this.createVis(this.state.spec);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const isSpecFixed = Boolean(nextProps.isSpecFixed);
-    const isSpecFixedChange = this.state.isSpecFixed !== isSpecFixed;
-    if (isSpecFixedChange) {
-      this.setState({ isSpecFixed });
-    }
-
-    if (!this.state.isSpecFixed || isSpecFixedChange) {
-      if (!Vega.isSameSpec(this.state.spec, nextProps.spec)) {
-        this.setState({ spec: nextProps.spec });
-      }
-    }
+    this.createVis(this.props.spec);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.spec !== prevState.spec) {
-      this.clearListeners(this.state.spec);
-      this.createVis(this.state.spec);
+    if (!Vega.isSameSpec(this.props.spec, prevProps.spec)) {
+      this.clearListeners(this.props.spec);
+      this.createVis(this.props.spec);
     } else if (this.vis) {
       const props = this.props;
-      const spec = this.state.spec;
+      const spec = this.props.spec;
       let changed = false;
 
       // update view properties
@@ -75,6 +48,7 @@ class Vega extends React.Component {
           const newData = props.data[d.name];
           if (!Vega.isSameData(oldData, newData)) {
             this.updateData(d.name, newData);
+            changed = true;
           }
         });
       }
@@ -86,7 +60,7 @@ class Vega extends React.Component {
   }
 
   componentWillUnmount() {
-    this.clearListeners(this.state.spec);
+    this.clearListeners(this.props.spec);
   }
 
   createVis(spec) {
@@ -128,7 +102,7 @@ class Vega extends React.Component {
         vis.update();
       });
     } else {
-      this.clearListeners(this.state.spec);
+      this.clearListeners(this.props.spec);
       this.vis = null;
     }
     return this;
@@ -177,6 +151,5 @@ Vega.listenerName = function listenerName(signalName) {
 };
 
 Vega.propTypes = propTypes;
-Vega.defaultProps = defaultProps;
 
 export default Vega;

@@ -105,8 +105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var propTypes = {
-	  spec: _react.PropTypes.object,
-	  isSpecFixed: _react.PropTypes.bool,
+	  spec: _react.PropTypes.object.isRequired,
 	  width: _react.PropTypes.number,
 	  height: _react.PropTypes.number,
 	  padding: _react.PropTypes.object,
@@ -115,57 +114,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	  data: _react.PropTypes.object
 	};
 
-	var defaultProps = {
-	  isSpecFixed: false
-	};
-
 	var Vega = function (_React$Component) {
 	  _inherits(Vega, _React$Component);
 
-	  function Vega(props) {
+	  function Vega() {
 	    _classCallCheck(this, Vega);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Vega).call(this, props));
-
-	    _this.state = {
-	      isSpecFixed: props.isSpecFixed,
-	      spec: props.spec
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Vega).apply(this, arguments));
 	  }
 
 	  _createClass(Vega, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.createVis(this.state.spec);
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(nextProps) {
-	      var isSpecFixed = Boolean(nextProps.isSpecFixed);
-	      var isSpecFixedChange = this.state.isSpecFixed !== isSpecFixed;
-	      if (isSpecFixedChange) {
-	        this.setState({ isSpecFixed: isSpecFixed });
-	      }
-
-	      if (!this.state.isSpecFixed || isSpecFixedChange) {
-	        if (!Vega.isSameSpec(this.state.spec, nextProps.spec)) {
-	          this.setState({ spec: nextProps.spec });
-	        }
-	      }
+	      this.createVis(this.props.spec);
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps, prevState) {
 	      var _this2 = this;
 
-	      if (this.state.spec !== prevState.spec) {
-	        this.clearListeners(this.state.spec);
-	        this.createVis(this.state.spec);
+	      if (!Vega.isSameSpec(this.props.spec, prevProps.spec)) {
+	        this.clearListeners(this.props.spec);
+	        this.createVis(this.props.spec);
 	      } else if (this.vis) {
 	        (function () {
 	          var props = _this2.props;
-	          var spec = _this2.state.spec;
+	          var spec = _this2.props.spec;
 	          var changed = false;
 
 	          // update view properties
@@ -184,6 +158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              var newData = props.data[d.name];
 	              if (!Vega.isSameData(oldData, newData)) {
 	                _this2.updateData(d.name, newData);
+	                changed = true;
 	              }
 	            });
 	          }
@@ -197,7 +172,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      this.clearListeners(this.state.spec);
+	      this.clearListeners(this.props.spec);
 	    }
 	  }, {
 	    key: 'createVis',
@@ -244,7 +219,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          });
 	        })();
 	      } else {
-	        this.clearListeners(this.state.spec);
+	        this.clearListeners(this.props.spec);
 	        this.vis = null;
 	      }
 	      return this;
@@ -307,7 +282,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	Vega.propTypes = propTypes;
-	Vega.defaultProps = defaultProps;
 
 	exports.default = Vega;
 
@@ -352,21 +326,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	exports.default = createClassFromSpec;
 
 	var _react = __webpack_require__(2);
 
-	var _Vega2 = __webpack_require__(1);
+	var _Vega = __webpack_require__(1);
 
-	var _Vega3 = _interopRequireDefault(_Vega2);
+	var _Vega2 = _interopRequireDefault(_Vega);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	function createClassFromSpec(name, spec) {
 	  var propTypes = {
@@ -379,25 +350,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	  if (spec.signals) {
 	    spec.signals.forEach(function (signal) {
-	      propTypes[_Vega3.default.listenerName(signal.name)] = _react.PropTypes.func;
+	      propTypes[_Vega2.default.listenerName(signal.name)] = _react.PropTypes.func;
 	    });
 	  }
 
-	  var Chart = function (_Vega) {
-	    _inherits(Chart, _Vega);
-
-	    function Chart(props) {
-	      _classCallCheck(this, Chart);
-
-	      var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Chart).call(this, props));
-
-	      _this.state.spec = spec;
-	      _this.state.isSpecFixed = true;
-	      return _this;
-	    }
-
-	    return Chart;
-	  }(_Vega3.default);
+	  function Chart(props) {
+	    return React.createElement(_Vega2.default, _extends({ spec: spec }, props, {
+	      __self: this
+	    }));
+	  }
 
 	  Chart.getSpec = function getSpec() {
 	    return spec;

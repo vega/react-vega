@@ -21,6 +21,10 @@ a:hover{
   text-decoration: underline;
 }
 
+#app{
+  margin-top: 10px;
+}
+
 footer{
   color: #aaa;
   font-size: 12px;
