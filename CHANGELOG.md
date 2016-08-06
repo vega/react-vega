@@ -1,6 +1,8 @@
 # react-vega
 
 ## v2.0.0
+**Very likely to work fine if you are upgrading from 1.x.x.**  There are breaking changes (of the features nobody seems to use) and I almost rewrite the whole thing so I think it is worth being considered a major version. Here are the list of changes:
+
 - Rewrite using preferred method recommended by React. `Vega` component now extends `React.Component` and use `ref` as a function instead of string.
 - Add check for props/data changes and only update when necessary.
 - Refactor code for clarity
