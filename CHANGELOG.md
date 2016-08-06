@@ -1,5 +1,12 @@
 # react-vega
 
+## v2.0.0
+- Rewrite using preferred method recommended by React. `Vega` component now extends `React.Component` and use `ref` as a function instead of string.
+- Add check for props/data changes and only update when necessary.
+- Refactor code for clarity
+- Remove support for spec as a function
+- Add static functions `isSameData`, `isSameSpec` and `listenerName` to `Vega` class.
+
 ## v1.1.1
 - Fix bug to call `vis.update()` before setting new data
 
