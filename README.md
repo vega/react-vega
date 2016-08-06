@@ -10,6 +10,7 @@ Convert Vega spec into React class conveniently, inspired by this [tutorial](htt
 
 ## Examples
 
+- http://kristw.github.io/react-vega/
 - https://jsfiddle.net/kristw/htg4uron/
 - https://jsfiddle.net/kristw/qr8a1v8d/
 
