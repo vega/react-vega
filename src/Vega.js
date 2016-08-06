@@ -3,10 +3,7 @@ import vg from 'vega';
 import { capitalize, isFunction } from './util.js';
 
 const propTypes = {
-  spec: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.func,
-  ]),
+  spec: PropTypes.object,
   isSpecFixed: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
@@ -25,7 +22,7 @@ class Vega extends React.Component {
     super(props);
     this.state = {
       isSpecFixed: props.isSpecFixed,
-      spec: Vega.readSpec(this.props.spec),
+      spec: props.spec,
     };
   }
 
@@ -41,9 +38,8 @@ class Vega extends React.Component {
     }
 
     if (!this.state.isSpecFixed || isSpecFixedChange) {
-      const newSpec = Vega.readSpec(nextProps.spec);
-      if (!Vega.isSameSpec(this.state.spec, newSpec)) {
-        this.setState({ spec: newSpec });
+      if (!Vega.isSameSpec(this.state.spec, nextProps.spec)) {
+        this.setState({ spec: nextProps.spec });
       }
     }
   }
@@ -172,18 +168,12 @@ Vega.isSameData = function isSameData(a, b) {
 };
 
 Vega.isSameSpec = function isSameSpec(a, b) {
-  const specA = Vega.readSpec(a);
-  const specB = Vega.readSpec(b);
-  return specA === specB
-    || JSON.stringify(specA) === JSON.stringify(specB);
+  return a === b
+    || JSON.stringify(a) === JSON.stringify(b);
 };
 
 Vega.listenerName = function listenerName(signalName) {
   return `onSignal${capitalize(signalName)}`;
-};
-
-Vega.readSpec = function readSpec(spec) {
-  return isFunction(spec) ? spec() : spec;
 };
 
 Vega.propTypes = propTypes;

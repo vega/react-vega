@@ -1,5 +1,3 @@
-console.log('Hi!', ReactVega);
-
 const barData = {
   table: [
     {"x": 1,  "y": 28}, {"x": 2,  "y": 55},

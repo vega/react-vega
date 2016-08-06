@@ -105,7 +105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var propTypes = {
-	  spec: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.func]),
+	  spec: _react.PropTypes.object,
 	  isSpecFixed: _react.PropTypes.bool,
 	  width: _react.PropTypes.number,
 	  height: _react.PropTypes.number,
@@ -129,7 +129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _this.state = {
 	      isSpecFixed: props.isSpecFixed,
-	      spec: Vega.readSpec(_this.props.spec)
+	      spec: props.spec
 	    };
 	    return _this;
 	  }
@@ -149,9 +149,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      if (!this.state.isSpecFixed || isSpecFixedChange) {
-	        var newSpec = Vega.readSpec(nextProps.spec);
-	        if (!Vega.isSameSpec(this.state.spec, newSpec)) {
-	          this.setState({ spec: newSpec });
+	        if (!Vega.isSameSpec(this.state.spec, nextProps.spec)) {
+	          this.setState({ spec: nextProps.spec });
 	        }
 	      }
 	    }
@@ -300,17 +299,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	Vega.isSameSpec = function isSameSpec(a, b) {
-	  var specA = Vega.readSpec(a);
-	  var specB = Vega.readSpec(b);
-	  return specA === specB || JSON.stringify(specA) === JSON.stringify(specB);
+	  return a === b || JSON.stringify(a) === JSON.stringify(b);
 	};
 
 	Vega.listenerName = function listenerName(signalName) {
 	  return 'onSignal' + (0, _util.capitalize)(signalName);
-	};
-
-	Vega.readSpec = function readSpec(spec) {
-	  return (0, _util.isFunction)(spec) ? spec() : spec;
 	};
 
 	Vega.propTypes = propTypes;
@@ -375,9 +368,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function createClassFromSpec(name, specIn) {
-	  var spec = _Vega3.default.readSpec(specIn);
-
+	function createClassFromSpec(name, spec) {
 	  var propTypes = {
 	    width: _react.PropTypes.number,
 	    height: _react.PropTypes.number,
