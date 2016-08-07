@@ -1,5 +1,8 @@
 # react-vega
 
+## v2.1.2
+- Makes `createClassFromSpec(name, spec)` works when name is omitted (`createClassFromSpec(spec)`). This is for backward compatibility.
+
 ## v2.1.1
 - Fix eslint complaints
 
