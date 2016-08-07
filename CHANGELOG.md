@@ -1,5 +1,9 @@
 # react-vega
 
+## v2.1.0
+- Implement `shouldComponentUpdate` to check if anything was changed.
+- Add static functions `isSamePadding` and `isSameViewport` to `Vega` class.
+
 ## v2.0.0
 **Very likely to work fine if you are upgrading from 1.x.x.**  There are breaking changes (of the features nobody seems to use) and I almost rewrite the whole thing so I think it is worth being considered a major version. Here are the list of changes:
 

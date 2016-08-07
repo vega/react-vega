@@ -129,8 +129,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.createVis(this.props.spec);
 	    }
 	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps) {
+	      var a = this.props;
+	      var b = nextProps;
+	      return ['width', 'height', 'renderer', 'spec', 'data'].some(function (name) {
+	        return a[name] !== b[name];
+	      }) || !Vega.isSameViewport(a.viewport, b.viewport) || !Vega.isSamePadding(a.padding, b.padding);
+	    }
+	  }, {
 	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate(prevProps, prevState) {
+	    value: function componentDidUpdate(prevProps) {
 	      var _this2 = this;
 
 	      if (!Vega.isSameSpec(this.props.spec, prevProps.spec)) {
@@ -143,12 +152,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var changed = false;
 
 	          // update view properties
-	          ['width', 'height', 'padding', 'viewport', 'renderer'].forEach(function (field) {
+	          ['width', 'height', 'renderer'].forEach(function (field) {
 	            if (props[field] !== prevProps[field]) {
 	              _this2.vis[field](props[field] || spec[field]);
 	              changed = true;
 	            }
 	          });
+
+	          if (!Vega.isSameViewport) {
+	            _this2.vis.viewport(props.viewport || spec.viewport);
+	            changed = true;
+	          }
+	          if (!Vega.isSamePadding) {
+	            _this2.vis.padding(props.padding || spec.padding);
+	            changed = true;
+	          }
 
 	          // update data
 	          if (spec.data && props.data) {
@@ -259,27 +277,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return(
 	        // Create the container Vega draws inside
 	        _react2.default.createElement('div', { ref: function ref(c) {
-	            return _this4.element = c;
+	            _this4.element = c;
 	          }, __self: this
 	        })
 	      );
+	    }
+	  }], [{
+	    key: 'isSameViewport',
+	    value: function isSameViewport(a, b) {
+	      if (Array.isArray(a) && Array.isArray(b)) {
+	        if (a.length !== b.length) return false;
+	        return a.every(function (value, index) {
+	          return value === b[index];
+	        });
+	      }
+	      return a === b;
+	    }
+	  }, {
+	    key: 'isSamePadding',
+	    value: function isSamePadding(a, b) {
+	      if ((0, _util.isDefined)(a) && (0, _util.isDefined)(b)) {
+	        return a.top === b.top && a.left === b.left && a.right === b.right && a.bottom === b.bottom;
+	      }
+	      return a === b;
+	    }
+	  }, {
+	    key: 'isSameData',
+	    value: function isSameData(a, b) {
+	      return a === b && !(0, _util.isFunction)(a);
+	    }
+	  }, {
+	    key: 'isSameSpec',
+	    value: function isSameSpec(a, b) {
+	      return a === b || JSON.stringify(a) === JSON.stringify(b);
+	    }
+	  }, {
+	    key: 'listenerName',
+	    value: function listenerName(signalName) {
+	      return 'onSignal' + (0, _util.capitalize)(signalName);
 	    }
 	  }]);
 
 	  return Vega;
 	}(_react2.default.Component);
-
-	Vega.isSameData = function isSameData(a, b) {
-	  return a === b && !(0, _util.isFunction)(a);
-	};
-
-	Vega.isSameSpec = function isSameSpec(a, b) {
-	  return a === b || JSON.stringify(a) === JSON.stringify(b);
-	};
-
-	Vega.listenerName = function listenerName(signalName) {
-	  return 'onSignal' + (0, _util.capitalize)(signalName);
-	};
 
 	Vega.propTypes = propTypes;
 
@@ -307,9 +347,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.capitalize = capitalize;
+	exports.isDefined = isDefined;
 	exports.isFunction = isFunction;
 	function capitalize(str) {
 	  return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+
+	function isDefined(x) {
+	  return x !== null && x !== undefined;
 	}
 
 	function isFunction(functionToCheck) {
@@ -333,6 +378,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react = __webpack_require__(2);
 
+	var _react2 = _interopRequireDefault(_react);
+
 	var _Vega = __webpack_require__(1);
 
 	var _Vega2 = _interopRequireDefault(_Vega);
@@ -355,7 +402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  function Chart(props) {
-	    return React.createElement(_Vega2.default, _extends({ spec: spec }, props, {
+	    return _react2.default.createElement(_Vega2.default, _extends({ spec: spec }, props, {
 	      __self: this
 	    }));
 	  }

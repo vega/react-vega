@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import Vega from './Vega.js';
 
 export default function createClassFromSpec(name, spec) {

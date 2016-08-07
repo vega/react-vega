@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import vg from 'vega';
-import { capitalize, isFunction } from './util.js';
+import { capitalize, isDefined, isFunction } from './util.js';
 
 const propTypes = {
   spec: PropTypes.object.isRequired,
@@ -16,8 +16,17 @@ class Vega extends React.Component {
   componentDidMount() {
     this.createVis(this.props.spec);
   }
+  
+  shouldComponentUpdate(nextProps) {
+    const a = this.props;
+    const b = nextProps;
+    return ['width', 'height', 'renderer', 'spec', 'data']
+      .some(name => a[name] !== b[name])
+      || !Vega.isSameViewport(a.viewport, b.viewport)
+      || !Vega.isSamePadding(a.padding, b.padding);
+  }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (!Vega.isSameSpec(this.props.spec, prevProps.spec)) {
       this.clearListeners(this.props.spec);
       this.createVis(this.props.spec);
@@ -27,18 +36,21 @@ class Vega extends React.Component {
       let changed = false;
 
       // update view properties
-      [
-        'width',
-        'height',
-        'padding',
-        'viewport',
-        'renderer',
-      ].forEach(field => {
+      ['width', 'height', 'renderer'].forEach(field => {
         if (props[field] !== prevProps[field]) {
           this.vis[field](props[field] || spec[field]);
           changed = true;
         }
       });
+
+      if (!Vega.isSameViewport) {
+        this.vis.viewport(props.viewport || spec.viewport);
+        changed = true;
+      }
+      if (!Vega.isSamePadding) {
+        this.vis.padding(props.padding || spec.padding);
+        changed = true;
+      }
 
       // update data
       if (spec.data && props.data) {
@@ -132,23 +144,41 @@ class Vega extends React.Component {
   render() {
     return (
       // Create the container Vega draws inside
-      <div ref={c => this.element = c} />
+      <div ref={c => { this.element = c; }} />
     );
   }
+
+  static isSameViewport(a, b) {
+    if (Array.isArray(a) && Array.isArray(b)) {
+      if (a.length !== b.length) return false;
+      return a.every( (value, index) => value === b[index]);
+    }
+    return a === b;
+  }
+
+  static isSamePadding(a, b) {
+    if (isDefined(a) && isDefined(b)) {
+      return a.top === b.top
+        && a.left === b.left
+        && a.right === b.right
+        && a.bottom === b.bottom;
+    }
+    return a === b;
+  }
+
+  static isSameData(a, b) {
+    return a === b && !isFunction(a);
+  }
+
+  static isSameSpec(a, b) {
+    return a === b
+      || JSON.stringify(a) === JSON.stringify(b);
+  }
+
+  static listenerName(signalName) {
+    return `onSignal${capitalize(signalName)}`;
+  }
 }
-
-Vega.isSameData = function isSameData(a, b) {
-  return a === b && !isFunction(a);
-};
-
-Vega.isSameSpec = function isSameSpec(a, b) {
-  return a === b
-    || JSON.stringify(a) === JSON.stringify(b);
-};
-
-Vega.listenerName = function listenerName(signalName) {
-  return `onSignal${capitalize(signalName)}`;
-};
 
 Vega.propTypes = propTypes;
 
