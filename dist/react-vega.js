@@ -386,8 +386,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function createClassFromSpec(nameOrSpec, specIn) {
-	  var spec = arguments.length === 1 ? nameOrSpec : specIn;
+	function createClassFromSpec() {
+	  var spec = arguments.length === 1 ? arguments.length <= 0 ? undefined : arguments[0] : arguments.length <= 1 ? undefined : arguments[1];
 
 	  var propTypes = {
 	    width: _react.PropTypes.number,

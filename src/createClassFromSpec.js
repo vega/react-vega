@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import Vega from './Vega.js';
 
-export default function createClassFromSpec(nameOrSpec, specIn) {
-  const spec = arguments.length === 1 ? nameOrSpec : specIn;
+export default function createClassFromSpec(...args) {
+  const spec = args.length === 1 ? args[0] : args[1];
 
   const propTypes = {
     width: PropTypes.number,
