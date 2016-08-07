@@ -124,7 +124,12 @@ const spec2 = {
 };
 
 const Vega = ReactVega.default;
-const BarChart = ReactVega.createClassFromSpec('BarChart', barSpec);
+const BarChart = ReactVega.createClassFromSpec(barSpec);
+
+const code1 = `<Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover} />`;
+
+const code2 = `const BarChart = ReactVega.createClassFromSpec(barSpec);
+<BarChart data={this.state.data} onSignalHover={this.handleHover} />`;
 
 class App extends React.Component {
   constructor(props) {
@@ -172,9 +177,13 @@ class App extends React.Component {
       <div>
         <button onClick={this.toggleSpec}>Toggle Spec</button>
         <button onClick={this.updateData}>Update data</button>
-        <h3>created with <code>&lt;Vega /&gt;</code></h3>
+        <h3><code>&lt;Vega&gt;</code> React Component</h3>
+        Will recompile when spec changes and update when data changes.
+        <pre>{code1}</pre>
         <Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover}/>
-        <h3>created with <code>ReactVega.createClassFromSpec()</code></h3>
+        <h3><code>ReactVega.createClassFromSpec()</code></h3>
+        Use the given spec to create a reusable component.
+        <pre>{code2}</pre>
         <BarChart data={this.state.data} onSignalHover={this.handleHover}/>
         {this.state.info}
       </div>
