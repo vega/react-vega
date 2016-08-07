@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
 import Vega from './Vega.js';
 
+// USAGE:
+// createClassFromSpec(name, spec);
+// createClassFromSpec(spec);
 export default function createClassFromSpec(...args) {
   const spec = args.length === 1 ? args[0] : args[1];
 
