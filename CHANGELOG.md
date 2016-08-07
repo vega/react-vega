@@ -1,5 +1,8 @@
 # react-vega
 
+## v2.1.1
+- Fix eslint complaints
+
 ## v2.1.0
 - Implement `shouldComponentUpdate` to check if anything was changed.
 - Add static functions `isSamePadding` and `isSameViewport` to `Vega` class.

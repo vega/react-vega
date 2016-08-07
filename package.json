@@ -67,6 +67,7 @@
     "start": "gulp --debug",
     "test": "karma start --single-run",
     "tdd": "karma start",
+    "preversion": "npm run eslint-fix",
     "version": "npm run build && git add -A dist",
     "postversion": "git push ; git push --tags; pkgfiles",
     "prepublish": "pkgfiles",
