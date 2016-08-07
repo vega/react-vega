@@ -13,10 +13,42 @@ const propTypes = {
 };
 
 class Vega extends React.Component {
+
+  static isSameViewport(a, b) {
+    if (Array.isArray(a) && Array.isArray(b)) {
+      if (a.length !== b.length) return false;
+      return a.every((value, index) => value === b[index]);
+    }
+    return a === b;
+  }
+
+  static isSamePadding(a, b) {
+    if (isDefined(a) && isDefined(b)) {
+      return a.top === b.top
+        && a.left === b.left
+        && a.right === b.right
+        && a.bottom === b.bottom;
+    }
+    return a === b;
+  }
+
+  static isSameData(a, b) {
+    return a === b && !isFunction(a);
+  }
+
+  static isSameSpec(a, b) {
+    return a === b
+      || JSON.stringify(a) === JSON.stringify(b);
+  }
+
+  static listenerName(signalName) {
+    return `onSignal${capitalize(signalName)}`;
+  }
+
   componentDidMount() {
     this.createVis(this.props.spec);
   }
-  
+
   shouldComponentUpdate(nextProps) {
     const a = this.props;
     const b = nextProps;
@@ -148,36 +180,6 @@ class Vega extends React.Component {
     );
   }
 
-  static isSameViewport(a, b) {
-    if (Array.isArray(a) && Array.isArray(b)) {
-      if (a.length !== b.length) return false;
-      return a.every( (value, index) => value === b[index]);
-    }
-    return a === b;
-  }
-
-  static isSamePadding(a, b) {
-    if (isDefined(a) && isDefined(b)) {
-      return a.top === b.top
-        && a.left === b.left
-        && a.right === b.right
-        && a.bottom === b.bottom;
-    }
-    return a === b;
-  }
-
-  static isSameData(a, b) {
-    return a === b && !isFunction(a);
-  }
-
-  static isSameSpec(a, b) {
-    return a === b
-      || JSON.stringify(a) === JSON.stringify(b);
-  }
-
-  static listenerName(signalName) {
-    return `onSignal${capitalize(signalName)}`;
-  }
 }
 
 Vega.propTypes = propTypes;
