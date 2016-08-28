@@ -105,6 +105,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var propTypes = {
+	  className: _react.PropTypes.string,
+	  style: _react.PropTypes.object,
 	  spec: _react.PropTypes.object.isRequired,
 	  width: _react.PropTypes.number,
 	  height: _react.PropTypes.number,
@@ -133,7 +135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function shouldComponentUpdate(nextProps) {
 	      var a = this.props;
 	      var b = nextProps;
-	      return ['width', 'height', 'renderer', 'spec', 'data'].some(function (name) {
+	      return ['width', 'height', 'renderer', 'spec', 'data', 'className', 'style'].some(function (name) {
 	        return a[name] !== b[name];
 	      }) || !Vega.isSameViewport(a.viewport, b.viewport) || !Vega.isSamePadding(a.padding, b.padding);
 	    }
@@ -276,9 +278,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return(
 	        // Create the container Vega draws inside
-	        _react2.default.createElement('div', { ref: function ref(c) {
+	        _react2.default.createElement('div', {
+	          ref: function ref(c) {
 	            _this4.element = c;
-	          }, __self: this
+	          },
+	          className: this.props.className,
+	          style: this.props.style,
+	          __self: this
 	        })
 	      );
 	    }
@@ -393,6 +399,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var spec = arguments.length === 1 ? arguments.length <= 0 ? undefined : arguments[0] : arguments.length <= 1 ? undefined : arguments[1];
 
 	  var propTypes = {
+	    className: _react.PropTypes.string,
+	    style: _react.PropTypes.object,
 	    width: _react.PropTypes.number,
 	    height: _react.PropTypes.number,
 	    padding: _react.PropTypes.object,
