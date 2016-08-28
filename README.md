@@ -137,6 +137,8 @@ React class `Vega` and any output class from `createClassFromSpec` have these pr
 - **padding**:Object
 - **viewport**:Array
 - **renderer**:String
+- **className**:String
+- **style**:Object
 
 These five properties above correspond to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
 

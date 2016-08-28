@@ -3,6 +3,8 @@ import vg from 'vega';
 import { capitalize, isDefined, isFunction } from './util.js';
 
 const propTypes = {
+  className: PropTypes.string,
+  style: PropTypes.object,
   spec: PropTypes.object.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
@@ -52,7 +54,7 @@ class Vega extends React.Component {
   shouldComponentUpdate(nextProps) {
     const a = this.props;
     const b = nextProps;
-    return ['width', 'height', 'renderer', 'spec', 'data']
+    return ['width', 'height', 'renderer', 'spec', 'data', 'className', 'style']
       .some(name => a[name] !== b[name])
       || !Vega.isSameViewport(a.viewport, b.viewport)
       || !Vega.isSamePadding(a.padding, b.padding);
@@ -176,7 +178,11 @@ class Vega extends React.Component {
   render() {
     return (
       // Create the container Vega draws inside
-      <div ref={c => { this.element = c; }} />
+      <div
+        ref={c => { this.element = c; }}
+        className={this.props.className}
+        style={this.props.style}
+      />
     );
   }
 

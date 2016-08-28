@@ -8,6 +8,8 @@ export default function createClassFromSpec(...args) {
   const spec = args.length === 1 ? args[0] : args[1];
 
   const propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
     width: PropTypes.number,
     height: PropTypes.number,
     padding: PropTypes.object,
