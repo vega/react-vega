@@ -1,5 +1,8 @@
 # react-vega
 
+## v2.3.0
+- Add props `updateOptions`
+
 ## v2.2.0
 - Support props `className` and `style`
 

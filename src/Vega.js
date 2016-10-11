@@ -12,6 +12,7 @@ const propTypes = {
   viewport: PropTypes.array,
   renderer: PropTypes.string,
   data: PropTypes.object,
+  updateOptions: PropTypes.object,
 };
 
 class Vega extends React.Component {
@@ -100,7 +101,7 @@ class Vega extends React.Component {
       }
 
       if (changed) {
-        this.vis.update();
+        this.vis.update(props.updateOptions);
       }
     }
   }

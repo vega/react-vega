@@ -184,7 +184,11 @@ class App extends React.Component {
         <h3><code>ReactVega.createClassFromSpec()</code></h3>
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
-        <BarChart data={this.state.data} onSignalHover={this.handleHover}/>
+        <BarChart
+          data={this.state.data}
+          onSignalHover={this.handleHover}
+          updateOptions={{duration:500}}
+        />
         {this.state.info}
       </div>
     );
