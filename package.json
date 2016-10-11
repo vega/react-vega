@@ -8,9 +8,6 @@
   "bugs": {
     "url": "https://github.com/kristw/react-vega/issues"
   },
-  "engines": {
-    "node": "~5.2"
-  },
   "dependencies": {
     "vega": "^2.6.1"
   },
