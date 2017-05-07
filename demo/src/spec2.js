@@ -1,21 +1,21 @@
-{
+export default {
   "width": 400,
-  "height": 200,
+  "height": 140,
   "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
   "data": [{ "name": "table" }],
-  "signals": [
+  'signals': [
     {
-      "name": "hover", "init": null,
-      "streams": [
-        {"type": "@bar:mouseover", "expr": "datum"},
-        {"type": "@bar:mouseout", "expr": "null"}
+      'name': 'hover', 'init': null,
+      'streams': [
+        {'type': '@bar:mouseover', 'expr': 'datum'},
+        {'type': '@bar:mouseout', 'expr': 'null'}
       ]
     }
   ],
   "scales": [
     {
       "name": "x",
-      "type": "ordinal",
+      "type": "linear",
       "range": "width",
       "domain": {"data": "table", "field": "x"}
     },
@@ -33,15 +33,13 @@
   ],
   "marks": [
     {
-      "type": "rect",
+      "type": "symbol",
       "name": "bar",
       "from": {"data": "table"},
       "properties": {
         "enter": {
           "x": {"scale": "x", "field": "x"},
-          "width": {"scale": "x", "band": true, "offset": -1},
           "y": {"scale": "y", "field": "y"},
-          "y2": {"scale": "y", "value": 0}
         },
         "update": {
           "fill": {"value": "steelblue"}
@@ -52,4 +50,4 @@
       }
     }
   ]
-}
+};

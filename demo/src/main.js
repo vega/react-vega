@@ -4,133 +4,11 @@ import Vega, { createClassFromSpec } from '../../src/index.js';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import barData from './data.json';
+import spec1 from './spec1';
+import spec2 from './spec2';
 
-const barData = {
-  table: [
-    {"x": 1,  "y": 28}, {"x": 2,  "y": 55},
-    {"x": 3,  "y": 43}, {"x": 4,  "y": 91},
-    {"x": 5,  "y": 81}, {"x": 6,  "y": 53},
-    {"x": 7,  "y": 19}, {"x": 8,  "y": 87},
-    {"x": 9,  "y": 52}, {"x": 10, "y": 48},
-    {"x": 11, "y": 24}, {"x": 12, "y": 49},
-    {"x": 13, "y": 87}, {"x": 14, "y": 66},
-    {"x": 15, "y": 17}, {"x": 16, "y": 27},
-    {"x": 17, "y": 68}, {"x": 18, "y": 16},
-    {"x": 19, "y": 49}, {"x": 20, "y": 15}
-  ]
-};
-
-const barSpec = {
-  "width": 400,
-  "height": 140,
-  "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
-  "data": [{ "name": "table" }],
-  'signals': [
-    {
-      'name': 'hover', 'init': null,
-      'streams': [
-        {'type': '@bar:mouseover', 'expr': 'datum'},
-        {'type': '@bar:mouseout', 'expr': 'null'}
-      ]
-    }
-  ],
-  "scales": [
-    {
-      "name": "x",
-      "type": "ordinal",
-      "range": "width",
-      "domain": {"data": "table", "field": "x"}
-    },
-    {
-      "name": "y",
-      "type": "linear",
-      "range": "height",
-      "domain": {"data": "table", "field": "y"},
-      "nice": true
-    }
-  ],
-  "axes": [
-    {"type": "x", "scale": "x"},
-    {"type": "y", "scale": "y"}
-  ],
-  "marks": [
-    {
-      "type": "rect",
-      "name": "bar",
-      "from": {"data": "table"},
-      "properties": {
-        "enter": {
-          "x": {"scale": "x", "field": "x"},
-          "width": {"scale": "x", "band": true, "offset": -1},
-          "y": {"scale": "y", "field": "y"},
-          "y2": {"scale": "y", "value": 0}
-        },
-        "update": {
-          "fill": {"value": "steelblue"}
-        },
-        "hover": {
-          "fill": {"value": "red"}
-        }
-      }
-    }
-  ]
-};
-
-const spec2 = {
-  "width": 400,
-  "height": 140,
-  "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
-  "data": [{ "name": "table" }],
-  'signals': [
-    {
-      'name': 'hover', 'init': null,
-      'streams': [
-        {'type': '@bar:mouseover', 'expr': 'datum'},
-        {'type': '@bar:mouseout', 'expr': 'null'}
-      ]
-    }
-  ],
-  "scales": [
-    {
-      "name": "x",
-      "type": "linear",
-      "range": "width",
-      "domain": {"data": "table", "field": "x"}
-    },
-    {
-      "name": "y",
-      "type": "linear",
-      "range": "height",
-      "domain": {"data": "table", "field": "y"},
-      "nice": true
-    }
-  ],
-  "axes": [
-    {"type": "x", "scale": "x"},
-    {"type": "y", "scale": "y"}
-  ],
-  "marks": [
-    {
-      "type": "symbol",
-      "name": "bar",
-      "from": {"data": "table"},
-      "properties": {
-        "enter": {
-          "x": {"scale": "x", "field": "x"},
-          "y": {"scale": "y", "field": "y"},
-        },
-        "update": {
-          "fill": {"value": "steelblue"}
-        },
-        "hover": {
-          "fill": {"value": "red"}
-        }
-      }
-    }
-  ]
-};
-
-const BarChart = createClassFromSpec(barSpec);
+const BarChart = createClassFromSpec(spec1);
 
 const code1 = `<Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover} />`;
 
@@ -142,7 +20,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       info: '',
-      spec: barSpec,
+      spec: spec1,
       data: barData
     };
 
@@ -158,10 +36,10 @@ class App extends React.Component {
   }
 
   toggleSpec() {
-    if(this.state.spec === barSpec) {
+    if(this.state.spec === spec1) {
       this.setState({ spec: spec2 });
     } else {
-      this.setState({ spec: barSpec });
+      this.setState({ spec: spec1 });
     }
   }
 
@@ -186,7 +64,11 @@ class App extends React.Component {
         <h3><code>&lt;Vega&gt;</code> React Component</h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover}/>
+        <Vega
+          data={this.state.data}
+          spec={this.state.spec}
+          onSignalHover={this.handleHover}
+        />
         <h3><code>ReactVega.createClassFromSpec()</code></h3>
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
