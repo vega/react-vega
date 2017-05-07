@@ -1,6 +1,1 @@
-module.exports = {
-    "extends": "airbnb",
-    "plugins": [
-        "react"
-    ]
-};
+module.exports = require('lazynerd-devtools/config/eslint/.eslintrc');
