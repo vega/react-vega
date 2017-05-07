@@ -12,21 +12,12 @@ const propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   padding: PropTypes.object,
-  viewport: PropTypes.array,
   renderer: PropTypes.string,
   data: PropTypes.object,
   updateOptions: PropTypes.object,
 };
 
 class Vega extends React.Component {
-
-  static isSameViewport(a, b) {
-    if (Array.isArray(a) && Array.isArray(b)) {
-      if (a.length !== b.length) return false;
-      return a.every((value, index) => value === b[index]);
-    }
-    return a === b;
-  }
 
   static isSamePadding(a, b) {
     if (isDefined(a) && isDefined(b)) {
@@ -60,7 +51,6 @@ class Vega extends React.Component {
     const b = nextProps;
     return ['width', 'height', 'renderer', 'spec', 'data', 'className', 'style']
       .some(name => a[name] !== b[name])
-      || !Vega.isSameViewport(a.viewport, b.viewport)
       || !Vega.isSamePadding(a.padding, b.padding);
   }
 
@@ -81,10 +71,6 @@ class Vega extends React.Component {
         }
       });
 
-      if (!Vega.isSameViewport) {
-        this.vis.viewport(props.viewport || spec.viewport);
-        changed = true;
-      }
       if (!Vega.isSamePadding) {
         this.vis.padding(props.padding || spec.padding);
         changed = true;
@@ -140,8 +126,8 @@ class Vega extends React.Component {
         vis
           .width(props.width || spec.width)
           .height(props.height || spec.height)
-          .padding(props.padding || spec.padding)
-          // .viewport(props.viewport || spec.viewport);
+          .padding(props.padding || spec.padding);
+
         if (props.renderer) {
           vis.renderer(props.renderer);
         }
