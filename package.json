@@ -9,7 +9,7 @@
     "url": "https://github.com/kristw/react-vega/issues"
   },
   "dependencies": {
-    "vega": "^2.6.1"
+    "vega": "3.0.0-beta.30"
   },
   "peerDependencies": {
     "react": "^15.3.0"
@@ -24,6 +24,11 @@
     "browser-sync": "~2.10.1",
     "core-js": "^2.2.2",
     "del": "~2.2.0",
+    "eslint": "^2.9.0",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^1.2.0",
+    "eslint-plugin-react": "^5.2.2",
     "gulp": "~3.9.0",
     "gulp-gh-pages": "~0.5.4",
     "gulp-load-plugins": "~1.1.0",
@@ -44,12 +49,7 @@
     "run-sequence": "~1.1.5",
     "webpack": "~1.12.9",
     "webpack-stream": "~3.1.0",
-    "yargs": "~3.31.0",
-    "eslint": "^2.9.0",
-    "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-import": "^1.12.0",
-    "eslint-plugin-jsx-a11y": "^1.2.0",
-    "eslint-plugin-react": "^5.2.2"
+    "yargs": "~3.31.0"
   },
   "license": "Apache-2.0",
   "main": "dist/react-vega.min.js",

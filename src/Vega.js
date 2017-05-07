@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
-import vg from 'vega';
 import { capitalize, isDefined, isFunction } from './util.js';
+
+import vg from 'vega';
+
+console.log(vg);
 
 const propTypes = {
   className: PropTypes.string,
