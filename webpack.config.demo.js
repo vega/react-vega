@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const merge = require('webpack-merge');
 
@@ -21,5 +22,11 @@ if(process.env.NODE_ENV === 'production') {
   const devConfig = require('lazynerd-devtools/config/webpack/webpack.config.dev.js');
   config = merge(devConfig, commonConfig);
 }
+
+config.plugins = [
+  new HtmlWebpackPlugin({
+    template: 'demo/src/index.ejs',
+  }),
+];
 
 module.exports = config;

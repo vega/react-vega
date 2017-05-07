@@ -1,9 +1,9 @@
+import * as vega from 'vega';
+
 import React, { PropTypes } from 'react';
 import { capitalize, isDefined, isFunction } from './util.js';
 
-import vg from 'vega';
-
-console.log(vg);
+console.log(vega);
 
 const propTypes = {
   className: PropTypes.string,
@@ -117,8 +117,10 @@ class Vega extends React.Component {
     if (spec) {
       const props = this.props;
       // Parse the vega spec and create the vis
-      vg.parse.spec(spec, chart => {
-        const vis = chart({ el: this.element });
+      try {
+        const runtime = vega.parse(spec);
+        const vis = new vega.View(runtime)
+          .initialize(this.element);
 
         // Attach listeners onto the signals
         if (spec.signals) {
@@ -139,18 +141,22 @@ class Vega extends React.Component {
           .width(props.width || spec.width)
           .height(props.height || spec.height)
           .padding(props.padding || spec.padding)
-          .viewport(props.viewport || spec.viewport);
+          // .viewport(props.viewport || spec.viewport);
         if (props.renderer) {
           vis.renderer(props.renderer);
         }
         if (spec.data && props.data) {
-          vis.update();
+          vis.run();
           spec.data.forEach(d => {
             this.updateData(d.name, props.data[d.name]);
           });
         }
-        vis.update();
-      });
+        vis.run();
+      } catch (ex) {
+        console.log('ex', ex);
+        this.clearListeners(this.props.spec);
+        this.vis = null;
+      }
     } else {
       this.clearListeners(this.props.spec);
       this.vis = null;

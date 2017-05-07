@@ -1,0 +1,38 @@
+const path = require('path');
+const merge = require('webpack-merge');
+
+const commonConfig = {
+  entry: [
+    './src/index.js',
+  ],
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'react-vega.min.js',
+    sourceMapFilename: '[file].map',
+    library: 'ReactVega',
+    libraryTarget: 'umd',
+    umdNamedDefine: false
+  },
+  externals: {
+    'vega': {
+      root: 'vega',
+      commonjs2: 'vega',
+      commonjs: 'vega',
+      amd: 'vega'
+    },
+    'react': {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react'
+    }
+  }
+};
+
+let config;
+const prodConfig = require('lazynerd-devtools/config/webpack/webpack.config.prod.js');
+config = merge(prodConfig, commonConfig);
+config.plugins = [];
+
+module.exports = config;
+
