@@ -9,16 +9,16 @@
     "url": "https://github.com/kristw/react-vega/issues"
   },
   "dependencies": {
-    "lazynerd-devtools": "^0.0.1",
-    "react-dom": "^15.5.4",
     "vega": "3.0.0-beta.30"
   },
   "peerDependencies": {
-    "react": "^15.3.0"
+    "react": "^15.5.4"
   },
   "devDependencies": {
+    "lazynerd-devtools": "^0.0.1",
     "pkgfiles": "^2.3.0",
-    "react": "^15.3.0"
+    "react-dom": "^15.5.4",
+    "react": "^15.5.4"
   },
   "license": "Apache-2.0",
   "main": "dist/react-vega.min.js",

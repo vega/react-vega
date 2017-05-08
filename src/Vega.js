@@ -3,16 +3,30 @@ import * as vega from 'vega';
 import React, { PropTypes } from 'react';
 import { capitalize, isDefined, isFunction } from './util.js';
 
+console.log('vega', vega);
+
 const propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   spec: PropTypes.object.isRequired,
+  logLevel: PropTypes.number,
   width: PropTypes.number,
   height: PropTypes.number,
+  background: PropTypes.string,
   padding: PropTypes.object,
   renderer: PropTypes.string,
+  enableHover: PropTypes.bool,
   data: PropTypes.object,
-  updateOptions: PropTypes.object,
+  onNewView: PropTypes.func,
+  onCompileError: PropTypes.func,
+};
+
+const defaultProps = {
+  className: '',
+  renderer: 'svg',
+  enableHover: true,
+  onNewView() {},
+  onCompileError() {},
 };
 
 class Vega extends React.Component {
@@ -41,42 +55,39 @@ class Vega extends React.Component {
   }
 
   componentDidMount() {
-    this.createVis(this.props.spec);
+    this.createView(this.props.spec);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   const a = this.props;
-  //   const b = nextProps;
-  //   return ['width', 'height', 'renderer', 'spec', 'data', 'className', 'style']
-  //     .some(name => a[name] !== b[name])
-  //     || !Vega.isSamePadding(a.padding, b.padding);
-  // }
-
   componentDidUpdate(prevProps) {
-    if (!Vega.isSameSpec(this.props.spec, prevProps.spec)) {
-      this.clearListeners(this.props.spec);
-      this.createVis(this.props.spec);
-    } else if (this.vis) {
+    if (this.props.spec !== prevProps.spec) {
+      this.clearView();
+      this.createView(this.props.spec);
+    } else if (this.view) {
       const props = this.props;
       const spec = this.props.spec;
       let changed = false;
 
       // update view properties
-      ['width', 'height', 'renderer'].forEach(field => {
-        if (props[field] !== prevProps[field]) {
-          this.vis[field](props[field] || spec[field]);
+      [
+        'width',
+        'height',
+        'renderer',
+        'logLevel',
+        'background'
+      ]
+        .filter(field => props[field] !== prevProps[field])
+        .forEach(field => {
+          this.view[field](props[field]);
           changed = true;
-        }
-      });
+        });
 
       if (!Vega.isSamePadding) {
-        this.vis.padding(props.padding || spec.padding);
+        this.view.padding(props.padding || spec.padding);
         changed = true;
       }
 
       // update data
       if (spec.data && props.data) {
-        this.vis.run();
         spec.data.forEach(d => {
           const oldData = prevProps.data[d.name];
           const newData = props.data[d.name];
@@ -87,32 +98,36 @@ class Vega extends React.Component {
         });
       }
 
+      if (props.enableHover !== prevProps.enableHover) {
+        changed = true;
+      }
+
       if (changed) {
-        this.vis.run(props.updateOptions);
+        if (props.enableHover) {
+          this.view.hover();
+        }
+        this.view.run();
       }
     }
   }
 
   componentWillUnmount() {
-    this.clearListeners(this.props.spec);
-    if (this.vis) {
-      this.vis.finalize();
-    }
+    this.clearView();
   }
 
-  createVis(spec) {
+  createView(spec) {
     if (spec) {
       const props = this.props;
-      // Parse the vega spec and create the vis
+      // Parse the vega spec and create the view
       try {
         const runtime = vega.parse(spec);
-        const vis = new vega.View(runtime)
+        const view = new vega.View(runtime)
           .initialize(this.element);
 
         // Attach listeners onto the signals
         if (spec.signals) {
           spec.signals.forEach(signal => {
-            vis.addSignalListener(signal.name, (...args) => {
+            view.addSignalListener(signal.name, (...args) => {
               const listener = this.props[Vega.listenerName(signal.name)];
               if (listener) {
                 listener.apply(this, args);
@@ -121,32 +136,39 @@ class Vega extends React.Component {
           });
         }
 
-        // store the vis object to be used on later updates
-        this.vis = vis;
+        // store the vega.View object to be used on later updates
+        this.view = view;
 
-        vis
-          .width(props.width || spec.width)
-          .height(props.height || spec.height)
-          .padding(props.padding || spec.padding);
+        [
+          'width',
+          'height',
+          'padding',
+          'renderer',
+          'logLevel',
+          'background'
+        ]
+          .filter(field => isDefined(props[field]))
+          .forEach(field => { view[field](props[field]); });
 
-        if (props.renderer) {
-          vis.renderer(props.renderer);
-        }
         if (spec.data && props.data) {
-          vis.run();
-          spec.data.forEach(d => {
-            this.updateData(d.name, props.data[d.name]);
-          });
+          spec.data
+            .filter(d => props.data[d.name])
+            .forEach(d => {
+              this.updateData(d.name, props.data[d.name]);
+            });
         }
-        vis.run();
+        if (props.enableHover) {
+          view.hover();
+        }
+        view.run();
+
+        props.onNewView(view);
       } catch (ex) {
-        console.log('ex', ex);
-        this.clearListeners(this.props.spec);
-        this.vis = null;
+        this.clearView();
+        props.onCompileError(ex);
       }
     } else {
-      this.clearListeners(this.props.spec);
-      this.vis = null;
+      this.clearView();
     }
     return this;
   }
@@ -154,9 +176,9 @@ class Vega extends React.Component {
   updateData(name, value) {
     if (value) {
       if (isFunction(value)) {
-        value(this.vis.data(name));
+        value(this.view.data(name));
       } else {
-        this.vis.change(
+        this.view.change(
           name,
           vega.changeset()
             .remove(() => true)
@@ -166,11 +188,10 @@ class Vega extends React.Component {
     }
   }
 
-  // Remove listeners from the signals
-  clearListeners(spec) {
-    const vis = this.vis;
-    if (vis && spec && spec.signals) {
-      spec.signals.forEach(signal => vis.removeSignalListener(signal.name));
+  clearView(spec) {
+    if (this.view) {
+      this.view.finalize();
+      this.view = null;
     }
     return this;
   }
@@ -189,5 +210,6 @@ class Vega extends React.Component {
 }
 
 Vega.propTypes = propTypes;
+Vega.defaultProps = defaultProps;
 
 export default Vega;

@@ -36,3 +36,4 @@ tmp
 
 # Project specific
 examples/dist
+.vscode

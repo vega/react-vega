@@ -4,7 +4,7 @@ export default {
   "$schema": "https://vega.github.io/schema/vega/v3.0.json",
   "width": 400,
   "height": 200,
-  "padding": 5,
+  "padding": { left: 5, right: 5, top: 5, bottom: 5 },
 
   "data": [
     {
