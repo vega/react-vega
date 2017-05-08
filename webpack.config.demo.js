@@ -13,7 +13,7 @@ const commonConfig = {
 };
 
 let config;
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   // Production config
   const prodConfig = require('lazynerd-devtools/config/webpack/webpack.config.prod.js');
   config = merge(prodConfig, commonConfig);
@@ -23,10 +23,12 @@ if(process.env.NODE_ENV === 'production') {
   config = merge(devConfig, commonConfig);
 }
 
-config.plugins = [
+config.plugins.splice(0, 1);
+
+config.plugins.push(
   new HtmlWebpackPlugin({
     template: 'demo/src/index.ejs',
-  }),
-];
+  })
+);
 
 module.exports = config;
