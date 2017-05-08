@@ -28,7 +28,6 @@ class App extends React.Component {
   }
 
   handleHover(...args) {
-    console.log('args', args);
     this.setState({
       info: JSON.stringify(args)
     });

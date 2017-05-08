@@ -9,6 +9,7 @@
     "url": "https://github.com/kristw/react-vega/issues"
   },
   "dependencies": {
+    "prop-types": "^15.5.8",
     "vega": "3.0.0-beta.30"
   },
   "peerDependencies": {
