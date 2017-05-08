@@ -135,12 +135,11 @@ React class `Vega` and any output class from `createClassFromSpec` have these pr
 - **width**:Number
 - **height**:Number
 - **padding**:Object
-- **viewport**:Array
 - **renderer**:String
 - **className**:String
 - **style**:Object
 
-These five properties above correspond to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
+These properties above correspond to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
 
 - **data**:Object
 
@@ -178,7 +177,7 @@ Any class created from `createClassFromSpec` will have this method.
 
 ## License
 
-© 2016 [Krist Wongsuphasawat](http://kristw.yellowpigz.com)  ([@kristw](https://twitter.com/kristw)) Apache-2.0 License
+© 2016-2017 [Krist Wongsuphasawat](http://kristw.yellowpigz.com)  ([@kristw](https://twitter.com/kristw)) Apache-2.0 License
 
 [npm-image]: https://badge.fury.io/js/react-vega.svg
 [npm-url]: https://npmjs.org/package/react-vega

@@ -14,6 +14,12 @@ const commonConfig = {
     umdNamedDefine: false
   },
   externals: {
+    'prop-types': {
+      root: 'PropTypes',
+      commonjs2: 'prop-types',
+      commonjs: 'prop-types',
+      amd: 'prop-types'
+    },
     'vega': {
       root: 'vega',
       commonjs2: 'vega',
