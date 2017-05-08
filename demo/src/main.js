@@ -1,12 +1,10 @@
 import './style.css';
-
-import Vega, { createClassFromSpec } from '../../src/index.js';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import data1 from './vega/data1.json';
 import spec1 from './vega/spec1';
 import spec2 from './vega/spec2';
+import Vega, { createClassFromSpec } from '../../src/index.js';
 
 const BarChart = createClassFromSpec(spec1);
 
@@ -21,7 +19,7 @@ class App extends React.Component {
     this.state = {
       info: '',
       spec: spec1,
-      data: data1
+      data: data1,
     };
 
     this.handleHover = this.handleHover.bind(this);
@@ -30,13 +28,14 @@ class App extends React.Component {
   }
 
   handleHover(...args) {
+    console.log('args', args);
     this.setState({
       info: JSON.stringify(args)
     });
   }
 
   toggleSpec() {
-    if(this.state.spec === spec1) {
+    if (this.state.spec === spec1) {
       this.setState({ spec: spec2 });
     } else {
       this.setState({ spec: spec1 });
@@ -45,15 +44,13 @@ class App extends React.Component {
 
   updateData() {
     const table = [];
-    for(let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 20; i++) {
       table.push({
         category: String.fromCharCode(65 + i),
-        amount: Math.round(Math.random() * 100)
+        amount: Math.round(Math.random() * 100),
       });
     }
-    this.setState({
-      data: { table }
-    });
+    this.setState({ data: { table } });
   }
 
   render() {
@@ -67,15 +64,14 @@ class App extends React.Component {
         <Vega
           data={this.state.data}
           spec={this.state.spec}
-          onSignalHover={this.handleHover}
+          onSignalTooltip={this.handleHover}
         />
         <h3><code>ReactVega.createClassFromSpec()</code></h3>
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
         <BarChart
           data={this.state.data}
-          onSignalHover={this.handleHover}
-          updateOptions={{duration:500}}
+          onSignalTooltip={this.handleHover}
         />
         {this.state.info}
       </div>

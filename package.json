@@ -15,10 +15,11 @@
     "react": "^15.5.4"
   },
   "devDependencies": {
+    "gh-pages": "^0.12.0",
     "lazynerd-devtools": "^0.0.1",
     "pkgfiles": "^2.3.0",
-    "react-dom": "^15.5.4",
-    "react": "^15.5.4"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   },
   "license": "Apache-2.0",
   "main": "dist/react-vega.min.js",
@@ -32,8 +33,10 @@
     "postversion": "git push ; git push --tags; pkgfiles",
     "prepublish": "pkgfiles",
     "dev": "./node_modules/lazynerd-devtools/dev --config webpack.config.demo.js",
+    "build-demo": "NODE_ENV=production ./node_modules/lazynerd-devtools/build --config webpack.config.demo.js",
     "build": "NODE_ENV=production ./node_modules/lazynerd-devtools/build --config webpack.config.lib.js",
     "lint": "./node_modules/lazynerd-devtools/lint \"src/**/*.@(js|jsx)\"",
-    "lint-fix": "./node_modules/lazynerd-devtools/lint --fix \"src/**/*.@(js|jsx)\""
+    "lint-fix": "./node_modules/lazynerd-devtools/lint --fix \"src/**/*.@(js|jsx)\"",
+    "gh-pages": "npm run build-demo && gh-pages -d demo/dist"
   }
 }

@@ -3,8 +3,6 @@ import * as vega from 'vega';
 import React, { PropTypes } from 'react';
 import { capitalize, isDefined, isFunction } from './util.js';
 
-console.log('vega', vega);
-
 const propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
@@ -51,7 +49,7 @@ class Vega extends React.Component {
   }
 
   static listenerName(signalName) {
-    return `addSignalListener${capitalize(signalName)}`;
+    return `onSignal${capitalize(signalName)}`;
   }
 
   componentDidMount() {
@@ -188,7 +186,7 @@ class Vega extends React.Component {
     }
   }
 
-  clearView(spec) {
+  clearView() {
     if (this.view) {
       this.view.finalize();
       this.view = null;
@@ -200,7 +198,7 @@ class Vega extends React.Component {
     return (
       // Create the container Vega draws inside
       <div
-        ref={c => { this.element = c; }}
+        ref={(c) => { this.element = c; }}
         className={this.props.className}
         style={this.props.style}
       />
