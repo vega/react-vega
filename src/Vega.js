@@ -72,10 +72,10 @@ class Vega extends React.Component {
         'height',
         'renderer',
         'logLevel',
-        'background'
+        'background',
       ]
         .filter(field => props[field] !== prevProps[field])
-        .forEach(field => {
+        .forEach((field) => {
           this.view[field](props[field]);
           changed = true;
         });
@@ -87,7 +87,7 @@ class Vega extends React.Component {
 
       // update data
       if (spec.data && props.data) {
-        spec.data.forEach(d => {
+        spec.data.forEach((d) => {
           const oldData = prevProps.data[d.name];
           const newData = props.data[d.name];
           if (!Vega.isSameData(oldData, newData)) {
@@ -125,7 +125,7 @@ class Vega extends React.Component {
 
         // Attach listeners onto the signals
         if (spec.signals) {
-          spec.signals.forEach(signal => {
+          spec.signals.forEach((signal) => {
             view.addSignalListener(signal.name, (...args) => {
               const listener = this.props[Vega.listenerName(signal.name)];
               if (listener) {
@@ -144,15 +144,15 @@ class Vega extends React.Component {
           'padding',
           'renderer',
           'logLevel',
-          'background'
+          'background',
         ]
           .filter(field => isDefined(props[field]))
-          .forEach(field => { view[field](props[field]); });
+          .forEach((field) => { view[field](props[field]); });
 
         if (spec.data && props.data) {
           spec.data
             .filter(d => props.data[d.name])
-            .forEach(d => {
+            .forEach((d) => {
               this.updateData(d.name, props.data[d.name]);
             });
         }
@@ -181,7 +181,7 @@ class Vega extends React.Component {
           name,
           vega.changeset()
             .remove(() => true)
-            .insert(value)
+            .insert(value),
         );
       }
     }

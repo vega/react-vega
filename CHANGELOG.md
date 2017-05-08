@@ -2,6 +2,7 @@
 
 ## v3.0.0
 - Support Vega 3 API changes ([Issue #6](https://github.com/kristw/react-vega/issues/6))
+- Remove props `viewport`
 
 ## v2.3.0
 - Add props `updateOptions`
