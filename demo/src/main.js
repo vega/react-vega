@@ -4,9 +4,9 @@ import Vega, { createClassFromSpec } from '../../src/index.js';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import barData from './data.json';
-import spec1 from './spec1';
-import spec2 from './spec2';
+import data1 from './vega/data1.json';
+import spec1 from './vega/spec1';
+import spec2 from './vega/spec2';
 
 const BarChart = createClassFromSpec(spec1);
 
@@ -21,7 +21,7 @@ class App extends React.Component {
     this.state = {
       info: '',
       spec: spec1,
-      data: barData
+      data: data1
     };
 
     this.handleHover = this.handleHover.bind(this);
@@ -47,8 +47,8 @@ class App extends React.Component {
     const table = [];
     for(let i = 1; i <= 20; i++) {
       table.push({
-        x: i,
-        y: Math.random() * 100
+        category: String.fromCharCode(65 + i),
+        amount: Math.round(Math.random() * 100)
       });
     }
     this.setState({
