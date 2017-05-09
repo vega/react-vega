@@ -17,7 +17,7 @@ const propTypes = {
   enableHover: PropTypes.bool,
   data: PropTypes.object,
   onNewView: PropTypes.func,
-  onCompileError: PropTypes.func,
+  onParseError: PropTypes.func,
 };
 
 const defaultProps = {
@@ -25,7 +25,7 @@ const defaultProps = {
   renderer: 'svg',
   enableHover: true,
   onNewView() {},
-  onCompileError() {},
+  onParseError() {},
 };
 
 class Vega extends React.Component {
@@ -164,7 +164,7 @@ class Vega extends React.Component {
         props.onNewView(view);
       } catch (ex) {
         this.clearView();
-        props.onCompileError(ex);
+        props.onParseError(ex);
       }
     } else {
       this.clearView();

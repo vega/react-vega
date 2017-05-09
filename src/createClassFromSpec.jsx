@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Vega from './Vega.js';
+import Vega from './Vega.jsx';
 
 // USAGE:
 // createClassFromSpec(name, spec);

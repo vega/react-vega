@@ -11,8 +11,6 @@ Convert Vega spec into React class conveniently, inspired by this [tutorial](htt
 ## Examples
 
 - http://kristw.github.io/react-vega/
-- https://jsfiddle.net/kristw/htg4uron/
-- https://jsfiddle.net/kristw/qr8a1v8d/
 
 ## Install
 
@@ -31,7 +29,7 @@ There are two approaches to use this libary.
 
 #### BarChart.js
 
-See the rest of the spec in [barChart.json](examples/barChart.json).
+See the rest of the spec in [barChart.json](demo/src/spec1.js).
 
 ```javascript
 import React, { PropTypes } from 'react';
@@ -40,18 +38,18 @@ import {createClassFromSpec} from 'react-vega';
 export default createClassFromSpec('BarChart', {
   "width": 400,
   "height": 200,
-  "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
   "data": [{ "name": "table" }],
   "signals": [
     {
-      "name": "hover", "init": null,
-      "streams": [
-        {"type": "@bar:mouseover", "expr": "datum"},
-        {"type": "@bar:mouseout", "expr": "null"}
+      "name": "tooltip",
+      "value": {},
+      "on": [
+        {"events": "rect:mouseover", "update": "datum"},
+        {"events": "rect:mouseout",  "update": "{}"}
       ]
     }
   ],
-  ... // See the rest in barChart.json
+  ... // See the rest in demo/src/spec1.js
 });
 ```
 
@@ -63,12 +61,7 @@ import ReactDOM from 'react-dom';
 import BarChart from './BarChart.js';
 
 const barData = {
-  table: [
-    {"x": 1,  "y": 28}, {"x": 2,  "y": 55},
-    {"x": 3,  "y": 43}, {"x": 4,  "y": 91},
-    {"x": 5,  "y": 81}, {"x": 6,  "y": 53},
-    ...
-  ]
+  table: [...]
 };
 
 function handleHover(...args){
@@ -95,27 +88,22 @@ import Vega from 'react-vega';
 const spec = {
   "width": 400,
   "height": 200,
-  "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
   "data": [{ "name": "table" }],
   "signals": [
     {
-      "name": "hover", "init": null,
-      "streams": [
-        {"type": "@bar:mouseover", "expr": "datum"},
-        {"type": "@bar:mouseout", "expr": "null"}
+      "name": "tooltip",
+      "value": {},
+      "on": [
+        {"events": "rect:mouseover", "update": "datum"},
+        {"events": "rect:mouseout",  "update": "{}"}
       ]
     }
   ],
-  ... // See the rest in barChart.json
+  ... // See the rest in demo/src/spec1.js
 }
 
 const barData = {
-  table: [
-    {"x": 1,  "y": 28}, {"x": 2,  "y": 55},
-    {"x": 3,  "y": 43}, {"x": 4,  "y": 91},
-    {"x": 5,  "y": 81}, {"x": 6,  "y": 53},
-    ...
-  ]
+  table: [...]
 };
 
 function handleHover(...args){
@@ -132,14 +120,22 @@ ReactDOM.render(
 
 React class `Vega` and any output class from `createClassFromSpec` have these properties:
 
+#### Basic
+
+- **className**:String
+- **style**:Object
+
+#### Props correspond to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
+
 - **width**:Number
 - **height**:Number
 - **padding**:Object
 - **renderer**:String
-- **className**:String
-- **style**:Object
+- **logLevel**:Number
+- **background**:String
+- **enableHover**:Boolean -- equivalent to calling `view.hover()`
 
-These properties above correspond to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
+#### Data
 
 - **data**:Object
 
@@ -168,6 +164,11 @@ For example, to listen to signal *hover*, attach a listener to `onSignal+capital
 ```javascript
  <Vega spec={spec} data={barData} onSignalHover={handleHover}/>
 ```
+
+#### Event handlers
+
+- **onNewView**:Function Dispatched when new vega.View is constructed and pass the newly created view as argument.
+- **onParseError**:Function Dispatched when vega cannot parse the spec.
 
 ### Static function
 
