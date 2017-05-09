@@ -29,7 +29,6 @@
     "dist/*.*"
   ],
   "scripts": {
-    "preversion": "npm run eslint-fix",
     "version": "npm run build && git add -A dist",
     "postversion": "git push ; git push --tags; pkgfiles",
     "prepublish": "pkgfiles",
