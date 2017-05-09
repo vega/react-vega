@@ -8,6 +8,9 @@
 
 Convert Vega spec into React class conveniently, inspired by this [tutorial](https://medium.com/@pbesh/react-and-vega-an-alternative-visualization-example-cd76e07dc1cd#.omslw1xy8) by @pbeshai
 
+`react-vega: 3.x.x` was update with breaking changes to support Vega 3.0, which is still in beta.
+If you are looking to use React with Vega 2.x, please use `react-vega: 2.3.1`.
+
 ## Examples
 
 - http://kristw.github.io/react-vega/
