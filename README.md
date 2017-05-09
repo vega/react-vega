@@ -29,7 +29,7 @@ There are two approaches to use this libary.
 
 #### BarChart.js
 
-See the rest of the spec in [barChart.json](demo/src/spec1.js).
+See the rest of the spec in [spec1.js](demo/src/spec1.js).
 
 ```javascript
 import React, { PropTypes } from 'react';
