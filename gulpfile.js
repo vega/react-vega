@@ -54,6 +54,12 @@ gulp.task('webpack', function() {
         umdNamedDefine: false
       },
       externals: {
+        'prop-types': {
+          root: 'PropTypes',
+          commonjs2: 'prop-types',
+          commonjs: 'prop-types',
+          amd: 'prop-types'
+        },
         'vega': {
           root: 'vg',
           commonjs2: 'vega',
