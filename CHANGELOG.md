@@ -1,5 +1,11 @@
 # react-vega
 
+## v2.3.2
+- Use package `prop-types` instead of using `PropTypes` from `react`. ([Issue #8](https://github.com/kristw/react-vega/issues/8))
+
+## v2.3.1
+Relax node engine requirement
+
 ## v2.3.0
 - Add props `updateOptions`
 
