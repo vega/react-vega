@@ -1,5 +1,8 @@
 # react-vega
 
+## v3.1.0
+- Move `vega` to peerDependencies
+
 ## v3.0.0
 - Support Vega 3 API changes ([Issue #6](https://github.com/kristw/react-vega/issues/6))
 - Remove props `viewport` from `Vega`
