@@ -18,9 +18,11 @@
   "devDependencies": {
     "gh-pages": "^0.12.0",
     "lazynerd-devtools": "^0.0.2",
+    "np": "^2.16.0",
     "pkgfiles": "^2.3.0",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "vega": "^3.0.0-beta.30"
   },
   "license": "Apache-2.0",
   "main": "dist/react-vega.min.js",
@@ -29,8 +31,8 @@
     "dist/*.*"
   ],
   "scripts": {
+    "np": "np",
     "version": "npm run build && git add -A dist",
-    "postversion": "git push ; git push --tags; pkgfiles",
     "prepublish": "pkgfiles",
     "dev": "./node_modules/lazynerd-devtools/dev --config webpack.config.demo.js",
     "build-demo": "rm -rf demo/dist && NODE_ENV=production ./node_modules/lazynerd-devtools/build --config webpack.config.demo.js",

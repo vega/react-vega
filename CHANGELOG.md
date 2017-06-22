@@ -1,5 +1,8 @@
 # react-vega
 
+## v3.1.1
+- Also add `vega` to devDependencies
+
 ## v3.1.0
 - Move `vega` to peerDependencies
 
