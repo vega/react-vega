@@ -7389,7 +7389,7 @@ vega-dataflow@>=2.0.0-beta, vega-dataflow@>=2.0.0-beta.27, vega-dataflow@>=2.0.0
     vega-statistics "1"
     vega-util "^1.1"
 
-"vega-datasets@github:vega/vega-datasets#gh-pages":
+vega-datasets@vega/vega-datasets#gh-pages:
   version "1.8.0"
   resolved "https://codeload.github.com/vega/vega-datasets/tar.gz/26bddc53d6112cff239436cdc85f56249c39e9e0"
 
