@@ -1,5 +1,8 @@
 # react-vega
 
+## v3.1.2
+- Expand version to support React 16
+
 ## v3.1.1
 - Also add `vega` to devDependencies
 
