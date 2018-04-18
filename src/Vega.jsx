@@ -1,4 +1,4 @@
-import * as vega from 'vega';
+import * as vega from 'vega-lib';
 
 import React from 'react';
 import PropTypes from 'prop-types';

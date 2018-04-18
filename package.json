@@ -13,7 +13,7 @@
   },
   "peerDependencies": {
     "react": "^15.5.4",
-    "vega": "^3.0.0-beta.30"
+    "vega-lib": "^3.2.1"
   },
   "devDependencies": {
     "gh-pages": "^0.12.0",
@@ -22,7 +22,7 @@
     "pkgfiles": "^2.3.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "vega": "^3.0.0-beta.30"
+    "vega-lib": "^3.2.1"
   },
   "license": "Apache-2.0",
   "main": "dist/react-vega.min.js",
