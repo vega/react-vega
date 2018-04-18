@@ -1,8 +1,9 @@
 import * as vega from 'vega';
 
-import React from 'react';
-import PropTypes from 'prop-types';
 import { capitalize, isDefined, isFunction } from './util.js';
+
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const propTypes = {
   className: PropTypes.string,
@@ -80,7 +81,7 @@ class Vega extends React.Component {
           changed = true;
         });
 
-      if (!Vega.isSamePadding) {
+      if (!Vega.isSamePadding(props.padding, prevProps.padding)) {
         this.view.padding(props.padding || spec.padding);
         changed = true;
       }
