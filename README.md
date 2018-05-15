@@ -102,7 +102,7 @@ const spec = {
       ]
     }
   ],
-  ... // See the rest in demo/src/spec1.js
+  ... // See the rest in demo/src/vega/spec1.js
 }
 
 const barData = {
