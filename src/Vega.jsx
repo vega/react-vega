@@ -11,6 +11,7 @@ const propTypes = {
   logLevel: PropTypes.number,
   width: PropTypes.number,
   height: PropTypes.number,
+  tooltip: PropTypes.func,
   background: PropTypes.string,
   padding: PropTypes.object,
   renderer: PropTypes.string,
@@ -139,12 +140,13 @@ class Vega extends React.Component {
         this.view = view;
 
         [
+          'logLevel',
+          'renderer',
+          'tooltip',
+          'background',
           'width',
           'height',
-          'padding',
-          'renderer',
-          'logLevel',
-          'background',
+          'padding'
         ]
           .filter(field => isDefined(props[field]))
           .forEach((field) => { view[field](props[field]); });
