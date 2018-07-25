@@ -136,6 +136,7 @@ React class `Vega` and any output class from `createClassFromSpec` have these pr
 - **renderer**:String
 - **logLevel**:Number
 - **background**:String
+- **tooltip**:Function
 - **enableHover**:Boolean -- equivalent to calling `view.hover()`
 
 #### Data
