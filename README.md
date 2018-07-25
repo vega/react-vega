@@ -19,10 +19,7 @@ If you are looking to use React with Vega 2.x, please use `react-vega: 2.3.1`.
 ## Install
 
 ```bash
-# via npm
-npm install react-vega --save
-# or via bower
-bower install react-vega --save
+npm install react vega-lib react-vega --save
 ```
 
 ## Example code
