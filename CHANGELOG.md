@@ -1,5 +1,10 @@
 # react-vega
 
+## v4.0.0
+- Switch from `vega` to `vega-lib`
+- Add tooltip handler support. Thanks @mdelrossi1.
+- Fix bug #14
+
 ## v3.1.2
 - Expand version to support React 16
 
