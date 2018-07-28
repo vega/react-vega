@@ -20,7 +20,7 @@ const commonConfig = {
       commonjs: 'prop-types',
       amd: 'prop-types'
     },
-    'vega': {
+    'vega-lib': {
       root: 'vega',
       commonjs2: 'vega',
       commonjs: 'vega',

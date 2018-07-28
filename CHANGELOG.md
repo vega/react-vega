@@ -1,5 +1,8 @@
 # react-vega
 
+## v4.0.1
+- Fix wrong webpack config that cause `react-vega` to accidentally bundle `vega-lib` inside it. (Issue #20)
+
 ## v4.0.0
 - Switch from `vega` to `vega-lib`
 - Add tooltip handler support. Thanks @mdelrossi1.
