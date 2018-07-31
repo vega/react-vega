@@ -22,9 +22,9 @@ const commonConfig = {
     },
     'vega-lib': {
       root: 'vega',
-      commonjs2: 'vega',
-      commonjs: 'vega',
-      amd: 'vega'
+      commonjs2: 'vega-lib',
+      commonjs: 'vega-lib',
+      amd: 'vega-lib'
     },
     'react': {
       root: 'React',
@@ -41,4 +41,3 @@ config = merge(prodConfig, commonConfig);
 config.plugins = [];
 
 module.exports = config;
-
