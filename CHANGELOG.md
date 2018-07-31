@@ -1,5 +1,8 @@
 # react-vega
 
+## v4.0.2
+- Fix webpack config for amd/commonjs
+
 ## v4.0.1
 - Fix wrong webpack config that cause `react-vega` to accidentally bundle `vega-lib` inside it. (Issue #20)
 
