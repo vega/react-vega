@@ -90,7 +90,7 @@ class Vega extends React.Component {
       // update data
       if (spec.data && props.data) {
         spec.data.forEach((d) => {
-          const oldData = prevProps.data[d.name];
+          const oldData = prevProps.spec.data[d.name];
           const newData = props.data[d.name];
           if (!Vega.isSameData(oldData, newData)) {
             this.updateData(d.name, newData);
