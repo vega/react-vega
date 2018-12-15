@@ -180,7 +180,7 @@ Any class created from `createClassFromSpec` will have this method.
 
 ## Frequently Asked Questions
 
-### How to use Vega Tlooltip?
+### How to use Vega Tooltip?
 
 You can pass the [`vega-tooltip`](https://github.com/vega/vega-tooltip) handler instance to the `tooltip` property.
 
