@@ -14,7 +14,7 @@ If you are looking to use React with Vega 2.x, please use `react-vega: 2.3.1`.
 
 ## Examples
 
-- http://kristw.github.io/react-vega/
+- http://vega.github.io/react-vega/
 
 ## Install
 
