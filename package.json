@@ -4,25 +4,25 @@
   "description": "Convert Vega spec into React class conveniently",
   "author": "Krist Wongsuphasawat <krist.wongz@gmail.com> (http://kristw.yellowpigz.com)",
   "keywords": [],
-  "repository": "git@github.com:kristw/react-vega.git",
+  "repository": "git@github.com:vega/react-vega.git",
   "bugs": {
-    "url": "https://github.com/kristw/react-vega/issues"
+    "url": "https://github.com/vega/react-vega/issues"
   },
   "dependencies": {
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": ">=15.5.4 || ^16.0.0",
-    "vega-lib": "^4.2.0"
+    "react": "^16.8.6",
+    "vega": "^5.3.4"
   },
   "devDependencies": {
-    "gh-pages": "^0.12.0",
-    "lazynerd-devtools": "^0.0.2",
-    "np": "^2.20.1",
-    "pkgfiles": "^2.3.0",
+    "gh-pages": "^2.0.1",
+    "lazynerd-devtools": "^1.0.1",
+    "np": "^4.0.2",
+    "pkgfiles": "^2.3.2",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "vega-lib": "^4.2.0"
+    "react-dom": "^16.8.6",
+    "vega": "^5.3.4"
   },
   "license": "Apache-2.0",
   "main": "dist/react-vega.min.js",

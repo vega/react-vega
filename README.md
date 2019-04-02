@@ -8,6 +8,7 @@
 
 Convert Vega spec into React class conveniently, inspired by this [tutorial](https://medium.com/@pbesh/react-and-vega-an-alternative-visualization-example-cd76e07dc1cd#.omslw1xy8) by @pbeshai
 
+`react-vega: 5.x.x` uses `vega` again.
 `react-vega: 4.x.x` has same interface with `3.x.x` except it uses the lightweight `vega-lib` instead of `vega`.
 `react-vega: 3.x.x` was update with breaking changes to support Vega 3.0.
 If you are looking to use React with Vega 2.x, please use `react-vega: 2.3.1`.
@@ -189,10 +190,6 @@ import { Handler } from 'vega-tooltip';
 
  <Vega spec={spec} data={barData} tooltip={new Handler().call} />
 ```
-
-## License
-
-© 2016-2017 [Krist Wongsuphasawat](http://kristw.yellowpigz.com)  ([@kristw](https://twitter.com/kristw)) Apache-2.0 License
 
 [npm-image]: https://badge.fury.io/js/react-vega.svg
 [npm-url]: https://npmjs.org/package/react-vega

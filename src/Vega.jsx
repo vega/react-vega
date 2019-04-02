@@ -1,4 +1,4 @@
-import * as vega from 'vega-lib';
+import * as vega from 'vega';
 
 import { capitalize, isDefined, isFunction } from './util.js';
 
