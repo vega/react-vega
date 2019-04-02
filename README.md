@@ -25,7 +25,7 @@ npm install react vega-lib react-vega --save
 
 ## Example code
 
-There are two approaches to use this libary.
+There are two approaches to use this library.
 
 ### Approach#1 Create class from spec, then get a React class to use
 
