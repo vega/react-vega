@@ -1,28 +1,14 @@
 {
-  "name": "react-vega",
-  "version": "6.0.0",
-  "description": "Convert Vega spec into React class conveniently",
+  "name": "react-vega-monorepo",
+  "version": "0.0.0",
+  "description": "Home of react-vega and react-vega-lite",
   "author": "Krist Wongsuphasawat <krist.wongz@gmail.com> (http://kristw.yellowpigz.com)",
   "keywords": [],
   "repository": "git@github.com:vega/react-vega.git",
   "bugs": {
     "url": "https://github.com/vega/react-vega/issues"
   },
-  "main": "lib/index.js",
-  "module": "esm/index.js",
-  "files": [
-    "src",
-    "esm",
-    "lib",
-    "types"
-  ],
-  "dependencies": {
-    "prop-types": "^15.7.2"
-  },
-  "peerDependencies": {
-    "react": "^16.0.0",
-    "vega": "^5.3.4"
-  },
+  "private": true,
   "devDependencies": {
     "@superset-ui/build-config": "^0.0.8",
     "@superset-ui/commit-config": "^0.0.9",
@@ -32,6 +18,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "vega": "^5.3.4",
+    "vega-lite": "^3.1.0",
     "@storybook/react": "^5.0.6",
     "@storybook/addon-actions": "^5.0.6",
     "@storybook/addon-links": "^5.0.6",
@@ -58,6 +45,9 @@
     ]
   },
   "license": "Apache-2.0",
+  "workspaces": [
+    "./packages/*"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -74,14 +64,14 @@
     "postpublish": "git push; git push --tags",
     "gh-pages": "npm run build-storybook && gh-pages -d storybook-static",
     "build": "yarn run build:cjs && yarn run build:esm",
-    "build:cjs": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir lib/ --delete-dir-on-start --minify",
-    "build:esm": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir esm/ --delete-dir-on-start --esm --minify",
+    "build:cjs": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir lib/ --delete-dir-on-start --minify --workspaces=\"(react-vega|react-vega-lite)\"",
+    "build:esm": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir esm/ --delete-dir-on-start --esm --minify --workspaces=\"(react-vega|react-vega-lite)\"",
     "commit": "superset-commit",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
-    "type": "NODE_ENV=production beemo typescript --noEmit",
-    "type:dts": "NODE_ENV=production beemo typescript --emitDeclarationOnly",
-    "lint": "beemo create-config prettier && beemo eslint \"./{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
+    "type": "NODE_ENV=production beemo typescript --workspaces=\"(react-vega|react-vega-lite)\" --noEmit",
+    "type:dts": "NODE_ENV=production beemo typescript  --workspaces=\"(react-vega|react-vega-lite)\" --emitDeclarationOnly",
+    "lint": "beemo create-config prettier && beemo eslint \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   }
