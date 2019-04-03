@@ -10,7 +10,9 @@
   },
   "private": true,
   "dependencies": {
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "react-vega": "^6.0.0",
+    "react-vega-lite": "^3.0.0"
   },
   "devDependencies": {
     "@superset-ui/build-config": "^0.0.8",

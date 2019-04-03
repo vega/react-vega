@@ -4,7 +4,6 @@ import Vega, { createClassFromSpec } from '../packages/react-vega';
 import data1 from './vega/data1.json';
 import spec1 from './vega/spec1';
 import spec2 from './vega/spec2';
-import './style.css';
 
 const BarChart = createClassFromSpec(spec1);
 
@@ -23,8 +22,8 @@ export default class Demo extends React.Component {
     };
 
     this.handleHover = this.handleHover.bind(this);
-    this.toggleSpec = this.handleToggleSpec.bind(this);
-    this.updateData = this.handleUpdateData.bind(this);
+    this.handleToggleSpec = this.handleToggleSpec.bind(this);
+    this.handleUpdateData = this.handleUpdateData.bind(this);
   }
 
   handleHover(...args) {
