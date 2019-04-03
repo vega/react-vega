@@ -35,7 +35,6 @@ tmp
 *.sublime-workspace
 
 # Project specific
-examples/dist
 .vscode
 
 # Do not store lock for library
@@ -51,3 +50,6 @@ lib
 .eslintrc.js
 .prettierignore
 prettier.config.js
+
+# Storybook output
+storybook-static

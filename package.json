@@ -70,9 +70,8 @@
     ]
   },
   "scripts": {
-    "version": "npm run build && git add -A dist",
     "postpublish": "git push; git push --tags",
-    "gh-pages": "npm run build-demo && gh-pages -d demo/dist",
+    "gh-pages": "npm run build-storybook && gh-pages -d storybook-static",
     "build": "yarn run build:cjs && yarn run build:esm",
     "build:cjs": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir lib/ --delete-dir-on-start --minify",
     "build:esm": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir esm/ --delete-dir-on-start --esm --minify",
