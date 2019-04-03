@@ -18,9 +18,9 @@
   "devDependencies": {
     "@superset-ui/build-config": "^0.0.8",
     "@superset-ui/commit-config": "^0.0.9",
-    "husky": "^1.1.2",
+    "husky": "^1.3.1",
     "gh-pages": "^2.0.1",
-    "np": "^4.0.2",
+    "lint-staged": "^8.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "vega": "^5.3.4"
@@ -49,9 +49,20 @@
     "src/index.js",
     "dist/*.*"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx,json,md}": [
+      "yarn run prettier --write",
+      "git add"
+    ]
+  },
   "scripts": {
     "version": "npm run build && git add -A dist",
-    "prepublish": "pkgfiles",
     "postpublish": "git push; git push --tags",
     "gh-pages": "npm run build-demo && gh-pages -d demo/dist",
     "build": "yarn run build:cjs && yarn run build:esm && yarn run type:dts",
