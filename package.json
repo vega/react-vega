@@ -12,17 +12,36 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
+    "react": "^16.0.0",
     "vega": "^5.3.4"
   },
   "devDependencies": {
+    "@superset-ui/build-config": "^0.0.8",
+    "@superset-ui/commit-config": "^0.0.9",
+    "husky": "^1.1.2",
     "gh-pages": "^2.0.1",
-    "lazynerd-devtools": "^1.0.1",
     "np": "^4.0.2",
-    "pkgfiles": "^2.3.2",
-    "react": "^16.3.2",
+    "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "vega": "^5.3.4"
+  },
+  "engines": {
+    "node": ">=8.10.0"
+  },
+  "beemo": {
+    "module": "@superset-ui/build-config",
+    "drivers": [
+      "babel",
+      "eslint",
+      {
+        "driver": "jest",
+        "env": {
+          "NODE_ENV": "test"
+        }
+      },
+      "prettier",
+      "typescript"
+    ]
   },
   "license": "Apache-2.0",
   "main": "dist/react-vega.min.js",
@@ -31,15 +50,18 @@
     "dist/*.*"
   ],
   "scripts": {
-    "np": "np",
     "version": "npm run build && git add -A dist",
     "prepublish": "pkgfiles",
     "postpublish": "git push; git push --tags",
-    "dev": "./node_modules/lazynerd-devtools/dev --config webpack.config.demo.js",
-    "build-demo": "rm -rf demo/dist && NODE_ENV=production ./node_modules/lazynerd-devtools/build --config webpack.config.demo.js",
-    "build": "rm -rf dist && NODE_ENV=production ./node_modules/lazynerd-devtools/build --config webpack.config.lib.js",
-    "lint": "./node_modules/lazynerd-devtools/lint \"src/**/*.@(js|jsx)\"",
-    "lint-fix": "./node_modules/lazynerd-devtools/lint --fix \"src/**/*.@(js|jsx)\"",
-    "gh-pages": "npm run build-demo && gh-pages -d demo/dist"
+    "gh-pages": "npm run build-demo && gh-pages -d demo/dist",
+    "build": "yarn run build:cjs && yarn run build:esm && yarn run type:dts",
+    "build:cjs": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir lib/ --delete-dir-on-start --minify",
+    "build:esm": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir esm/ --delete-dir-on-start --esm --minify",
+    "commit": "superset-commit",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
+    "type": "NODE_ENV=production beemo typescript --noEmit",
+    "type:dts": "NODE_ENV=production beemo typescript --emitDeclarationOnly",
+    "lint": "beemo create-config prettier && beemo eslint \"./{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./{src,test,storybook}/**/*.{js,jsx,ts,tsx}\""
   }
 }
