@@ -1,26 +1,46 @@
-# react-vega
+<a name="5.0.0"></a>
+# [5.0.0](https://github.com/vega/react-vega/compare/v4.0.2...v5.0.0) (2019-04-02)
 
-## v4.0.2
+- Switch from `vega-lib` back to `vega.
+
+<a name="4.0.2"></a>
+## [4.0.2](https://github.com/vega/react-vega/compare/v4.0.1...v4.0.2) (2018-07-31)
+
 - Fix webpack config for amd/commonjs
 
-## v4.0.1
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/vega/react-vega/compare/v4.0.0...v4.0.1) (2018-07-28)
+
 - Fix wrong webpack config that cause `react-vega` to accidentally bundle `vega-lib` inside it. (Issue #20)
 
-## v4.0.0
+<a name="4.0.0"></a>
+# [4.0.0](https://github.com/vega/react-vega/compare/v3.1.2...v4.0.0) (2018-07-25)
+
 - Switch from `vega` to `vega-lib`
 - Add tooltip handler support. Thanks @mdelrossi1.
 - Fix bug #14
 
-## v3.1.2
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/vega/react-vega/compare/v3.1.1...v3.1.2) (2018-01-11)
+
 - Expand version to support React 16
 
-## v3.1.1
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/vega/react-vega/compare/v3.1.0...v3.1.1) (2017-06-22)
+
 - Also add `vega` to devDependencies
 
-## v3.1.0
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/vega/react-vega/compare/v3.0.1...v3.1.0) (2017-06-22)
+
 - Move `vega` to peerDependencies
 
-## v3.0.0
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/vega/react-vega/compare/v3.0.0...v3.0.1) (2017-05-09)
+
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/vega/react-vega/compare/v2.3.1...v3.0.0) (2017-05-09)
+
 - Support Vega 3 API changes ([Issue #6](https://github.com/kristw/react-vega/issues/6))
 - Remove props `viewport` from `Vega`
 
