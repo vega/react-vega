@@ -1,3 +1,15 @@
+## [6.0.1](https://github.com/vega/react-vega/compare/v6.0.0...v6.0.1) (2019-04-03)
+
+
+### Features
+
+* add `react-vega-lite` ([87b3512](https://github.com/vega/react-vega/commit/87b3512))
+
+### Documentation
+
+* add `react-vega-lite` storybook ([4e8793f](https://github.com/vega/react-vega/commit/4e8793f))
+
+
 <a name="6.0.0"></a>
 # [6.0.0](https://github.com/vega/react-vega/compare/v5.0.0...v6.0.0) (2019-04-03)
 

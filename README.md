@@ -43,7 +43,7 @@ react-vega/
 2. have `yarn install` package dependencies and manage the symlinking between packages for you
 
 ```sh
-git clone ...superset-ui && cd superset-ui
+git clone ...react-vega && cd react-vega
 yarn install
 ```
 
