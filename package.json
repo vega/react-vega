@@ -11,6 +11,7 @@
   "main": "lib/index.js",
   "module": "esm/index.js",
   "files": [
+    "src",
     "esm",
     "lib",
     "types"
