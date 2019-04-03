@@ -75,6 +75,7 @@
     "type:dts": "NODE_ENV=production beemo typescript  --workspaces=\"(react-vega|react-vega-lite)\" --emitDeclarationOnly",
     "lint": "beemo create-config prettier && beemo eslint \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
+    "test": "echo \"no test yet\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "postrelease": "yarn run gh-pages",
