@@ -30,7 +30,13 @@
     "lint-staged": "^8.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "vega": "^5.3.4"
+    "vega": "^5.3.4",
+    "@storybook/react": "^5.0.6",
+    "@storybook/addon-actions": "^5.0.6",
+    "@storybook/addon-links": "^5.0.6",
+    "@storybook/addons": "^5.0.6",
+    "@babel/core": "^7.4.3",
+    "babel-loader": "^8.0.5"
   },
   "engines": {
     "node": ">=8.10.0"
@@ -75,6 +81,8 @@
     "type": "NODE_ENV=production beemo typescript --noEmit",
     "type:dts": "NODE_ENV=production beemo typescript --emitDeclarationOnly",
     "lint": "beemo create-config prettier && beemo eslint \"./{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./{src,test,storybook}/**/*.{js,jsx,ts,tsx}\""
+    "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   }
 }
