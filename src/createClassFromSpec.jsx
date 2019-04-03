@@ -11,7 +11,7 @@ export default function createClassFromSpec(...args) {
   const propTypes = Object.assign({}, Vega.propTypes);
   delete propTypes.spec;
   if (spec.signals) {
-    spec.signals.forEach((signal) => {
+    spec.signals.forEach(signal => {
       propTypes[Vega.listenerName(signal.name)] = PropTypes.func;
     });
   }

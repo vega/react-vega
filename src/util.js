@@ -8,5 +8,6 @@ export function isDefined(x) {
 
 export function isFunction(functionToCheck) {
   const getType = {};
+
   return !!functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }

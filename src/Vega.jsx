@@ -1,9 +1,8 @@
 import * as vega from 'vega';
 
-import { capitalize, isDefined, isFunction } from './util.js';
-
 import PropTypes from 'prop-types';
 import React from 'react';
+import { capitalize, isDefined, isFunction } from './util.js';
 
 const propTypes = {
   className: PropTypes.string,
@@ -31,14 +30,11 @@ const defaultProps = {
 };
 
 class Vega extends React.Component {
-
   static isSamePadding(a, b) {
     if (isDefined(a) && isDefined(b)) {
-      return a.top === b.top
-        && a.left === b.left
-        && a.right === b.right
-        && a.bottom === b.bottom;
+      return a.top === b.top && a.left === b.left && a.right === b.right && a.bottom === b.bottom;
     }
+
     return a === b;
   }
 
@@ -47,8 +43,7 @@ class Vega extends React.Component {
   }
 
   static isSameSpec(a, b) {
-    return a === b
-      || JSON.stringify(a) === JSON.stringify(b);
+    return a === b || JSON.stringify(a) === JSON.stringify(b);
   }
 
   static listenerName(signalName) {
@@ -64,20 +59,14 @@ class Vega extends React.Component {
       this.clearView();
       this.createView(this.props.spec);
     } else if (this.view) {
-      const props = this.props;
-      const spec = this.props.spec;
+      const { props } = this;
+      const { spec } = this.props;
       let changed = false;
 
       // update view properties
-      [
-        'width',
-        'height',
-        'renderer',
-        'logLevel',
-        'background',
-      ]
+      ['width', 'height', 'renderer', 'logLevel', 'background']
         .filter(field => props[field] !== prevProps[field])
-        .forEach((field) => {
+        .forEach(field => {
           this.view[field](props[field]);
           changed = true;
         });
@@ -89,7 +78,7 @@ class Vega extends React.Component {
 
       // update data
       if (spec.data && props.data) {
-        spec.data.forEach((d) => {
+        spec.data.forEach(d => {
           const oldData = prevProps.data[d.name];
           const newData = props.data[d.name];
           if (!Vega.isSameData(oldData, newData)) {
@@ -118,16 +107,15 @@ class Vega extends React.Component {
 
   createView(spec) {
     if (spec) {
-      const props = this.props;
+      const { props } = this;
       // Parse the vega spec and create the view
       try {
         const runtime = vega.parse(spec);
-        const view = new vega.View(runtime)
-          .initialize(this.element);
+        const view = new vega.View(runtime).initialize(this.element);
 
         // Attach listeners onto the signals
         if (spec.signals) {
-          spec.signals.forEach((signal) => {
+          spec.signals.forEach(signal => {
             view.addSignalListener(signal.name, (...args) => {
               const listener = this.props[Vega.listenerName(signal.name)];
               if (listener) {
@@ -140,22 +128,16 @@ class Vega extends React.Component {
         // store the vega.View object to be used on later updates
         this.view = view;
 
-        [
-          'logLevel',
-          'renderer',
-          'tooltip',
-          'background',
-          'width',
-          'height',
-          'padding'
-        ]
+        ['logLevel', 'renderer', 'tooltip', 'background', 'width', 'height', 'padding']
           .filter(field => isDefined(props[field]))
-          .forEach((field) => { view[field](props[field]); });
+          .forEach(field => {
+            view[field](props[field]);
+          });
 
         if (spec.data && props.data) {
           spec.data
             .filter(d => props.data[d.name])
-            .forEach((d) => {
+            .forEach(d => {
               this.updateData(d.name, props.data[d.name]);
             });
         }
@@ -172,6 +154,7 @@ class Vega extends React.Component {
     } else {
       this.clearView();
     }
+
     return this;
   }
 
@@ -182,7 +165,8 @@ class Vega extends React.Component {
       } else {
         this.view.change(
           name,
-          vega.changeset()
+          vega
+            .changeset()
             .remove(() => true)
             .insert(value),
         );
@@ -195,6 +179,7 @@ class Vega extends React.Component {
       this.view.finalize();
       this.view = null;
     }
+
     return this;
   }
 
@@ -202,13 +187,14 @@ class Vega extends React.Component {
     return (
       // Create the container Vega draws inside
       <div
-        ref={(c) => { this.element = c; }}
+        ref={c => {
+          this.element = c;
+        }}
         className={this.props.className}
         style={this.props.style}
       />
     );
   }
-
 }
 
 Vega.propTypes = propTypes;
