@@ -1,9 +1,9 @@
 /* eslint-disable no-magic-numbers */
 import React from 'react';
+import Vega, { createClassFromSpec } from '../packages/react-vega';
 import data1 from './vega/data1.json';
 import spec1 from './vega/spec1';
 import spec2 from './vega/spec2';
-import Vega, { createClassFromSpec } from '../src/index';
 import './style.css';
 
 const BarChart = createClassFromSpec(spec1);
