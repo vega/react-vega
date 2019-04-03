@@ -37,5 +37,10 @@ tmp
 # Project specific
 examples/dist
 .vscode
+
 yarn.lock
 package.json
+babel.config.js
+tsconfig.json
+esm
+lib
