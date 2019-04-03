@@ -1,9 +1,9 @@
-# @superset-ui
+# react-vega & react-vega-lite
 
-[![Codecov branch](https://img.shields.io/codecov/c/github/apache-superset/superset-ui/master.svg?style=flat-square)](http://codecov.io/github/apache-superset/superset-ui/coverage.svg?branch=master)
-[![Build Status](https://img.shields.io/travis/com/apache-superset/superset-ui/master.svg?style=flat-square
-)](https://travis-ci.com/apache-superset/superset-ui)
-[![David](https://img.shields.io/david/dev/apache-superset/superset-ui.svg?style=flat-square)](https://david-dm.org/apache-superset/superset-ui?type=dev)
+[![Codecov branch](https://img.shields.io/codecov/c/github/vega/react-vega/master.svg?style=flat-square)](http://codecov.io/github/vega/react-vega/coverage.svg?branch=master)
+[![Build Status](https://img.shields.io/travis/com/vega/react-vega/master.svg?style=flat-square
+)](https://travis-ci.com/vega/react-vega)
+[![David](https://img.shields.io/david/dev/vega/react-vega.svg?style=flat-square)](https://david-dm.org/vega/react-vega?type=dev)
 
 > `react` + `vega`|`vega-lite`
 
