@@ -1,32 +1,42 @@
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/forbid-prop-types */
 import * as vega from 'vega';
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import { capitalize, isDefined, isFunction } from './util.js';
+import { capitalize, isDefined, isFunction } from './util';
 
 const propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  spec: PropTypes.object.isRequired,
-  logLevel: PropTypes.number,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  tooltip: PropTypes.func,
   background: PropTypes.string,
-  padding: PropTypes.object,
-  renderer: PropTypes.string,
-  enableHover: PropTypes.bool,
+  className: PropTypes.string,
   data: PropTypes.object,
+  enableHover: PropTypes.bool,
+  height: PropTypes.number,
+  logLevel: PropTypes.number,
   onNewView: PropTypes.func,
   onParseError: PropTypes.func,
+  padding: PropTypes.object,
+  renderer: PropTypes.string,
+  spec: PropTypes.object.isRequired,
+  style: PropTypes.object,
+  tooltip: PropTypes.func,
+  width: PropTypes.number,
 };
 
 const defaultProps = {
+  background: undefined,
   className: '',
-  renderer: 'svg',
+  data: {},
   enableHover: true,
+  height: undefined,
+  logLevel: undefined,
   onNewView() {},
   onParseError() {},
+  padding: undefined,
+  renderer: 'svg',
+  style: undefined,
+  tooltip: () => {},
+  width: undefined,
 };
 
 class Vega extends React.Component {
@@ -51,16 +61,17 @@ class Vega extends React.Component {
   }
 
   componentDidMount() {
-    this.createView(this.props.spec);
+    const { spec } = this.props;
+    this.createView(spec);
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.spec !== prevProps.spec) {
+    const { spec } = this.props;
+    if (spec !== prevProps.spec) {
       this.clearView();
-      this.createView(this.props.spec);
+      this.createView(spec);
     } else if (this.view) {
       const { props } = this;
-      const { spec } = this.props;
       let changed = false;
 
       // update view properties
@@ -117,7 +128,7 @@ class Vega extends React.Component {
         if (spec.signals) {
           spec.signals.forEach(signal => {
             view.addSignalListener(signal.name, (...args) => {
-              const listener = this.props[Vega.listenerName(signal.name)];
+              const listener = props[Vega.listenerName(signal.name)];
               if (listener) {
                 listener.apply(this, args);
               }
@@ -184,14 +195,16 @@ class Vega extends React.Component {
   }
 
   render() {
+    const { className, style } = this.props;
+
     return (
       // Create the container Vega draws inside
       <div
         ref={c => {
           this.element = c;
         }}
-        className={this.props.className}
-        style={this.props.style}
+        className={className}
+        style={style}
       />
     );
   }

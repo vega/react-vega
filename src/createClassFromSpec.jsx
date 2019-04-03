@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Vega from './Vega.jsx';
+import Vega from './Vega';
 
 // USAGE:
 // createClassFromSpec(name, spec);
@@ -8,7 +8,8 @@ import Vega from './Vega.jsx';
 export default function createClassFromSpec(...args) {
   const spec = args.length === 1 ? args[0] : args[1];
 
-  const propTypes = Object.assign({}, Vega.propTypes);
+  // eslint-disable-next-line react/forbid-foreign-prop-types
+  const propTypes = { ...Vega.propTypes };
   delete propTypes.spec;
   if (spec.signals) {
     spec.signals.forEach(signal => {

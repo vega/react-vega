@@ -8,6 +8,13 @@
   "bugs": {
     "url": "https://github.com/vega/react-vega/issues"
   },
+  "main": "lib/index.js",
+  "module": "esm/index.js",
+  "files": [
+    "esm",
+    "lib",
+    "types"
+  ],
   "dependencies": {
     "prop-types": "^15.7.2"
   },
@@ -44,14 +51,6 @@
     ]
   },
   "license": "Apache-2.0",
-  "main": "dist/react-vega.min.js",
-  "files": [
-    "src/*.*",
-    "esm/*.*",
-    "lib/*.*",
-    "types/*.*",
-    "dist/*.*"
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
