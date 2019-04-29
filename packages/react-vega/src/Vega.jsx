@@ -5,6 +5,7 @@ import * as vega from 'vega';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { capitalize, isDefined, isFunction } from './util';
+import * as vegaEmbed from 'vega-embed';
 
 const propTypes = {
   background: PropTypes.string,
@@ -116,15 +117,31 @@ class Vega extends React.Component {
     this.clearView();
   }
 
-  createView(spec) {
+  async createView2(spec) {
+    console.log(spec);
+    const specJson = JSON.stringify(spec);
+    const view = {};
+    try {
+      result = await vegaEmbed(this.element, specJson);
+      view = result.view;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async createView(spec) {
     if (spec) {
       const { props } = this;
       // Parse the vega spec and create the view
       try {
-        const runtime = vega.parse(spec);
-        const view = new vega.View(runtime).initialize(this.element);
-
-        // Attach listeners onto the signals
+        const specJson = JSON.stringify(spec);
+        const view = {};
+        try {
+          result = await vegaEmbed.default(this.element, spec);
+          view = result.view;
+        } catch (error) {
+          console.log(error);
+        }
         if (spec.signals) {
           spec.signals.forEach(signal => {
             view.addSignalListener(signal.name, (...args) => {
