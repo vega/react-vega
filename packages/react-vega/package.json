@@ -22,7 +22,8 @@
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "vega": "^5.3.4"
+    "vega": "^5.3.4",
+    "vega-embed": "^4.0.0"
   },
   "license": "Apache-2.0",
   "publishConfig": {
