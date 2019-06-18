@@ -101,14 +101,12 @@ class Vega extends React.Component {
         });
       }
 
-      if (props.enableHover !== prevProps.enableHover) {
+      if (!prevProps.enableHover && props.enableHover) {
+        this.view.hover();
         changed = true;
       }
 
       if (changed) {
-        if (props.enableHover) {
-          this.view.hover();
-        }
         this.view.run();
       }
     }
