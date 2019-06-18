@@ -25,6 +25,10 @@
     "vega": "^5.3.4",
     "vega-embed": "^4.0.0"
   },
+  "devDependencies": {
+    "vega": "^5.3.4",
+    "vega-embed": "^4.0.0"
+  },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"

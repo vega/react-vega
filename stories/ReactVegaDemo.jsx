@@ -1,9 +1,9 @@
 /* eslint-disable no-magic-numbers */
-import React from "react";
-import Vega, { createClassFromSpec } from "../packages/react-vega/src";
-import data1 from "./vega/data1.json";
-import spec1 from "./vega/spec1";
-import spec2 from "./vega/spec2";
+import React from 'react';
+import Vega, { createClassFromSpec } from '../packages/react-vega/src';
+import data1 from './vega/data1.json';
+import spec1 from './vega/spec1';
+import spec2 from './vega/spec2';
 
 const BarChart = createClassFromSpec(spec1);
 
@@ -17,8 +17,8 @@ export default class Demo extends React.Component {
     super(props);
     this.state = {
       data: data1,
-      info: "",
-      spec: spec1
+      info: '',
+      spec: spec1,
     };
 
     this.handleHover = this.handleHover.bind(this);
@@ -28,7 +28,7 @@ export default class Demo extends React.Component {
 
   handleHover(...args) {
     this.setState({
-      info: JSON.stringify(args)
+      info: JSON.stringify(args),
     });
   }
 
@@ -46,7 +46,7 @@ export default class Demo extends React.Component {
     for (let i = 1; i <= 20; i += 1) {
       table.push({
         amount: Math.round(Math.random() * 100),
-        category: String.fromCharCode(65 + i)
+        category: String.fromCharCode(65 + i),
       });
     }
     this.setState({ data: { table } });
@@ -57,7 +57,7 @@ export default class Demo extends React.Component {
 
     return (
       <div>
-        <div style={{ float: "right" }}>
+        <div style={{ float: 'right' }}>
           <iframe
             title="star"
             src="https://ghbtns.com/github-btn.html?user=vega&repo=react-vega&type=star&count=true"

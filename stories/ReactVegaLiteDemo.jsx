@@ -1,52 +1,50 @@
-import React from "react";
-import VegaLite, {
-  createClassFromLiteSpec
-} from "../packages/react-vega-lite/src";
+import React from 'react';
+import VegaLite, { createClassFromLiteSpec } from '../packages/react-vega-lite/src';
 
 const data1 = {
   values: [
-    { a: "A", b: 20 },
-    { a: "B", b: 34 },
-    { a: "C", b: 55 },
-    { a: "D", b: 19 },
-    { a: "E", b: 40 },
-    { a: "F", b: 34 },
-    { a: "G", b: 91 },
-    { a: "H", b: 78 },
-    { a: "I", b: 25 }
-  ]
+    { a: 'A', b: 20 },
+    { a: 'B', b: 34 },
+    { a: 'C', b: 55 },
+    { a: 'D', b: 19 },
+    { a: 'E', b: 40 },
+    { a: 'F', b: 34 },
+    { a: 'G', b: 91 },
+    { a: 'H', b: 78 },
+    { a: 'I', b: 25 },
+  ],
 };
 
 const data2 = {
   values: [
-    { a: "A", b: 28 },
-    { a: "B", b: 55 },
-    { a: "C", b: 43 },
-    { a: "D", b: 91 },
-    { a: "E", b: 81 },
-    { a: "F", b: 53 },
-    { a: "G", b: 19 },
-    { a: "H", b: 87 },
-    { a: "I", b: 52 }
-  ]
+    { a: 'A', b: 28 },
+    { a: 'B', b: 55 },
+    { a: 'C', b: 43 },
+    { a: 'D', b: 91 },
+    { a: 'E', b: 81 },
+    { a: 'F', b: 53 },
+    { a: 'G', b: 19 },
+    { a: 'H', b: 87 },
+    { a: 'I', b: 52 },
+  ],
 };
 
 const spec1 = {
-  description: "A simple bar chart with embedded data.",
+  description: 'A simple bar chart with embedded data.',
   encoding: {
-    x: { field: "a", type: "ordinal" },
-    y: { field: "b", type: "quantitative" }
+    x: { field: 'a', type: 'ordinal' },
+    y: { field: 'b', type: 'quantitative' },
   },
-  mark: "bar"
+  mark: 'bar',
 };
 
 const spec2 = {
-  description: "A simple bar chart with embedded data.",
+  description: 'A simple bar chart with embedded data.',
   encoding: {
-    x: { field: "b", type: "quantitative" },
-    y: { field: "a", type: "ordinal" }
+    x: { field: 'b', type: 'quantitative' },
+    y: { field: 'a', type: 'ordinal' },
   },
-  mark: "bar"
+  mark: 'bar',
 };
 
 const BarChart = createClassFromLiteSpec(spec1);
@@ -61,8 +59,8 @@ export default class Demo extends React.Component {
     super(props);
     this.state = {
       data: data1,
-      info: "",
-      spec: spec1
+      info: '',
+      spec: spec1,
     };
 
     this.handleHover = this.handleHover.bind(this);
@@ -72,7 +70,7 @@ export default class Demo extends React.Component {
 
   handleHover(...args) {
     this.setState({
-      info: JSON.stringify(args)
+      info: JSON.stringify(args),
     });
   }
 
@@ -99,7 +97,7 @@ export default class Demo extends React.Component {
 
     return (
       <div>
-        <div style={{ float: "right" }}>
+        <div style={{ float: 'right' }}>
           <iframe
             title="star"
             src="https://ghbtns.com/github-btn.html?user=vega&repo=react-vega&type=star&count=true"
