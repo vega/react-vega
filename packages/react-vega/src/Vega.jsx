@@ -142,12 +142,6 @@ class Vega extends React.Component {
         // store the vega.View object to be used on later updates
         this.view = view;
 
-        ['logLevel', 'renderer', 'tooltip', 'background', 'width', 'height', 'padding']
-          .filter(field => isDefined(props[field]))
-          .forEach(field => {
-            view[field](props[field]);
-          });
-
         if (spec.data && props.data) {
           spec.data
             .filter(d => props.data[d.name])
