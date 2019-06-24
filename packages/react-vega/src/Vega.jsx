@@ -104,7 +104,6 @@ class Vega extends React.Component {
   }
 
   async createView(spec, embedOption) {
-    console.log(embedOption);
     if (spec) {
       const { props } = this;
       // Parse the vega spec and create the view
