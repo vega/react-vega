@@ -4,6 +4,7 @@ import Vega, { createClassFromSpec } from '../packages/react-vega/src';
 import data1 from './vega/data1.json';
 import spec1 from './vega/spec1';
 import spec2 from './vega/spec2';
+import option1 from './vega/option1';
 
 const BarChart = createClassFromSpec(spec1);
 
@@ -18,6 +19,7 @@ export default class Demo extends React.Component {
     this.state = {
       data: data1,
       info: '',
+      option: option1,
       spec: spec1,
     };
 
@@ -27,6 +29,7 @@ export default class Demo extends React.Component {
   }
 
   handleHover(...args) {
+    console.log('YOOOOOOO');
     this.setState({
       info: JSON.stringify(args),
     });
@@ -53,7 +56,7 @@ export default class Demo extends React.Component {
   }
 
   render() {
-    const { data, spec, info } = this.state;
+    const { data, spec, info, option } = this.state;
 
     return (
       <div>
@@ -78,7 +81,7 @@ export default class Demo extends React.Component {
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={data} spec={spec} onSignalTooltip={this.handleHover} />
+        <Vega data={data} spec={spec} onSignalTooltip={this.handleHover} embedOption={option} />
         <h3>
           <code>ReactVega.createClassFromSpec()</code>
         </h3>

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/forbid-prop-types */
 import * as vega from 'vega';
@@ -12,6 +11,7 @@ const propTypes = {
   background: PropTypes.string,
   className: PropTypes.string,
   data: PropTypes.object,
+  embedOption: PropTypes.object,
   enableHover: PropTypes.bool,
   height: PropTypes.number,
   logLevel: PropTypes.number,
@@ -29,6 +29,7 @@ const defaultProps = {
   background: undefined,
   className: '',
   data: {},
+  embedOption: undefined,
   enableHover: true,
   height: undefined,
   logLevel: undefined,
@@ -63,31 +64,22 @@ class Vega extends React.Component {
   }
 
   componentDidMount() {
+    let { embedOption } = this.props;
     const { spec } = this.props;
-    this.createView(spec);
+    embedOption = this.propsToEmbedOption(this.props, embedOption);
+    this.createView(spec, embedOption);
   }
 
   componentDidUpdate(prevProps) {
+    let { embedOption } = this.props;
     const { spec } = this.props;
     if (spec !== prevProps.spec) {
       this.clearView();
-      this.createView(spec);
+      embedOption = this.propsToEmbedOption(this.props, embedOption);
+      this.createView(spec, embedOption);
     } else if (this.view) {
       const { props } = this;
       let changed = false;
-
-      // update view properties
-      ['width', 'height', 'renderer', 'logLevel', 'background']
-        .filter(field => props[field] !== prevProps[field])
-        .forEach(field => {
-          this.view[field](props[field]);
-          changed = true;
-        });
-
-      if (!Vega.isSamePadding(props.padding, prevProps.padding)) {
-        this.view.padding(props.padding || spec.padding);
-        changed = true;
-      }
 
       // update data
       if (spec.data && props.data) {
@@ -101,11 +93,6 @@ class Vega extends React.Component {
         });
       }
 
-      if (!prevProps.enableHover && props.enableHover) {
-        this.view.hover();
-        changed = true;
-      }
-
       if (changed) {
         this.view.run();
       }
@@ -116,18 +103,13 @@ class Vega extends React.Component {
     this.clearView();
   }
 
-  async createView(spec) {
+  async createView(spec, embedOption) {
+    console.log(embedOption);
     if (spec) {
       const { props } = this;
       // Parse the vega spec and create the view
       try {
-        let view = {};
-        try {
-          result = await vegaEmbed(this.element, spec);
-          ({ view } = result);
-        } catch (error) {
-          throw new Error('Something went wrong parsing Vega specs');
-        }
+        const { view } = await vegaEmbed(this.element, spec, embedOption);
         if (spec.signals) {
           spec.signals.forEach(signal => {
             view.addSignalListener(signal.name, (...args) => {
@@ -148,9 +130,6 @@ class Vega extends React.Component {
             .forEach(d => {
               this.updateData(d.name, props.data[d.name]);
             });
-        }
-        if (props.enableHover) {
-          view.hover();
         }
         view.run();
 
@@ -180,6 +159,23 @@ class Vega extends React.Component {
         );
       }
     }
+  }
+
+  propsToEmbedOption(props, embedOption) {
+    const embedOptionClone = Object.assign({}, embedOption);
+    ['renderer', 'logLevel', 'tooltip', 'width', 'height', 'padding', 'enableHover']
+      .filter(field => isDefined(props[field]))
+      .forEach(field => {
+        if (field === 'enableHover') {
+          // Since declared type of react vega is enableHover while
+          // vega-embed use hover
+          embedOptionClone.hover = props[field];
+        } else {
+          embedOptionClone[field] = props[field];
+        }
+      });
+
+    return embedOptionClone;
   }
 
   clearView() {
