@@ -29,7 +29,6 @@ export default class Demo extends React.Component {
   }
 
   handleHover(...args) {
-    console.log('YOOOOOOO');
     this.setState({
       info: JSON.stringify(args),
     });
@@ -81,7 +80,7 @@ export default class Demo extends React.Component {
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={data} spec={spec} onSignalTooltip={this.handleHover} embedOption={option} />
+        <Vega data={data} spec={spec} onSignalTooltip={this.handleHover} />
         <h3>
           <code>ReactVega.createClassFromSpec()</code>
         </h3>

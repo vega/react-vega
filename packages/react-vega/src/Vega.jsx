@@ -11,7 +11,6 @@ const propTypes = {
   background: PropTypes.string,
   className: PropTypes.string,
   data: PropTypes.object,
-  embedOption: PropTypes.object,
   enableHover: PropTypes.bool,
   height: PropTypes.number,
   logLevel: PropTypes.number,
@@ -29,7 +28,6 @@ const defaultProps = {
   background: undefined,
   className: '',
   data: {},
-  embedOption: undefined,
   enableHover: true,
   height: undefined,
   logLevel: undefined,
@@ -64,19 +62,15 @@ class Vega extends React.Component {
   }
 
   componentDidMount() {
-    let { embedOption } = this.props;
     const { spec } = this.props;
-    embedOption = this.propsToEmbedOption(this.props, embedOption);
-    this.createView(spec, embedOption);
+    this.createView(spec);
   }
 
   componentDidUpdate(prevProps) {
-    let { embedOption } = this.props;
     const { spec } = this.props;
     if (spec !== prevProps.spec) {
       this.clearView();
-      embedOption = this.propsToEmbedOption(this.props, embedOption);
-      this.createView(spec, embedOption);
+      this.createView(spec);
     } else if (this.view) {
       const { props } = this;
       let changed = false;
@@ -103,12 +97,12 @@ class Vega extends React.Component {
     this.clearView();
   }
 
-  async createView(spec, embedOption) {
+  async createView(spec) {
     if (spec) {
       const { props } = this;
       // Parse the vega spec and create the view
       try {
-        const { view } = await vegaEmbed(this.element, spec, embedOption);
+        const { view } = await vegaEmbed(this.element, spec, this.propsToEmbedOption(props));
         if (spec.signals) {
           spec.signals.forEach(signal => {
             view.addSignalListener(signal.name, (...args) => {
@@ -160,21 +154,18 @@ class Vega extends React.Component {
     }
   }
 
-  propsToEmbedOption(props, embedOption) {
-    const embedOptionClone = Object.assign({}, embedOption);
-    ['renderer', 'logLevel', 'tooltip', 'width', 'height', 'padding', 'enableHover']
-      .filter(field => isDefined(props[field]))
-      .forEach(field => {
-        if (field === 'enableHover') {
-          // Since declared type of react vega is enableHover while
-          // vega-embed use hover
-          embedOptionClone.hover = props[field];
-        } else {
-          embedOptionClone[field] = props[field];
-        }
-      });
+  propsToEmbedOption(props) {
+    const options = {
+      enableHover: props.enableHover ? props.enableHover : true,
+      height: props.height ? props.height : undefined,
+      logLevel: props.logLevel ? props.logLevel : undefined,
+      padding: props.padding ? props.padding : undefined,
+      renderer: props.renderer ? props.renderer : '',
+      tooltip: props.tooltip ? props.tooltip : () => {},
+      width: props.width ? props.width : undefined,
+    };
 
-    return embedOptionClone;
+    return options;
   }
 
   clearView() {
