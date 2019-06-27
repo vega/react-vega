@@ -18,8 +18,7 @@
     "types"
   ],
   "dependencies": {
-    "prop-types": "^15.7.2",
-    "vega-embed": "^4.0.0"
+    "prop-types": "^15.7.2"
   },
   "peerDependencies": {
     "react": "^16.0.0",
