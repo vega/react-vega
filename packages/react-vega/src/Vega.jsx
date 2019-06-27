@@ -156,13 +156,13 @@ class Vega extends React.Component {
 
   propsToEmbedOption(props) {
     const options = {
-      enableHover: props.enableHover ? props.enableHover : true,
-      height: props.height ? props.height : undefined,
-      logLevel: props.logLevel ? props.logLevel : undefined,
-      padding: props.padding ? props.padding : undefined,
-      renderer: props.renderer ? props.renderer : '',
-      tooltip: props.tooltip ? props.tooltip : () => {},
-      width: props.width ? props.width : undefined,
+      ...(props.enableHover ? { enableHover: props.enableHover } : {}),
+      ...(props.height ? { height: props.height } : {}),
+      ...(props.logLevel ? { logLevel: props.logLevel } : {}),
+      ...(props.padding ? { padding: props.padding } : {}),
+      ...(props.renderer ? { renderer: props.renderer } : {}),
+      ...(props.tooltip ? { tooltip: props.tooltip } : {}),
+      ...(props.width ? { width: props.width } : {}),
     };
 
     return options;
