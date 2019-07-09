@@ -10,8 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "react": "^16.8.6",
-    "vega-embed": "^4.0.0"
+    "react": "^16.8.6"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
