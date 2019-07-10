@@ -1,4 +1,5 @@
 import React from 'react';
+import { action } from '@storybook/addon-actions';
 import VegaLite, { createClassFromLiteSpec } from '../packages/react-vega-lite';
 
 const data1 = {
@@ -69,6 +70,9 @@ export default class Demo extends React.Component {
   }
 
   handleHover(...args) {
+    action('hover', {
+      limit: 5,
+    })(args);
     this.setState({
       info: JSON.stringify(args),
     });
@@ -76,6 +80,7 @@ export default class Demo extends React.Component {
 
   handleToggleSpec() {
     const { spec } = this.state;
+    action('toggle spec')(spec);
     if (spec === spec1) {
       this.setState({ spec: spec2 });
     } else {
@@ -85,6 +90,7 @@ export default class Demo extends React.Component {
 
   handleUpdateData() {
     const { data } = this.state;
+    action('update data')(data);
     if (data === data1) {
       this.setState({ data: data2 });
     } else if (data === data2) {

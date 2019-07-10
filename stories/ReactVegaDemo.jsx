@@ -1,5 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import React from 'react';
+import { action } from '@storybook/addon-actions';
 import Vega, { createClassFromSpec } from '../packages/react-vega';
 import data1 from './vega/data1.json';
 import spec1 from './vega/spec1';
@@ -27,6 +28,9 @@ export default class Demo extends React.Component {
   }
 
   handleHover(...args) {
+    action('hover', {
+      limit: 5,
+    })(args);
     this.setState({
       info: JSON.stringify(args),
     });
@@ -34,6 +38,7 @@ export default class Demo extends React.Component {
 
   handleToggleSpec() {
     const { spec } = this.state;
+    action('toggle spec')(spec);
     if (spec === spec1) {
       this.setState({ spec: spec2 });
     } else {
@@ -49,6 +54,7 @@ export default class Demo extends React.Component {
         category: String.fromCharCode(65 + i),
       });
     }
+    action('update data')(table);
     this.setState({ data: { table } });
   }
 
