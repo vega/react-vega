@@ -60,14 +60,14 @@
   },
   "lint-staged": {
     "./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx,json,md}": [
-      "yarn run prettier --write",
+      "yarn prettier --write",
       "git add"
     ]
   },
   "scripts": {
     "postpublish": "git push; git push --tags",
-    "gh-pages": "npm run build-storybook && gh-pages -d storybook-static",
-    "build": "yarn run build:cjs && yarn run build:esm",
+    "gh-pages": "yarn build-storybook && gh-pages -d storybook-static",
+    "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir lib/ --delete-dir-on-start --minify --workspaces=\"(react-vega|react-vega-lite)\"",
     "build:esm": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir esm/ --delete-dir-on-start --esm --minify --workspaces=\"(react-vega|react-vega-lite)\"",
     "commit": "superset-commit",
@@ -77,13 +77,15 @@
     "lint": "beemo create-config prettier && beemo eslint \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
     "test": "echo \"no test yet\"",
+    "start": "yarn storybook",
+    "prestorybook": "yarn build:cjs",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "postrelease": "yarn run gh-pages",
-    "prepare-release": "git checkout master && git pull --rebase origin master && lerna bootstrap && yarn install && yarn run test",
-    "prerelease": "yarn run build",
-    "pretest": "yarn run lint",
+    "build:storybook": "build-storybook",
+    "postrelease": "yarn gh-pages",
+    "prepare-release": "git checkout master && git pull --rebase origin master && lerna bootstrap && yarn && yarn test",
+    "prerelease": "yarn build",
+    "pretest": "yarn lint",
     "prettier": "beemo prettier \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx,json,md}\"",
-    "release": "yarn run prepare-release && lerna publish && yarn run postrelease"
+    "release": "yarn prepare-release && lerna publish && yarn postrelease"
   }
 }

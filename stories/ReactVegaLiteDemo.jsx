@@ -1,5 +1,5 @@
 import React from 'react';
-import VegaLite, { createClassFromLiteSpec } from '../packages/react-vega-lite/src';
+import VegaLite, { createClassFromLiteSpec } from '../packages/react-vega-lite';
 
 const data1 = {
   values: [

@@ -120,7 +120,7 @@ class Vega extends React.Component {
       const { props } = this;
       // Parse the vega spec and create the view
       try {
-        const { view } = await vegaEmbed(this.element, spec, this.propsToEmbedOption(props));
+        const { view } = await vegaEmbed(this.element, spec, this.propsToEmbedOptions(props));
         if (spec.signals) {
           spec.signals.forEach(signal => {
             view.addSignalListener(signal.name, (...args) => {
@@ -172,8 +172,8 @@ class Vega extends React.Component {
     }
   }
 
-  propsToEmbedOption(props) {
-    const options = {
+  propsToEmbedOptions(props) {
+    return {
       ...(props.enableHover ? { hover: props.enableHover } : {}),
       ...(props.height ? { height: props.height } : {}),
       ...(props.logLevel ? { logLevel: props.logLevel } : {}),
@@ -182,8 +182,6 @@ class Vega extends React.Component {
       ...(props.tooltip ? { tooltip: props.tooltip } : {}),
       ...(props.width ? { width: props.width } : {}),
     };
-
-    return options;
   }
 
   clearView() {
