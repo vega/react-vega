@@ -75,6 +75,19 @@ class Vega extends React.Component {
       const { props } = this;
       let changed = false;
 
+      // update view properties
+      ['width', 'height', 'renderer', 'logLevel', 'background']
+        .filter(field => props[field] !== prevProps[field])
+        .forEach(field => {
+          this.view[field](props[field]);
+          changed = true;
+        });
+
+      if (!Vega.isSamePadding(props.padding, prevProps.padding)) {
+        this.view.padding(props.padding || spec.padding);
+        changed = true;
+      }
+
       // update data
       if (spec.data && props.data) {
         spec.data.forEach(d => {
@@ -85,6 +98,11 @@ class Vega extends React.Component {
             changed = true;
           }
         });
+      }
+
+      if (!prevProps.enableHover && props.enableHover) {
+        this.view.hover();
+        changed = true;
       }
 
       if (changed) {
