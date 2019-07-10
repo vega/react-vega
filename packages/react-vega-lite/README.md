@@ -1,10 +1,4 @@
-<!--**Introduction**-->
-<!--| [API Reference](https://github.com/kristw/react-vega-lite/blob/master/docs/api.md)-->
-<!--| [Demo](https://kristw.github.io/react-vega-lite)-->
-
-# react-vega-lite [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-
-<!--[![Build Status][travis-image]][travis-url]-->
+# react-vega-lite [![NPM version][npm-image]][npm-url]
 
 Convert Vega Lite spec into React class conveniently, inspired by this [tutorial](https://medium.com/@pbesh/react-and-vega-an-alternative-visualization-example-cd76e07dc1cd#.omslw1xy8) by @pbeshai
 
@@ -140,9 +134,5 @@ import { Handler } from 'vega-tooltip';
  <VegaLite spec={spec} data={barData} tooltip={new Handler().call} />
 ```
 
-[npm-image]: https://badge.fury.io/js/react-vega-lite.svg
+[npm-image]: https://img.shields.io/npm/v/react-vega-lite.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/react-vega-lite
-[travis-image]: https://travis-ci.org/kristw/react-vega-lite.svg?branch=master
-[travis-url]: https://travis-ci.org/kristw/react-vega-lite
-[daviddm-image]: https://david-dm.org/kristw/react-vega-lite.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/kristw/react-vega-lite
