@@ -18,7 +18,8 @@
     "types"
   ],
   "dependencies": {
-    "react-vega": "^6.0.1"
+    "react-vega": "^6.0.1",
+    "vega-embed": "^4.0.0"
   },
   "peerDependencies": {
     "react": "^16.0.0",

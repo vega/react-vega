@@ -85,7 +85,9 @@ export default class Demo extends React.Component {
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
         <BarChart data={data} onSignalTooltip={this.handleHover} />
-        {info}
+        <div>
+          Hover info: <code>{info}</code>
+        </div>
       </div>
     );
   }
