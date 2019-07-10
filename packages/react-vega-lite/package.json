@@ -1,6 +1,6 @@
 {
   "name": "react-vega-lite",
-  "version": "6.0.1",
+  "version": "6.1.0",
   "description": "Convert Vega-lite spec into React class conveniently",
   "author": "Krist Wongsuphasawat <krist.wongz@gmail.com> (http://kristw.yellowpigz.com)",
   "keywords": [],
@@ -18,7 +18,7 @@
     "types"
   ],
   "dependencies": {
-    "react-vega": "^6.0.1",
+    "react-vega": "^6.1.0",
     "vega-embed": "^4.0.0"
   },
   "peerDependencies": {
