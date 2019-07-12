@@ -1,7 +1,7 @@
 // From https://vega.github.io/vega/examples/bar-chart/
 
 export default {
-  $schema: 'https://vega.github.io/schema/vega/v3.0.json',
+  $schema: 'https://vega.github.io/schema/vega/v5.json',
   width: 400,
   height: 200,
   padding: { left: 5, right: 5, top: 5, bottom: 5 },
