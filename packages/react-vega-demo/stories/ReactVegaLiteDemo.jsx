@@ -1,17 +1,59 @@
-/* eslint-disable no-magic-numbers */
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import Vega, { createClassFromSpec } from '../packages/react-vega';
-import data1 from './vega/data1.json';
-import spec1 from './vega/spec1';
-import spec2 from './vega/spec2';
+import VegaLite, { createClassFromLiteSpec } from '../../react-vega-lite';
 
-const BarChart = createClassFromSpec(spec1);
+const data1 = {
+  values: [
+    { a: 'A', b: 20 },
+    { a: 'B', b: 34 },
+    { a: 'C', b: 55 },
+    { a: 'D', b: 19 },
+    { a: 'E', b: 40 },
+    { a: 'F', b: 34 },
+    { a: 'G', b: 91 },
+    { a: 'H', b: 78 },
+    { a: 'I', b: 25 },
+  ],
+};
 
-const code1 = `<Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover} />`;
+const data2 = {
+  values: [
+    { a: 'A', b: 28 },
+    { a: 'B', b: 55 },
+    { a: 'C', b: 43 },
+    { a: 'D', b: 91 },
+    { a: 'E', b: 81 },
+    { a: 'F', b: 53 },
+    { a: 'G', b: 19 },
+    { a: 'H', b: 87 },
+    { a: 'I', b: 52 },
+  ],
+};
 
-const code2 = `const BarChart = ReactVega.createClassFromSpec(barSpec);
-<BarChart data={this.state.data} onSignalHover={this.handleHover} />`;
+const spec1 = {
+  description: 'A simple bar chart with embedded data.',
+  encoding: {
+    x: { field: 'a', type: 'ordinal' },
+    y: { field: 'b', type: 'quantitative' },
+  },
+  mark: 'bar',
+};
+
+const spec2 = {
+  description: 'A simple bar chart with embedded data.',
+  encoding: {
+    x: { field: 'b', type: 'quantitative' },
+    y: { field: 'a', type: 'ordinal' },
+  },
+  mark: 'bar',
+};
+
+const BarChart = createClassFromLiteSpec(spec1);
+
+const code1 = `<VegaLite data={this.state.data} spec={this.state.spec} />`;
+
+const code2 = `const BarChart = ReactVegaLite.createClassFromLiteSpec(spec1);
+<BarChart data={this.state.data} />`;
 
 export default class Demo extends React.Component {
   constructor(props) {
@@ -47,15 +89,13 @@ export default class Demo extends React.Component {
   }
 
   handleUpdateData() {
-    const table = [];
-    for (let i = 1; i <= 20; i += 1) {
-      table.push({
-        amount: Math.round(Math.random() * 100),
-        category: String.fromCharCode(65 + i),
-      });
+    const { data } = this.state;
+    action('update data')(data);
+    if (data === data1) {
+      this.setState({ data: data2 });
+    } else if (data === data2) {
+      this.setState({ data: data1 });
     }
-    action('update data')(table);
-    this.setState({ data: { table } });
   }
 
   render() {
@@ -80,20 +120,18 @@ export default class Demo extends React.Component {
           Update data
         </button>
         <h3>
-          <code>&lt;Vega&gt;</code> React Component
+          <code>&lt;VegaLite&gt;</code> React Component
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={data} spec={spec} onSignalTooltip={this.handleHover} />
+        <VegaLite data={data} spec={spec} onSignalHover={this.handleHover} />
         <h3>
-          <code>ReactVega.createClassFromSpec()</code>
+          <code>ReactVegaLite.createClassFromLiteSpec()</code>
         </h3>
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
-        <BarChart data={data} onSignalTooltip={this.handleHover} />
-        <div>
-          Hover info: <code>{info}</code>
-        </div>
+        <BarChart data={data} onSignalHover={this.handleHover} />
+        {info}
       </div>
     );
   }

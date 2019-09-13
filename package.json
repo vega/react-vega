@@ -9,26 +9,12 @@
     "url": "https://github.com/vega/react-vega/issues"
   },
   "private": true,
-  "dependencies": {
-    "@storybook/addon-actions": "^5.1.9",
-    "@storybook/addon-links": "^5.1.9",
-    "@storybook/addons": "^5.1.9",
-    "@storybook/react": "^5.1.9",
-    "react-dom": "^16.8.6",
-    "react": "^16.8.6",
-    "vega-lite": "^3.1.0",
-    "vega": "^5.4.0"
-  },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@superset-ui/build-config": "^0.1.1",
+    "@superset-ui/build-config": "^0.1.3",
     "@superset-ui/commit-config": "^0.0.9",
-    "babel-loader": "^8.0.6",
-    "gh-pages": "^2.0.1",
     "husky": "^3.0.0",
     "lerna": "^3.15.0",
-    "lint-staged": "^9.2.0",
-    "react-scripts": "^3.0.1"
+    "lint-staged": "^9.2.0"
   },
   "engines": {
     "node": ">=8.10.0"
@@ -66,7 +52,6 @@
   },
   "scripts": {
     "postpublish": "git push; git push --tags",
-    "gh-pages": "yarn build-storybook && gh-pages -d storybook-static",
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir lib/ --delete-dir-on-start --minify --workspaces=\"(react-vega|react-vega-lite)\"",
     "build:esm": "NODE_ENV=production beemo babel --extensions=\".js,.jsx,.ts,.tsx\" ./src --out-dir esm/ --delete-dir-on-start --esm --minify --workspaces=\"(react-vega|react-vega-lite)\"",
@@ -77,10 +62,7 @@
     "lint": "beemo create-config prettier && beemo eslint \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "beemo create-config prettier && beemo eslint --fix \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx}\"",
     "test": "echo \"no test yet\"",
-    "start": "yarn storybook",
-    "storybook": "start-storybook -p 6006",
-    "build:storybook": "build-storybook",
-    "postrelease": "yarn gh-pages",
+    "postrelease": "lerna run deploy-demo",
     "prepare-release": "git checkout master && git pull --rebase origin master && lerna bootstrap && yarn && yarn test",
     "prerelease": "yarn build",
     "pretest": "yarn lint",
