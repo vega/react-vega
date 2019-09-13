@@ -67,6 +67,7 @@
     "prerelease": "yarn build",
     "pretest": "yarn lint",
     "prettier": "beemo prettier \"./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx,json,md}\"",
-    "release": "yarn prepare-release && lerna publish && yarn postrelease"
+    "release": "yarn prepare-release && lerna publish && yarn postrelease",
+    "storybook": "cd packages/react-vega-demo && yarn storybook"
   }
 }
