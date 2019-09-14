@@ -37,15 +37,15 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     if (this.containerRef.current) {
       this.viewPromise = vegaEmbed(this.containerRef.current, spec, options).then(
         ({ view }) => {
-          if (typeof spec !== 'string' && 'signals' in spec && spec.signals) {
-            spec.signals.forEach(signal => {
-              view.addSignalListener(signal.name, (...args) => {
-                const listener = signalHandlers[signal.name];
-                if (listener) {
-                  listener.apply(this, args);
-                }
-              });
-            });
+          const signalNames = Object.keys(signalHandlers);
+          signalNames.forEach(signalName => {
+            try {
+              view.addSignalListener(signalName, signalHandlers[signalName]);
+            } catch (ex) {
+              console.warn('Cannot add invalid signal handler >>', ex);
+            }
+          });
+          if (signalNames.length > 0) {
             view.run();
           }
           onNewView(view);

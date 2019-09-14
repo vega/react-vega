@@ -69,7 +69,7 @@ export default class Demo extends React.Component {
     this.handleHover = this.handleHover.bind(this);
     this.handleToggleSpec = this.handleToggleSpec.bind(this);
     this.handleUpdateData = this.handleUpdateData.bind(this);
-    this.handlers = { tooltip: this.handleHover };
+    // this.handlers = { hover: this.handleHover };
   }
 
   handleHover(...args) {
