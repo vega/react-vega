@@ -69,6 +69,7 @@ export default class Demo extends React.Component {
     this.handleHover = this.handleHover.bind(this);
     this.handleToggleSpec = this.handleToggleSpec.bind(this);
     this.handleUpdateData = this.handleUpdateData.bind(this);
+    this.handlers = { tooltip: this.handleHover };
   }
 
   handleHover(...args) {
@@ -126,13 +127,13 @@ export default class Demo extends React.Component {
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <VegaLite data={data} spec={spec} onSignalHover={this.handleHover} />
+        <VegaLite data={data} spec={spec} signalHandlers={this.handlers} />
         <h3>
           <code>ReactVegaLite.createClassFromLiteSpec()</code>
         </h3>
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
-        <BarChart data={data} onSignalHover={this.handleHover} />
+        <BarChart data={data} signalHandlers={this.handlers} />
         {info}
       </div>
     );
