@@ -1,5 +1,5 @@
 import React from 'react';
-import { vega } from 'vega-embed';
+import { vega, Result } from 'vega-embed';
 import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
 import isFunction from './utils/isFunction';
 
@@ -7,7 +7,7 @@ export type VegaProps = VegaEmbedProps & {
   data: { [key: string]: any };
 };
 
-function updateData(view, name, value) {
+function updateData(view: Result['view'], name: string, value: any) {
   if (value) {
     if (isFunction(value)) {
       value(view.data(name));
@@ -23,7 +23,7 @@ function updateData(view, name, value) {
   }
 }
 
-export default class VegaEmbedWithData extends React.PureComponent<VegaProps> {
+export default class Vega extends React.PureComponent<VegaProps> {
   vegaEmbed = React.createRef<VegaEmbed>();
 
   componentDidMount() {

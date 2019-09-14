@@ -1,5 +1,3 @@
-import Vega from './VegaEmbedWithData';
-import createClassFromSpec from './createClassFromSpec';
-
-export default Vega;
-export { createClassFromSpec };
+export { default as Vega } from './Vega';
+export { default as VegaLite } from './VegaLite';
+export { default as createClassFromSpec } from './createClassFromSpec';

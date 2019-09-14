@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import VegaLite, { createClassFromLiteSpec } from '../../react-vega-lite';
+import { VegaLite, createClassFromSpec } from '../../react-vega';
 
 const data1 = {
   values: [
@@ -48,7 +48,7 @@ const spec2 = {
   mark: 'bar',
 };
 
-const BarChart = createClassFromLiteSpec(spec1);
+const BarChart = createClassFromSpec({ mode: 'vega-lite', spec: spec1 });
 
 const code1 = `<VegaLite data={this.state.data} spec={this.state.spec} />`;
 

@@ -4,7 +4,7 @@ import vegaEmbed, { EmbedOptions, VisualizationSpec, Result } from 'vega-embed';
 export type VegaEmbedProps = {
   className?: string;
   spec: VisualizationSpec;
-  signalHandlers: {
+  signalHandlers?: {
     [key: string]: (name: string, value: any) => void;
   };
   style?: { [key: string]: any };
@@ -16,6 +16,8 @@ const NOOP = () => {};
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
+
+  viewPromise?: Promise<Result['view'] | undefined>;
 
   componentDidMount() {
     this.createView();
@@ -29,8 +31,6 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   componentWillUnmount() {
     this.clearView();
   }
-
-  viewPromise?: Promise<Result['view'] | undefined>;
 
   createView() {
     const { spec, onNewView = NOOP, onError = NOOP, signalHandlers = {}, ...options } = this.props;
@@ -54,6 +54,8 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
         },
         reason => {
           onError(reason);
+
+          return undefined;
         },
       );
     }
@@ -70,7 +72,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           return true;
         })
         .catch(NOOP);
-      this.viewPromise = null;
+      this.viewPromise = undefined;
     }
 
     return this;

@@ -1,12 +1,12 @@
 /* eslint-disable no-magic-numbers */
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import Vega, { createClassFromSpec } from '../../react-vega';
+import { Vega, createClassFromSpec } from '../../react-vega';
 import data1 from './vega/data1.json';
 import spec1 from './vega/spec1';
 import spec2 from './vega/spec2';
 
-const BarChart = createClassFromSpec(spec1);
+const BarChart = createClassFromSpec({ spec: spec1 });
 
 const code1 = `<Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover} />`;
 
@@ -84,7 +84,7 @@ export default class Demo extends React.Component {
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={data} spec={spec} signalHandlers={{ tooltip: this.handleHover }} />
+        <Vega data={data} hover spec={spec} signalHandlers={{ tooltip: this.handleHover }} />
         <h3>
           <code>ReactVega.createClassFromSpec()</code>
         </h3>

@@ -1,24 +1,30 @@
 import React from 'react';
-import { VisualizationSpec } from 'vega-embed';
-import Vega, { VegaProps } from './VegaEmbedWithData';
+import { VisualizationSpec, Mode } from 'vega-embed';
+import Vega, { VegaProps } from './Vega';
 
-// USAGE:
-// createClassFromSpec(name, spec);
-// createClassFromSpec(spec);
-export default function createClassFromSpec(
-  ...args: [VisualizationSpec] | [string, VisualizationSpec]
-) {
-  const spec = args.length === 1 ? args[0] : args[1];
+interface Constructor<T> {
+  getSpec: () => VisualizationSpec;
+  new (...args: any[]): T;
+}
 
-  class VegaChart extends React.PureComponent<Omit<VegaProps, 'spec'>> {
+export type FixedVegaChartProps = Omit<VegaProps, 'spec'>;
+
+export default function createClassFromSpec({
+  mode,
+  spec,
+}: {
+  mode?: Mode;
+  spec: VisualizationSpec;
+}) {
+  class FixedVegaChart extends React.PureComponent<FixedVegaChartProps> {
     static getSpec = function getSpec() {
       return spec;
     };
 
     render() {
-      return <Vega spec={spec} {...this.props} />;
+      return <Vega mode={mode} spec={spec} {...this.props} />;
     }
   }
 
-  return VegaChart;
+  return FixedVegaChart as Constructor<React.PureComponent<FixedVegaChartProps>>;
 }
