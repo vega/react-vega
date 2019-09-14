@@ -1,9 +1,9 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { VegaLite, createClassFromSpec } from '../../react-vega';
+import { VegaLite, createClassFromSpec } from '../../react-vega/src';
 
 const data1 = {
-  values: [
+  myData: [
     { a: 'A', b: 20 },
     { a: 'B', b: 34 },
     { a: 'C', b: 55 },
@@ -17,7 +17,7 @@ const data1 = {
 };
 
 const data2 = {
-  values: [
+  myData: [
     { a: 'A', b: 28 },
     { a: 'B', b: 55 },
     { a: 'C', b: 43 },
@@ -31,6 +31,7 @@ const data2 = {
 };
 
 const spec1 = {
+  data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
     x: { field: 'a', type: 'ordinal' },
@@ -40,6 +41,7 @@ const spec1 = {
 };
 
 const spec2 = {
+  data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
     x: { field: 'b', type: 'quantitative' },

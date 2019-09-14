@@ -41,12 +41,21 @@ export default class Vega extends React.PureComponent<VegaProps> {
       if (viewPromise) {
         viewPromise
           .then(view => {
-            if (view && data && spec.data && Array.isArray(spec.data)) {
-              spec.data
-                .filter(({ name }) => data[name])
-                .forEach(({ name }) => {
+            if (view && data && spec.data) {
+              if (Array.isArray(spec.data)) {
+                // Array of data (for vega)
+                spec.data
+                  .filter(({ name }) => data[name])
+                  .forEach(({ name }) => {
+                    updateData(view, name, data[name]);
+                  });
+              } else {
+                // Single data (for vega-lite)
+                const { name } = spec.data;
+                if (typeof name === 'string') {
                   updateData(view, name, data[name]);
-                });
+                }
+              }
               view.run();
             }
 
