@@ -84,13 +84,13 @@ export default class Demo extends React.Component {
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={data} spec={spec} onSignalTooltip={this.handleHover} />
+        <Vega data={data} spec={spec} signalHandlers={{ tooltip: this.handleHover }} />
         <h3>
           <code>ReactVega.createClassFromSpec()</code>
         </h3>
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
-        <BarChart data={data} onSignalTooltip={this.handleHover} />
+        <BarChart data={data} signalHandlers={{ tooltip: this.handleHover }} />
         <div>
           Hover info: <code>{info}</code>
         </div>

@@ -1,15 +1,16 @@
 import React from 'react';
-import vegaEmbed, { EmbedOptions, VisualizationSpec, Result, vega } from 'vega-embed';
-import { isFunction } from './util';
-import listenerName from './utils/listenerName';
+import vegaEmbed, { EmbedOptions, VisualizationSpec, Result } from 'vega-embed';
 
 export type VegaEmbedProps = {
   className?: string;
-  spec: string | VisualizationSpec;
+  spec: VisualizationSpec;
+  signalHandlers: {
+    [key: string]: (name: string, value: any) => void;
+  };
   style?: { [key: string]: any };
   onNewView?: (view: Result['view']) => {};
   onError?: (error: Error) => {};
-} & EmbedOptions;
+} & EmbedOptions & {};
 
 const NOOP = () => {};
 
@@ -29,58 +30,50 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     this.clearView();
   }
 
-  view?: Result['view'];
+  viewPromise?: Promise<Result['view'] | undefined>;
 
   createView() {
-    const { spec, onNewView = NOOP, onError = NOOP } = this.props;
+    const { spec, onNewView = NOOP, onError = NOOP, signalHandlers = {}, ...options } = this.props;
     if (this.containerRef.current) {
-      vegaEmbed(this.containerRef.current, spec)
-        .then(({ view }) => {
+      this.viewPromise = vegaEmbed(this.containerRef.current, spec, options).then(
+        ({ view }) => {
           if (typeof spec !== 'string' && 'signals' in spec && spec.signals) {
             spec.signals.forEach(signal => {
               view.addSignalListener(signal.name, (...args) => {
-                const listener = this.props[listenerName(signal.name)];
+                const listener = signalHandlers[signal.name];
                 if (listener) {
                   listener.apply(this, args);
                 }
               });
             });
+            view.run();
           }
-
-          this.view = view;
           onNewView(view);
 
           return view;
-        })
-        .catch((reason: any) => {
+        },
+        reason => {
           onError(reason);
-        });
+        },
+      );
     }
   }
 
   clearView() {
-    if (this.view) {
-      this.view.finalize();
-      this.view = null;
+    if (this.viewPromise) {
+      this.viewPromise
+        .then(view => {
+          if (view) {
+            view.finalize();
+          }
+
+          return true;
+        })
+        .catch(NOOP);
+      this.viewPromise = null;
     }
 
     return this;
-  }
-
-  updateData(name, value) {
-    if (value) {
-      if (isFunction(value)) {
-        value(this.view.data(name));
-      } else {
-        this.view.change(
-          name,
-          vega
-            .changeset()
-            .remove(() => true)
-            .insert(value),
-        );
-      }
-    }
   }
 
   render() {
