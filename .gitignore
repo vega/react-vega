@@ -50,6 +50,7 @@ lib
 .eslintrc.js
 .prettierignore
 prettier.config.js
+jest.config.js
 
 # Storybook output
 storybook-static
