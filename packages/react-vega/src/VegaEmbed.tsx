@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import vegaEmbed, { EmbedOptions, VisualizationSpec, Result } from 'vega-embed';
 
 export type VegaEmbedProps = {
@@ -7,12 +7,14 @@ export type VegaEmbedProps = {
   signalListeners?: {
     [key: string]: (name: string, value: any) => void;
   };
-  style?: { [key: string]: any };
+  style?: CSSProperties;
   onNewView?: (view: Result['view']) => {};
   onError?: (error: Error) => {};
 } & EmbedOptions & {};
 
 const NOOP = () => {};
+
+type ViewModifier = (view: Result['view']) => void;
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
@@ -32,11 +34,33 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     this.clearView();
   }
 
+  handleError = (error: Error) => {
+    const { onError = NOOP } = this.props;
+    onError(error);
+    console.warn(error);
+
+    return undefined;
+  };
+
+  modifyView = (action: ViewModifier) => {
+    if (this.viewPromise) {
+      this.viewPromise
+        .then(view => {
+          if (view) {
+            action(view);
+          }
+
+          return true;
+        })
+        .catch(this.handleError);
+    }
+  };
+
   createView() {
     const { spec, onNewView = NOOP, onError = NOOP, signalListeners = {}, ...options } = this.props;
     if (this.containerRef.current) {
-      this.viewPromise = vegaEmbed(this.containerRef.current, spec, options).then(
-        ({ view }) => {
+      this.viewPromise = vegaEmbed(this.containerRef.current, spec, options)
+        .then(({ view }) => {
           const signalNames = Object.keys(signalListeners);
           signalNames.forEach(signalName => {
             try {
@@ -51,29 +75,16 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           onNewView(view);
 
           return view;
-        },
-        reason => {
-          onError(reason);
-
-          return undefined;
-        },
-      );
+        })
+        .catch(this.handleError);
     }
   }
 
   clearView() {
-    if (this.viewPromise) {
-      this.viewPromise
-        .then(view => {
-          if (view) {
-            view.finalize();
-          }
-
-          return true;
-        })
-        .catch(NOOP);
-      this.viewPromise = undefined;
-    }
+    this.modifyView(view => {
+      view.finalize();
+    });
+    this.viewPromise = undefined;
 
     return this;
   }
