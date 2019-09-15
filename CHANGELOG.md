@@ -1,5 +1,4 @@
-# [0.0.0](https://github.com/vega/react-vega/compare/v6.1.0...v0.0.0) (2019-09-15)
-
+# [7.0.0-alpha.0](https://github.com/vega/react-vega/compare/v6.1.0...v7.0.0-alpha.0) (2019-09-15)
 
 ### Features
 

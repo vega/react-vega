@@ -12,7 +12,7 @@ npm install react vega react-vega --save
 
 ## Versions
 
-* `react-vega@7.x.x` is rewritten in typescript with several API changes and now support both `vega` and `vega-lite`.
+* `react-vega@7.x.x` is rewritten in typescript with several API changes and now support both `vega` and `vega-lite`. If you are upgrading from `react-vega` or `react-vega-lite` version `6.x.x` to `7.x.x`, read this [migration guide](https://github.com/vega/react-vega/blob/master/CHANGELOG.md#-migration-guide).
 * `react-vega@6.x.x` is same with `5.x.x` but output are in different directories and exported as both `commonjs` and `es module`.
 * `react-vega@5.x.x` uses `vega` again.
 * `react-vega@4.x.x` has same interface with `3.x.x` except it uses the lightweight `vega-lib` instead of `vega`.
