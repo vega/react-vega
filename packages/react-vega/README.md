@@ -28,7 +28,7 @@ There are two approaches to use this library.
 
 #### BarChart.js
 
-See the rest of the spec in [spec1.js](demo/src/vega/spec1.js).
+See the rest of the spec in [spec1.js](https://github.com/vega/react-vega/blob/master/packages/react-vega-demo/stories/vega/spec1.js).
 
 ```js
 import React, { PropTypes } from 'react';

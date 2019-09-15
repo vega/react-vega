@@ -1,8 +1,8 @@
-# WARNING: THIS PACKAGE IS DEPRECATED.
+# WARNING: `react-vega-lite` IS DEPRECATED.
 
 The development has stop at version 6 since `react-vega` now can handle `vega-lite` spec as well.
 
-Please use `react-vega` instead.
+Please use `react-vega@7.x.x` instead.
 
 ```js
 import { Vega, VegaLite, createClassFromSpec } from 'react-vega';
