@@ -6,5 +6,5 @@ import ReactVegaDemo from './ReactVegaDemo';
 import ReactVegaLiteDemo from './ReactVegaLiteDemo';
 import './style.css';
 
-storiesOf('react-vega', module).add('Demo', () => <ReactVegaDemo />);
-storiesOf('react-vega-lite', module).add('Demo', () => <ReactVegaLiteDemo />);
+storiesOf('react-vega', module).add('Vega', () => <ReactVegaDemo />);
+storiesOf('react-vega', module).add('VegaLite', () => <ReactVegaLiteDemo />);

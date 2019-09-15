@@ -1,9 +1,9 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import VegaLite, { createClassFromLiteSpec } from '../../react-vega-lite';
+import { VegaLite, createClassFromSpec } from '../../react-vega/src';
 
 const data1 = {
-  values: [
+  myData: [
     { a: 'A', b: 20 },
     { a: 'B', b: 34 },
     { a: 'C', b: 55 },
@@ -17,7 +17,7 @@ const data1 = {
 };
 
 const data2 = {
-  values: [
+  myData: [
     { a: 'A', b: 28 },
     { a: 'B', b: 55 },
     { a: 'C', b: 43 },
@@ -31,6 +31,7 @@ const data2 = {
 };
 
 const spec1 = {
+  data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
     x: { field: 'a', type: 'ordinal' },
@@ -40,6 +41,7 @@ const spec1 = {
 };
 
 const spec2 = {
+  data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
     x: { field: 'b', type: 'quantitative' },
@@ -48,7 +50,7 @@ const spec2 = {
   mark: 'bar',
 };
 
-const BarChart = createClassFromLiteSpec(spec1);
+const BarChart = createClassFromSpec({ mode: 'vega-lite', spec: spec1 });
 
 const code1 = `<VegaLite data={this.state.data} spec={this.state.spec} />`;
 
@@ -67,6 +69,7 @@ export default class Demo extends React.Component {
     this.handleHover = this.handleHover.bind(this);
     this.handleToggleSpec = this.handleToggleSpec.bind(this);
     this.handleUpdateData = this.handleUpdateData.bind(this);
+    // this.handlers = { hover: this.handleHover };
   }
 
   handleHover(...args) {
@@ -124,13 +127,13 @@ export default class Demo extends React.Component {
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <VegaLite data={data} spec={spec} onSignalHover={this.handleHover} />
+        <VegaLite data={data} spec={spec} signalHandlers={this.handlers} />
         <h3>
           <code>ReactVegaLite.createClassFromLiteSpec()</code>
         </h3>
         Use the given spec to create a reusable component.
         <pre>{code2}</pre>
-        <BarChart data={data} onSignalHover={this.handleHover} />
+        <BarChart data={data} signalHandlers={this.handlers} />
         {info}
       </div>
     );
