@@ -17,6 +17,10 @@ http://vega.github.io/react-vega/
 | [react-vega](https://github.com/vega/react-vega/tree/master/packages/react-vega) | [![Version](https://img.shields.io/npm/v/react-vega.svg?style=flat-square)](https://npmjs.org/package/react-vega) | [Documentation](https://github.com/vega/react-vega/tree/master/packages/react-vega) |
 | [react-vega-lite](https://github.com/vega/react-vega/tree/master/packages/react-vega-lite) (deprecated) | [![Version](https://img.shields.io/npm/v/react-vega-lite.svg?style=flat-square)](https://npmjs.org/package/react-vega-lite) | Use `react-vega` instead.
 
+### Migration
+
+If you are upgrading from `react-vega` or `react-vega-lite` version `6.x.x` to `7.x.x`, read this [migration guide](https://github.com/vega/react-vega/blob/master/CHANGELOG.md#-migration-guide).
+
 ### License
 
 Apache-2.0
