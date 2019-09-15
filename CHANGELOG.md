@@ -14,6 +14,7 @@
 #### Vega
 
 * `<Vega enableHover />` changes to `<Vega hover />`
+* `<Vega onParseError={} />` changes to `<Vega onError={} />`
 * `Vega`'s `onSignalXXX` signal listeners has been changed.
 
 ##### Previous versions
