@@ -1,24 +1,24 @@
 # react-vega [![NPM version][npm-image]][npm-url]
 
-Convert Vega spec into React class conveniently, inspired by this [tutorial](https://medium.com/@pbesh/react-and-vega-an-alternative-visualization-example-cd76e07dc1cd#.omslw1xy8) by @pbeshai
+> Use `vega` or `vega-lite` in `react` application smoothly!
 
-## Versions
-
-* `react-vega@6.x.x` is same with `5.x.x` but output are in different directories and exported as both `commonjs` and `es module`.
-* `react-vega@5.x.x` uses `vega` again.
-* `react-vega@4.x.x` has same interface with `3.x.x` except it uses the lightweight `vega-lib` instead of `vega`.
-* `react-vega@3.x.x` was update with breaking changes to support `vega@3.0`.
-* If you are looking to use `react` with `vega@2.x`, please use `react-vega@2.3.1`.
-
-## Examples
-
-- http://vega.github.io/react-vega/
+**DEMO**: http://vega.github.io/react-vega/
 
 ## Install
 
 ```bash
 npm install react vega react-vega --save
 ```
+
+## Versions
+
+* `react-vega@7.x.x` is rewritten in typescript with several API changes and now support both `vega` and `vega-lite`.
+* `react-vega@6.x.x` is same with `5.x.x` but output are in different directories and exported as both `commonjs` and `es module`.
+* `react-vega@5.x.x` uses `vega` again.
+* `react-vega@4.x.x` has same interface with `3.x.x` except it uses the lightweight `vega-lib` instead of `vega`.
+* `react-vega@3.x.x` was update with breaking changes to support `vega@3.0`.
+* If you are looking to use `react` with `vega@2.x`, please use `react-vega@2.3.1`.
+
 
 ## Example code
 
@@ -30,7 +30,7 @@ There are two approaches to use this library.
 
 See the rest of the spec in [spec1.js](demo/src/vega/spec1.js).
 
-```javascript
+```js
 import React, { PropTypes } from 'react';
 import {createClassFromSpec} from 'react-vega';
 
@@ -48,13 +48,13 @@ export default createClassFromSpec('BarChart', {
       ]
     }
   ],
-  ... // See the rest in demo/src/vega/spec1.js
+  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.js
 });
 ```
 
 #### main.js
 
-```javascript
+```js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BarChart from './BarChart.js';
@@ -67,8 +67,10 @@ function handleHover(...args){
   console.log(args);
 }
 
+const signalListeners = { hover: handleHover };
+
 ReactDOM.render(
-  <BarChart data={barData} onSignalHover={handleHover}/>,
+  <BarChart data={barData} signalListeners={signalListeners} />,
   document.getElementById('bar-container')
 );
 ```
@@ -98,7 +100,7 @@ const spec = {
       ]
     }
   ],
-  ... // See the rest in demo/src/vega/spec1.js
+  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.js
 }
 
 const barData = {
@@ -109,31 +111,30 @@ function handleHover(...args){
   console.log(args);
 }
 
+const signalListeners = { hover: handleHover };
+
 ReactDOM.render(
-  <Vega spec={spec} data={barData} onSignalHover={handleHover}/>,
+  <Vega spec={spec} data={barData} signalListeners={signalListeners} />,
   document.getElementById('bar-container')
 );
 ```
+
+## API
 
 ### Props
 
 React class `Vega` and any output class from `createClassFromSpec` have these properties:
 
-#### Basic
+#### Props from [vega-embed's API](https://github.com/vega/vega-embed)
+
+`mode`, `theme`, `defaultStyle`, `renderer`, `logLovel`, `tooltip`, `loader`, `patch`, `width`, `height`, `padding`, `actions`, `scaleFactor`, `config`, `editorUrl`, `sourceHeader`, `sourceFooter`, `hover`, `i18n`, `downloadFileName`
+
+#### CSS
+
+class and style of the container `<div>` element
 
 - **className**:String
 - **style**:Object
-
-#### Props correspond to [Vega's View Component API](https://github.com/vega/vega/wiki/Runtime#view-component-api)
-
-- **width**:Number
-- **height**:Number
-- **padding**:Object
-- **renderer**:String
-- **logLevel**:Number
-- **background**:String
-- **tooltip**:Function
-- **enableHover**:Boolean -- equivalent to calling `view.hover()`
 
 #### Data
 
@@ -141,7 +142,7 @@ React class `Vega` and any output class from `createClassFromSpec` have these pr
 
 For `data`, this property takes an Object with keys being dataset names defined in the spec's data field, such as:
 
-```javascript
+```js
 var barData = {
   table: [{"x": 1,  "y": 28}, {"x": 2,  "y": 55}, ...]
 };
@@ -149,23 +150,27 @@ var barData = {
 
 Each value can be an *array* or `function(dataset){...}`. If the value is a function, Vega's `vis.data(dataName)` will be passed as the argument `dataset`.
 
-```javascript
+```js
 var barData = {
   table: function(dataset){...}
 };
 ```
+
 In the example above, `vis.data('table')` will be passed as `dataset`.
 
-- **onSignal***XXX* - Include all signals defined in the spec automatically.
+- **signalListeners**:Object
 
-All signals defined in the spec can be listened to via these properties.
-For example, to listen to signal *hover*, attach a listener to `onSignal+capitalize('hover')`
+All signals defined in the spec can be listened to via `signalListeners`.
+For example, to listen to signal *hover*, attach a listener like this
 
-```javascript
- <Vega spec={spec} data={barData} onSignalHover={handleHover}/>
+```js
+// better declare outside of render function
+const signalListeners = { hover: handleHover };
+
+<Vega spec={spec} data={barData} signalListeners={signalListeners} />
 ```
 
-#### Event handlers
+#### Event listeners
 
 - **onNewView**:Function Dispatched when new vega.View is constructed and pass the newly created view as argument.
 - **onParseError**:Function Dispatched when vega cannot parse the spec.

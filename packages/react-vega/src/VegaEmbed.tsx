@@ -4,7 +4,7 @@ import vegaEmbed, { EmbedOptions, VisualizationSpec, Result } from 'vega-embed';
 export type VegaEmbedProps = {
   className?: string;
   spec: VisualizationSpec;
-  signalHandlers?: {
+  signalListeners?: {
     [key: string]: (name: string, value: any) => void;
   };
   style?: { [key: string]: any };
@@ -33,14 +33,14 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   }
 
   createView() {
-    const { spec, onNewView = NOOP, onError = NOOP, signalHandlers = {}, ...options } = this.props;
+    const { spec, onNewView = NOOP, onError = NOOP, signalListeners = {}, ...options } = this.props;
     if (this.containerRef.current) {
       this.viewPromise = vegaEmbed(this.containerRef.current, spec, options).then(
         ({ view }) => {
-          const signalNames = Object.keys(signalHandlers);
+          const signalNames = Object.keys(signalListeners);
           signalNames.forEach(signalName => {
             try {
-              view.addSignalListener(signalName, signalHandlers[signalName]);
+              view.addSignalListener(signalName, signalListeners[signalName]);
             } catch (ex) {
               console.warn('Cannot add invalid signal handler >>', ex);
             }

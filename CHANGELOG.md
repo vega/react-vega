@@ -1,3 +1,66 @@
+# [0.0.0](https://github.com/vega/react-vega/compare/v6.1.0...v0.0.0) (2019-09-15)
+
+
+### Features
+
+* rewrite react-vega in typescript ([#54](https://github.com/vega/react-vega/issues/54)) ([b923923](https://github.com/vega/react-vega/commit/b923923))
+
+### 💔 BREAKING CHANGES:
+
+* Some props of `<Vega />` are changed.
+* `react-vega-lite` package is deprecated.
+
+### 🚚 Migration Guide
+
+#### Vega
+
+* `<Vega enableHover />` changes to `<Vega hover />`
+* `Vega`'s `onSignalXXX` signal listeners has been changed.
+
+##### Previous versions
+
+```js
+<Vega onSignalHover={handleHover} />
+```
+
+##### Now
+
+```js
+// key is signal name
+const signalListeners = { hover: handleHover } />
+
+<Vega signalListeners={signalListeners} />
+```
+
+#### VegaLite
+
+Please use `react-vega` instead of `react-vega-lite`.
+
+```js
+import { Vega, VegaLite, createClassFromSpec } from 'react-vega';
+
+// Option 1. When spec has $schema field that is a valid vega-lite schema url. Vega will automatically parse vega-lite spec.
+<Vega spec={spec} />
+// Option 2. Enforce mode manually.
+<Vega mode="vega-lite" spec={spec} />
+// Option 3. The new VegaLite component in react-vega is just a syntactic sugar of option 3.
+<VegaLite spec={spec} />
+```
+
+# [6.1.0](https://github.com/vega/react-vega/compare/v6.0.1...v6.1.0) (2019-07-10)
+
+
+### Bug Fixes
+
+* re-render should not register additonal hover listeners ([#42](https://github.com/vega/react-vega/issues/42)) ([5634efe](https://github.com/vega/react-vega/commit/5634efe)), closes [#30](https://github.com/vega/react-vega/issues/30)
+
+
+### Features
+
+* integrate vega embed to use tooltip, bug fixes for storybook ([#38](https://github.com/vega/react-vega/issues/38)) ([16aa8cc](https://github.com/vega/react-vega/commit/16aa8cc))
+
+
+
 ## [6.0.1](https://github.com/vega/react-vega/compare/v6.0.0...v6.0.1) (2019-04-03)
 
 

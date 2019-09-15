@@ -1,4 +1,4 @@
-# react-vega & react-vega-lite
+# react-vega
 
 > `react` + `vega`|`vega-lite`
 
@@ -10,10 +10,10 @@ http://vega.github.io/react-vega/
 
 Click on package name below to see its documentation.
 
-| Package | Version |
-|--|--|
-| [react-vega](https://github.com/vega/react-vega/tree/master/packages/react-vega) | [![Version](https://img.shields.io/npm/v/react-vega.svg?style=flat-square)](https://npmjs.org/package/react-vega) |
-| [react-vega-lite](https://github.com/vega/react-vega/tree/master/packages/react-vega-lite) | [![Version](https://img.shields.io/npm/v/react-vega-lite.svg?style=flat-square)](https://npmjs.org/package/react-vega-lite) |
+| Package | Version | |
+|--|--|--|
+| [react-vega](https://github.com/vega/react-vega/tree/master/packages/react-vega) | [![Version](https://img.shields.io/npm/v/react-vega.svg?style=flat-square)](https://npmjs.org/package/react-vega) | [Documentation](https://github.com/vega/react-vega/tree/master/packages/react-vega) |
+| [react-vega-lite](https://github.com/vega/react-vega/tree/master/packages/react-vega-lite) (deprecated) | [![Version](https://img.shields.io/npm/v/react-vega-lite.svg?style=flat-square)](https://npmjs.org/package/react-vega-lite) |
 
 ### Development
 
