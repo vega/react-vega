@@ -1,25 +1,22 @@
 import React, { CSSProperties } from 'react';
-import vegaEmbed, { EmbedOptions, VisualizationSpec, Result } from 'vega-embed';
+import vegaEmbed, { EmbedOptions, VisualizationSpec } from 'vega-embed';
+import { ViewListener, View, SignalListeners } from './types';
 
 export type VegaEmbedProps = {
   className?: string;
   spec: VisualizationSpec;
-  signalListeners?: {
-    [key: string]: (name: string, value: any) => void;
-  };
+  signalListeners?: SignalListeners;
   style?: CSSProperties;
-  onNewView?: (view: Result['view']) => {};
+  onNewView?: ViewListener;
   onError?: (error: Error) => {};
 } & EmbedOptions & {};
 
 const NOOP = () => {};
 
-type ViewModifier = (view: Result['view']) => void;
-
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
 
-  viewPromise?: Promise<Result['view'] | undefined>;
+  viewPromise?: Promise<View | undefined>;
 
   componentDidMount() {
     this.createView();
@@ -42,7 +39,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     return undefined;
   };
 
-  modifyView = (action: ViewModifier) => {
+  modifyView = (action: ViewListener) => {
     if (this.viewPromise) {
       this.viewPromise
         .then(view => {

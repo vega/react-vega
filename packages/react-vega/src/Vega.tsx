@@ -1,13 +1,14 @@
 import React from 'react';
-import { vega, Result } from 'vega-embed';
+import { vega } from 'vega-embed';
 import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
 import isFunction from './utils/isFunction';
+import { PlainObject, View } from './types';
 
 export type VegaProps = VegaEmbedProps & {
-  data: { [key: string]: any };
+  data: PlainObject;
 };
 
-function updateData(view: Result['view'], name: string, value: any) {
+function updateData(view: View, name: string, value: any) {
   if (value) {
     if (isFunction(value)) {
       value(view.data(name));
