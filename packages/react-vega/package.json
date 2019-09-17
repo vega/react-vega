@@ -18,12 +18,12 @@
     "types"
   ],
   "dependencies": {
-    "prop-types": "^15.7.2",
     "vega-embed": "^4.2.0"
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "vega": "^5.3.4"
+    "vega": "^5.3.4",
+    "vega-lite": "^3.4.0"
   },
   "license": "Apache-2.0",
   "publishConfig": {
