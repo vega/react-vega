@@ -22,8 +22,8 @@
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "vega": "^5.3.4",
-    "vega-lite": "^3.4.0"
+    "vega": "*",
+    "vega-lite": "*"
   },
   "license": "Apache-2.0",
   "publishConfig": {
