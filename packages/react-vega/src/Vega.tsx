@@ -3,6 +3,8 @@ import { vega } from 'vega-embed';
 import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
 import isFunction from './utils/isFunction';
 import { PlainObject, View } from './types';
+import shallowEqual from './utils/shallowEqual';
+import { NOOP } from './constants';
 
 export type VegaProps = VegaEmbedProps & {
   data: PlainObject;
@@ -31,9 +33,17 @@ export default class Vega extends React.PureComponent<VegaProps> {
     this.update();
   }
 
-  componentDidUpdate() {
-    this.update();
+  componentDidUpdate(prevProps: VegaProps) {
+    if (!shallowEqual(this.props.data, prevProps.data)) {
+      this.update();
+    }
   }
+
+  handleNewView: VegaProps['onNewView'] = (view: View) => {
+    this.update();
+    const { onNewView = NOOP } = this.props;
+    onNewView(view);
+  };
 
   update() {
     const { data, spec } = this.props;
@@ -63,6 +73,6 @@ export default class Vega extends React.PureComponent<VegaProps> {
   render() {
     const { data, ...restProps } = this.props;
 
-    return <VegaEmbed ref={this.vegaEmbed} {...restProps} />;
+    return <VegaEmbed ref={this.vegaEmbed} {...restProps} onNewView={this.handleNewView} />;
   }
 }

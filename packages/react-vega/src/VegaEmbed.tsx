@@ -1,6 +1,9 @@
 import React, { CSSProperties } from 'react';
 import vegaEmbed, { EmbedOptions, VisualizationSpec } from 'vega-embed';
 import { ViewListener, View, SignalListeners } from './types';
+import shallowEqual from './utils/shallowEqual';
+import getUniqueFieldNames from './utils/getUniqueFieldNames';
+import { NOOP } from './constants';
 
 export type VegaEmbedProps = {
   className?: string;
@@ -11,8 +14,6 @@ export type VegaEmbedProps = {
   onError?: (error: Error) => {};
 } & EmbedOptions & {};
 
-const NOOP = () => {};
-
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
 
@@ -22,9 +23,20 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     this.createView();
   }
 
-  componentDidUpdate() {
-    this.clearView();
-    this.createView();
+  componentDidUpdate(prevProps: VegaEmbedProps) {
+    const fieldSet = getUniqueFieldNames([this.props, prevProps]) as Set<keyof VegaEmbedProps>;
+    fieldSet.delete('className');
+    fieldSet.delete('style');
+    fieldSet.delete('signalListeners');
+
+    // Only create a new view if necessary
+    if (
+      Array.from(fieldSet).some(f => this.props[f] !== prevProps[f]) ||
+      !shallowEqual(this.props.signalListeners, prevProps.signalListeners)
+    ) {
+      this.clearView();
+      this.createView();
+    }
   }
 
   componentWillUnmount() {
