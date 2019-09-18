@@ -18,6 +18,7 @@
     "types"
   ],
   "dependencies": {
+    "@types/react": "^16.0.0",
     "vega-embed": "^4.2.0"
   },
   "peerDependencies": {
