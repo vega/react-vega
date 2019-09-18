@@ -1,6 +1,8 @@
 import { PlainObject } from '../types';
 
-export default function shallowEqual(a: PlainObject = {}, b: PlainObject = {}) {
+const EMPTY = {};
+
+export default function shallowEqual(a: PlainObject = EMPTY, b: PlainObject = EMPTY) {
   const aKeys = Object.keys(a);
   const bKeys = Object.keys(b);
 
