@@ -1,13 +1,16 @@
 import React from 'react';
-import { vega, Result } from 'vega-embed';
+import { vega } from 'vega-embed';
 import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
 import isFunction from './utils/isFunction';
+import { PlainObject, View } from './types';
+import shallowEqual from './utils/shallowEqual';
+import { NOOP } from './constants';
 
 export type VegaProps = VegaEmbedProps & {
-  data: { [key: string]: any };
+  data: PlainObject;
 };
 
-function updateData(view: Result['view'], name: string, value: any) {
+function updateData(view: View, name: string, value: any) {
   if (value) {
     if (isFunction(value)) {
       value(view.data(name));
@@ -30,9 +33,17 @@ export default class Vega extends React.PureComponent<VegaProps> {
     this.update();
   }
 
-  componentDidUpdate() {
-    this.update();
+  componentDidUpdate(prevProps: VegaProps) {
+    if (!shallowEqual(this.props.data, prevProps.data)) {
+      this.update();
+    }
   }
+
+  handleNewView: VegaProps['onNewView'] = (view: View) => {
+    this.update();
+    const { onNewView = NOOP } = this.props;
+    onNewView(view);
+  };
 
   update() {
     const { data, spec } = this.props;
@@ -62,6 +73,6 @@ export default class Vega extends React.PureComponent<VegaProps> {
   render() {
     const { data, ...restProps } = this.props;
 
-    return <VegaEmbed ref={this.vegaEmbed} {...restProps} />;
+    return <VegaEmbed ref={this.vegaEmbed} {...restProps} onNewView={this.handleNewView} />;
   }
 }

@@ -1,33 +1,42 @@
 import React, { CSSProperties } from 'react';
-import vegaEmbed, { EmbedOptions, VisualizationSpec, Result } from 'vega-embed';
+import vegaEmbed, { EmbedOptions, VisualizationSpec } from 'vega-embed';
+import { ViewListener, View, SignalListeners } from './types';
+import shallowEqual from './utils/shallowEqual';
+import getUniqueFieldNames from './utils/getUniqueFieldNames';
+import { NOOP } from './constants';
 
 export type VegaEmbedProps = {
   className?: string;
   spec: VisualizationSpec;
-  signalListeners?: {
-    [key: string]: (name: string, value: any) => void;
-  };
+  signalListeners?: SignalListeners;
   style?: CSSProperties;
-  onNewView?: (view: Result['view']) => {};
+  onNewView?: ViewListener;
   onError?: (error: Error) => {};
 } & EmbedOptions & {};
-
-const NOOP = () => {};
-
-type ViewModifier = (view: Result['view']) => void;
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
 
-  viewPromise?: Promise<Result['view'] | undefined>;
+  viewPromise?: Promise<View | undefined>;
 
   componentDidMount() {
     this.createView();
   }
 
-  componentDidUpdate() {
-    this.clearView();
-    this.createView();
+  componentDidUpdate(prevProps: VegaEmbedProps) {
+    const fieldSet = getUniqueFieldNames([this.props, prevProps]) as Set<keyof VegaEmbedProps>;
+    fieldSet.delete('className');
+    fieldSet.delete('style');
+    fieldSet.delete('signalListeners');
+
+    // Only create a new view if necessary
+    if (
+      Array.from(fieldSet).some(f => this.props[f] !== prevProps[f]) ||
+      !shallowEqual(this.props.signalListeners, prevProps.signalListeners)
+    ) {
+      this.clearView();
+      this.createView();
+    }
   }
 
   componentWillUnmount() {
@@ -42,7 +51,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     return undefined;
   };
 
-  modifyView = (action: ViewModifier) => {
+  modifyView = (action: ViewListener) => {
     if (this.viewPromise) {
       this.viewPromise
         .then(view => {
