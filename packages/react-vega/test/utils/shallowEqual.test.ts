@@ -9,6 +9,13 @@ describe('shallowEqual(a, b)', () => {
   it('does not check recursively', () => {
     expect(shallowEqual({ a: { b: 1 } }, { a: { b: 1 } })).toBeFalsy();
   });
+  it('uses empty object if receive undefined', () => {
+    expect(shallowEqual(undefined, undefined)).toBeTruthy();
+    expect(shallowEqual(undefined, {})).toBeTruthy();
+    expect(shallowEqual(undefined, { a: 1 })).toBeFalsy();
+    expect(shallowEqual({}, undefined)).toBeTruthy();
+    expect(shallowEqual({ a: 1 }, undefined)).toBeFalsy();
+  });
   it('returns false otherwise', () => {
     expect(shallowEqual({ a: 1 }, { a: 2 })).toBeFalsy();
     expect(shallowEqual({ b: 1 }, { a: 2 })).toBeFalsy();
