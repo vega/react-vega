@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install react vega react-vega --save
+npm install react vega vega-lite react-vega --save
 ```
 
 ## Versions
@@ -118,6 +118,8 @@ ReactDOM.render(
   document.getElementById('bar-container')
 );
 ```
+
+There is also a `<VegaLite>` component that behaves like `<Vega>` but always assume that the spec is `vega-lite` spec (`mode` is fixed to `vega-lite`).
 
 ## API
 
