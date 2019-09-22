@@ -2,7 +2,7 @@ import React from 'react';
 import { vega } from 'vega-embed';
 import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
 import isFunction from './utils/isFunction';
-import { PlainObject, View } from './types';
+import { PlainObject, View, ViewListener } from './types';
 import shallowEqual from './utils/shallowEqual';
 import { NOOP } from './constants';
 
@@ -39,7 +39,7 @@ export default class Vega extends React.PureComponent<VegaProps> {
     }
   }
 
-  handleNewView: VegaProps['onNewView'] = (view: View) => {
+  handleNewView: ViewListener = (view: View) => {
     this.update();
     const { onNewView = NOOP } = this.props;
     onNewView(view);
