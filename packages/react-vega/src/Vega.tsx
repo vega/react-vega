@@ -54,28 +54,18 @@ export default class Vega extends React.PureComponent<VegaProps> {
 
   update() {
     const { data, spec } = this.props;
-    const datasetNames = getDatasetNamesFromSpec(spec);
 
-    if (this.vegaEmbed.current && datasetNames.length > 0) {
-      this.vegaEmbed.current.modifyView(view => {
-        if (data && spec.data) {
-          if (Array.isArray(spec.data)) {
-            // Array of data
-            spec.data
-              .filter(({ name }) => data[name])
-              .forEach(({ name }) => {
-                updateData(view, name, data[name]);
-              });
-          } else {
-            // Single data
-            const { name } = spec.data;
-            if (typeof name === 'string') {
-              updateData(view, name, data[name]);
-            }
-          }
+    if (data) {
+      const datasetNames = getDatasetNamesFromSpec(spec).filter(name => data[name]);
+
+      if (this.vegaEmbed.current && datasetNames.length > 0) {
+        this.vegaEmbed.current.modifyView(view => {
+          datasetNames.forEach(name => {
+            updateData(view, name, data[name]);
+          });
           view.run();
-        }
-      });
+        });
+      }
     }
   }
 
