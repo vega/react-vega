@@ -66,7 +66,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   };
 
   createView() {
-    const { spec, onNewView = NOOP, onError = NOOP, signalListeners = {}, ...options } = this.props;
+    const { spec, onNewView, onError = NOOP, signalListeners = {}, ...options } = this.props;
     if (this.containerRef.current) {
       this.viewPromise = vegaEmbed(this.containerRef.current, spec, options)
         .then(({ view }) => {
@@ -81,11 +81,14 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           if (signalNames.length > 0) {
             view.run();
           }
-          onNewView(view);
 
           return view;
         })
         .catch(this.handleError);
+
+      if (onNewView) {
+        this.modifyView(onNewView);
+      }
     }
   }
 
