@@ -32,7 +32,7 @@ See the rest of the spec in [spec1.js](https://github.com/vega/react-vega/blob/m
 
 ```js
 import React, { PropTypes } from 'react';
-import {createClassFromSpec} from 'react-vega';
+import { createClassFromSpec } from 'react-vega';
 
 export default createClassFromSpec('BarChart', {
   "width": 400,
@@ -84,7 +84,7 @@ Provides a bit more flexibility, but at the cost of extra checks for spec change
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Vega from 'react-vega';
+import { Vega } from 'react-vega';
 
 const spec = {
   "width": 400,
