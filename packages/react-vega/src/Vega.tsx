@@ -30,11 +30,11 @@ function updateData(view: View, name: string, value: any) {
 const EMPTY = {};
 
 export default class Vega extends React.PureComponent<VegaProps> {
+  vegaEmbed = React.createRef<VegaEmbed>();
+
   static defaultProps = {
     data: EMPTY,
   };
-
-  vegaEmbed = React.createRef<VegaEmbed>();
 
   componentDidMount() {
     this.update();
