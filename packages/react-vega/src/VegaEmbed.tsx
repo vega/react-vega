@@ -43,7 +43,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     this.clearView();
   }
 
-  handleError = (error: Error) => {
+  handleError = (error: Error): undefined => {
     const { onError = NOOP } = this.props;
     onError(error);
     console.warn(error);

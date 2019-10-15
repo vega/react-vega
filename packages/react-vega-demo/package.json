@@ -19,20 +19,20 @@
     "types"
   ],
   "dependencies": {
-    "@storybook/addon-actions": "^5.1.9",
-    "@storybook/addon-links": "^5.1.9",
-    "@storybook/addons": "^5.1.9",
-    "@storybook/react": "^5.1.9",
-    "react": "^16.8.6"
+    "@storybook/addon-actions": "^5.2.4",
+    "@storybook/addon-links": "^5.2.4",
+    "@storybook/addons": "^5.2.4",
+    "@storybook/react": "^5.2.4",
+    "react": "^16.10.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
+    "@babel/core": "^7.6.4",
     "babel-loader": "^8.0.6",
-    "gh-pages": "^2.0.1",
-    "react-dom": "^16.8.6",
-    "vega": "^5.4.0",
-    "vega-embed": "^5.1.2",
-    "vega-lite": "^3.1.0"
+    "gh-pages": "^2.1.1",
+    "react-dom": "^16.10.2",
+    "vega": "^5.7.2",
+    "vega-embed": "^6.0.0",
+    "vega-lite": "^4.0.0-beta.10"
   },
   "license": "Apache-2.0",
   "publishConfig": {
