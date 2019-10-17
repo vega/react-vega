@@ -5,7 +5,6 @@ import isFunction from './utils/isFunction';
 import { PlainObject, View, ViewListener } from './types';
 import shallowEqual from './utils/shallowEqual';
 import { NOOP } from './constants';
-import getDatasetNamesFromSpec from './utils/getDatasetNamesFromSpec';
 
 export type VegaProps = VegaEmbedProps & {
   data?: PlainObject;
@@ -53,10 +52,10 @@ export default class Vega extends React.PureComponent<VegaProps> {
   };
 
   update() {
-    const { data, spec } = this.props;
+    const { data } = this.props;
 
     if (data) {
-      const datasetNames = getDatasetNamesFromSpec(spec).filter(name => data[name]);
+      const datasetNames = Object.keys(data);
 
       if (this.vegaEmbed.current && datasetNames.length > 0) {
         this.vegaEmbed.current.modifyView(view => {
