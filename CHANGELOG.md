@@ -1,3 +1,41 @@
+# [7.1.0](https://github.com/vega/react-vega/compare/v7.0.1...v7.1.0) (2019-10-18)
+
+
+### Features
+
+* add data support for layer ([#66](https://github.com/vega/react-vega/issues/66)) ([b63e3ae](https://github.com/vega/react-vega/commit/b63e3ae9ee800b5c48f9a1d8d442d58bed1bbf3d))
+
+
+
+## [7.0.1](https://github.com/vega/react-vega/compare/v7.0.0...v7.0.1) (2019-09-25)
+
+
+### Bug Fixes
+
+* return type of onError ([#62](https://github.com/vega/react-vega/issues/62)) ([8980bc4](https://github.com/vega/react-vega/commit/8980bc4fbe94d0e125be8609206de04f949e593e))
+
+
+### Features
+
+* optimize data update ([#61](https://github.com/vega/react-vega/issues/61)) ([8e1baab](https://github.com/vega/react-vega/commit/8e1baab35bb29b0e5903d452a7ed1db2a7046ee6))
+
+
+
+# [7.0.0](https://github.com/vega/react-vega/compare/v7.0.0-alpha.0...v7.0.0) (2019-09-20)
+
+
+### Bug Fixes
+
+* list of dependencies in package.json ([#57](https://github.com/vega/react-vega/issues/57)) ([d15659a](https://github.com/vega/react-vega/commit/d15659a6199620b5846654fb7047fd216e283125))
+
+
+### Features
+
+* improve perf and avoid updating data or view when not necessary ([#58](https://github.com/vega/react-vega/issues/58)) ([20d99ca](https://github.com/vega/react-vega/commit/20d99ca00ad422406eee2ec60040cefe1cef4696))
+* log parse error by default and catch more errors ([#56](https://github.com/vega/react-vega/issues/56)) ([c01862d](https://github.com/vega/react-vega/commit/c01862dbc63bea7f3cdf37aa0f3c0b129a8fb296))
+
+
+
 # [7.0.0-alpha.0](https://github.com/vega/react-vega/compare/v6.1.0...v7.0.0-alpha.0) (2019-09-15)
 
 ### Features
