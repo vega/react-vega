@@ -1,6 +1,6 @@
 {
   "name": "react-vega-demo",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "Convert Vega spec into React class conveniently",
   "author": "Krist Wongsuphasawat <krist.wongz@gmail.com> (http://kristw.yellowpigz.com)",
   "keywords": [],
