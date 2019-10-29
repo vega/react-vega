@@ -150,7 +150,7 @@ var barData = {
 };
 ```
 
-Each value can be an *array* or `function(dataset){...}`. If the value is a function, Vega's `vis.data(dataName)` will be passed as the argument `dataset`.
+Each value can be an *array* or `function(dataset){...}`. If the value is a function, Vega's `vis.data(dataName)` will be passed as the argument `dataset`. If you are using `<VegaLite>` make sure to enable your tooltip in the the spec, as [described here](https://vega.github.io/vega-lite/docs/tooltip.html#using-tooltip-channel).
 
 ```js
 var barData = {
