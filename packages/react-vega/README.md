@@ -12,12 +12,13 @@ npm install react vega vega-lite react-vega --save
 
 ## Versions
 
-- `react-vega@7.x.x` is rewritten in typescript with several API changes and now support both `vega` and `vega-lite`. If you are upgrading from `react-vega` or `react-vega-lite` version `6.x.x` to `7.x.x`, read this [migration guide](https://github.com/vega/react-vega/blob/master/CHANGELOG.md#-migration-guide).
-- `react-vega@6.x.x` is same with `5.x.x` but output are in different directories and exported as both `commonjs` and `es module`.
-- `react-vega@5.x.x` uses `vega` again.
-- `react-vega@4.x.x` has same interface with `3.x.x` except it uses the lightweight `vega-lib` instead of `vega`.
-- `react-vega@3.x.x` was update with breaking changes to support `vega@3.0`.
-- If you are looking to use `react` with `vega@2.x`, please use `react-vega@2.3.1`.
+* `react-vega@7.x.x` is rewritten in typescript with several API changes and now support both `vega` and `vega-lite`. If you are upgrading from `react-vega` or `react-vega-lite` version `6.x.x` to `7.x.x`, read this [migration guide](https://github.com/vega/react-vega/blob/master/CHANGELOG.md#-migration-guide).
+* `react-vega@6.x.x` is same with `5.x.x` but output are in different directories and exported as both `commonjs` and `es module`.
+* `react-vega@5.x.x` uses `vega` again.
+* `react-vega@4.x.x` has same interface with `3.x.x` except it uses the lightweight `vega-lib` instead of `vega`.
+* `react-vega@3.x.x` was update with breaking changes to support `vega@3.0`.
+* If you are looking to use `react` with `vega@2.x`, please use `react-vega@2.3.1`.
+
 
 ## Example code
 
@@ -118,7 +119,7 @@ ReactDOM.render(
 );
 ```
 
-There is also a `<VegaLite>` component that behaves like `<Vega>` but always assume that the spec is `vega-lite` spec (`mode` is fixed to `vega-lite`). If you are using `<VegaLite>` make sure to enable your tooltip in the the spec, as [described here](https://vega.github.io/vega-lite/docs/tooltip.html#using-tooltip-channel).
+There is also a `<VegaLite>` component that behaves like `<Vega>` but always assume that the spec is `vega-lite` spec (`mode` is fixed to `vega-lite`).
 
 ## API
 
@@ -149,7 +150,7 @@ var barData = {
 };
 ```
 
-Each value can be an _array_ or `function(dataset){...}`. If the value is a function, Vega's `vis.data(dataName)` will be passed as the argument `dataset`.
+Each value can be an *array* or `function(dataset){...}`. If the value is a function, Vega's `vis.data(dataName)` will be passed as the argument `dataset`. If you are using `<VegaLite>` make sure to enable your tooltip in the the spec, as [described here](https://vega.github.io/vega-lite/docs/tooltip.html#using-tooltip-channel).
 
 ```js
 var barData = {
@@ -162,13 +163,13 @@ In the example above, `vis.data('table')` will be passed as `dataset`.
 - **signalListeners**:Object
 
 All signals defined in the spec can be listened to via `signalListeners`.
-For example, to listen to signal _hover_, attach a listener like this
+For example, to listen to signal *hover*, attach a listener like this
 
 ```js
 // better declare outside of render function
 const signalListeners = { hover: handleHover };
 
-<Vega spec={spec} data={barData} signalListeners={signalListeners} />;
+<Vega spec={spec} data={barData} signalListeners={signalListeners} />
 ```
 
 #### Event listeners
@@ -189,9 +190,9 @@ Any class created from `createClassFromSpec` will have this method.
 You can pass the [`vega-tooltip`](https://github.com/vega/vega-tooltip) handler instance to the `tooltip` property.
 
 ```javascript
-import { Handler } from "vega-tooltip";
+import { Handler } from 'vega-tooltip';
 
-<Vega spec={spec} data={barData} tooltip={new Handler().call} />;
+ <Vega spec={spec} data={barData} tooltip={new Handler().call} />
 ```
 
 [npm-image]: https://img.shields.io/npm/v/react-vega.svg?style=flat-square
