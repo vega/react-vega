@@ -35,7 +35,6 @@
     ],
     "typescript": {
       "compilerOptions": {
-        "strictNullChecks": false,
         "typeRoots": [
           "../../node_modules/vega-lite/typings"
         ]

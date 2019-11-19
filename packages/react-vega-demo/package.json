@@ -30,9 +30,9 @@
     "babel-loader": "^8.0.6",
     "gh-pages": "^2.1.1",
     "react-dom": "^16.10.2",
-    "vega": "^5.7.2",
+    "vega": "^5.8.1",
     "vega-embed": "^6.0.0",
-    "vega-lite": "^4.0.0-beta.10"
+    "vega-lite": "^4.0.0-beta.12"
   },
   "license": "Apache-2.0",
   "publishConfig": {
