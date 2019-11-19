@@ -10,7 +10,7 @@
   },
   "private": true,
   "devDependencies": {
-    "@superset-ui/build-config": "^0.1.3",
+    "@superset-ui/build-config": "^0.2.0",
     "@superset-ui/commit-config": "^0.0.9",
     "husky": "^3.0.9",
     "lerna": "^3.17.0",
