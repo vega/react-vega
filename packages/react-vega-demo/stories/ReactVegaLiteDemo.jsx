@@ -122,6 +122,8 @@ export default class Demo extends React.Component {
         <button type="button" onClick={this.handleUpdateData}>
           Update data
         </button>
+        <p>Active spec</p>
+        <pre>{spec}</pre>
         <h3>
           <code>&lt;VegaLite&gt;</code> React Component
         </h3>
