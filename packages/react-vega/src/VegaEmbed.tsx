@@ -46,6 +46,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   handleError = (error: Error): undefined => {
     const { onError = NOOP } = this.props;
     onError(error);
+    // eslint-disable-next-line no-console
     console.warn(error);
 
     return undefined;
@@ -66,7 +67,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   };
 
   createView() {
-    const { spec, onNewView, onError = NOOP, signalListeners = {}, ...options } = this.props;
+    const { spec, onNewView, signalListeners = {}, ...options } = this.props;
     if (this.containerRef.current) {
       this.viewPromise = vegaEmbed(this.containerRef.current, spec, options)
         .then(({ view }) => {
@@ -74,8 +75,9 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           signalNames.forEach(signalName => {
             try {
               view.addSignalListener(signalName, signalListeners[signalName]);
-            } catch (ex) {
-              console.warn('Cannot add invalid signal handler >>', ex);
+            } catch (error) {
+              // eslint-disable-next-line no-console
+              console.warn('Cannot add invalid signal handler >>', error);
             }
           });
           if (signalNames.length > 0) {
