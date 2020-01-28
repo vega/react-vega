@@ -1,7 +1,7 @@
 {
   "name": "react-vega-monorepo",
   "version": "0.0.0",
-  "description": "Home of react-vega and react-vega-lite",
+  "description": "Home of react-vega",
   "author": "Krist Wongsuphasawat <krist.wongz@gmail.com> (http://kristw.yellowpigz.com)",
   "keywords": [],
   "repository": "git@github.com:vega/react-vega.git",
@@ -13,11 +13,9 @@
   "scripts": {
     "postpublish": "git push; git push --tags",
     "build": "yarn babel && yarn type:dts",
-    "build-one": "nimbus babel --clean",
     "babel": "yarn babel:cjs && yarn babel:esm",
     "babel:cjs": "nimbus babel --clean --workspaces=\"(react-vega)\"",
     "babel:esm": "nimbus babel --clean --workspaces=\"(react-vega)\" --esm",
-    "build:assets": "node ./scripts/buildAssets.js",
     "clean": "rm -rf ./packages/**/{lib,esm}",
     "commit": "superset-commit",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 20",
@@ -116,10 +114,7 @@
     },
     "typescript": {
       "compilerOptions": {
-        "emitDeclarationOnly": true,
-        "typeRoots": [
-          "../../node_modules/vega-lite/typings"
-        ]
+        "emitDeclarationOnly": true
       },
       "include": [
         "./storybook/**/*"
