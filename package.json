@@ -27,7 +27,7 @@
     "test": "yarn jest",
     "test:watch": "yarn lint:fix && yarn jest --watch",
     "type:dts": "nimbus typescript --build --reference-workspaces",
-    "prepare-release": "git checkout master && git pull --rebase origin master && lerna bootstrap && yarn install && yarn test",
+    "prepare-release": "git checkout master && git pull --rebase origin master && yarn && yarn test",
     "prerelease": "yarn build",
     "pretest": "yarn lint",
     "release": "yarn prepare-release && lerna publish --exact && yarn postrelease",
