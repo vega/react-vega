@@ -6,7 +6,8 @@ export default function getDatasetNamesFromSpec(spec: VisualizationSpec) {
     if (Array.isArray(data)) {
       // Array of data
       return data.map(({ name }) => name);
-    } else if (typeof data.name === 'string') {
+    }
+    if (typeof data.name === 'string') {
       // Single data
       return [data.name];
     }
