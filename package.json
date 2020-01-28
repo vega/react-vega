@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "postpublish": "git push; git push --tags",
-    "build": "yarn babel && yarn type:dts && yarn build:assets",
+    "build": "yarn babel && yarn type:dts",
     "build-one": "nimbus babel --clean",
     "babel": "yarn babel:cjs && yarn babel:esm",
     "babel:cjs": "nimbus babel --clean --workspaces=\"(react-vega)\"",
@@ -28,7 +28,7 @@
     "prettier": "nimbus prettier",
     "test": "yarn jest",
     "test:watch": "yarn lint:fix && yarn jest --watch",
-    "type:dts": "nimbus typescript --build --reference-workspaces --workspaces=\"!(react-vega-demo|react-vega-lite)\"",
+    "type:dts": "nimbus typescript --build --workspaces=\"!(react-vega-demo|react-vega-lite)\"",
     "prepare-release": "git checkout master && git pull --rebase origin master && lerna bootstrap && yarn install && yarn test",
     "prerelease": "yarn build",
     "pretest": "yarn lint",
