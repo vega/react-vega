@@ -70,7 +70,7 @@ webpack.config.js
 # Lock files, libs should not have lock files
 npm-shrinkwrap.json
 package-lock.json
-# yarn.lock
+yarn.lock
 
 # Storybook output
 storybook-static
