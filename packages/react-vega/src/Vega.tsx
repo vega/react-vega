@@ -2,7 +2,7 @@ import React from 'react';
 import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
 import { PlainObject, View, ViewListener } from './types';
 import shallowEqual from './utils/shallowEqual';
-import updateVegaViewData from './utils/updateVegaViewData';
+import updateVegaViewDataset from './utils/updateVegaViewDataset';
 import { NOOP } from './constants';
 
 export type VegaProps = VegaEmbedProps & {
@@ -43,7 +43,7 @@ export default class Vega extends React.PureComponent<VegaProps> {
       if (this.vegaEmbed.current && datasetNames.length > 0) {
         this.vegaEmbed.current.modifyView(view => {
           datasetNames.forEach(name => {
-            updateVegaViewData(view, name, data[name]);
+            updateVegaViewDataset(view, name, data[name]);
           });
           view.resize().run();
         });
