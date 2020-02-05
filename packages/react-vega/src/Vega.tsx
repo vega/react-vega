@@ -10,7 +10,7 @@ export type VegaProps = VegaEmbedProps & {
   data?: PlainObject;
 };
 
-function updateData(view: View, name: string, value: any) {
+function updateData(view: View, name: string, value: unknown) {
   if (value) {
     if (isFunction(value)) {
       value(view.data(name));

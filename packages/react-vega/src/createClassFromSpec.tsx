@@ -4,7 +4,7 @@ import Vega, { VegaProps } from './Vega';
 
 interface Constructor<T> {
   getSpec: () => VisualizationSpec;
-  new (...args: any[]): T;
+  new (...args: unknown[]): T;
 }
 
 export type FixedVegaChartProps = Omit<VegaProps, 'spec'>;
