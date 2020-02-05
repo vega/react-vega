@@ -2,7 +2,7 @@ import { VisualizationSpec } from 'vega-embed';
 import equal from 'fast-deep-equal';
 import getUniqueFieldNames from './getUniqueFieldNames';
 
-export const NON_DIMENSION_FIELDS = 'NON_DIMENSION_FIELDS';
+export const EXPENSIVE_FIELDS = 'EXPENSIVE_FIELDS';
 
 export default function isSpecChanged(a: VisualizationSpec, b: VisualizationSpec) {
   if (a === b) return false;
@@ -20,15 +20,24 @@ export default function isSpecChanged(a: VisualizationSpec, b: VisualizationSpec
   }
 
   if (
+    fieldNames.has('background') &&
+    (!('background' in a) || !('background' in b) || a.background !== b.background)
+  ) {
+    changes.add('background');
+  }
+
+  if (
     fieldNames.has('padding') &&
     (!('padding' in a) || !('padding' in b) || !equal(a.padding, b.padding))
   ) {
     changes.add('padding');
   }
 
+  // Delete cheap fields
   fieldNames.delete('width');
   fieldNames.delete('height');
   fieldNames.delete('padding');
+  fieldNames.delete('background');
 
   if (
     [...fieldNames].some(
@@ -38,7 +47,7 @@ export default function isSpecChanged(a: VisualizationSpec, b: VisualizationSpec
         !equal(a[field as keyof typeof a], b[field as keyof typeof b]),
     )
   ) {
-    changes.add(NON_DIMENSION_FIELDS);
+    changes.add(EXPENSIVE_FIELDS);
   }
 
   return changes.size > 0 ? changes : false;
