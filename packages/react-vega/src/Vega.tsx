@@ -1,8 +1,8 @@
 import React from 'react';
+import shallowEqual from './utils/shallowEqual';
+import updateMultipleDatasetsInView from './utils/updateMultipleDatasetsInView';
 import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
 import { PlainObject, View, ViewListener } from './types';
-import shallowEqual from './utils/shallowEqual';
-import updateVegaViewDataset from './utils/updateVegaViewDataset';
 import { NOOP } from './constants';
 
 export type VegaProps = VegaEmbedProps & {
@@ -38,13 +38,9 @@ export default class Vega extends React.PureComponent<VegaProps> {
     const { data } = this.props;
 
     if (data) {
-      const datasetNames = Object.keys(data);
-
-      if (this.vegaEmbed.current && datasetNames.length > 0) {
+      if (this.vegaEmbed.current && Object.keys(data).length > 0) {
         this.vegaEmbed.current.modifyView(view => {
-          datasetNames.forEach(name => {
-            updateVegaViewDataset(view, name, data[name]);
-          });
+          updateMultipleDatasetsInView(view, data);
           view.resize().run();
         });
       }
