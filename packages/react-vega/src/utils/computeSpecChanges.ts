@@ -5,15 +5,6 @@ import getUniqueFieldNames from './getUniqueFieldNames';
 interface SpecChanges {
   width: false | number;
   height: false | number;
-  padding:
-    | false
-    | number
-    | {
-        top?: number;
-        bottom?: number;
-        left?: number;
-        right?: number;
-      };
   isExpensive: boolean;
 }
 
@@ -23,7 +14,6 @@ export default function computeSpecChanges(newSpec: VisualizationSpec, oldSpec: 
   const changes: SpecChanges = {
     width: false,
     height: false,
-    padding: false,
     isExpensive: false,
   };
 
@@ -51,21 +41,9 @@ export default function computeSpecChanges(newSpec: VisualizationSpec, oldSpec: 
     }
   }
 
-  if (
-    fieldNames.has('padding') &&
-    (!('padding' in newSpec) || !('padding' in oldSpec) || !equal(newSpec.padding, oldSpec.padding))
-  ) {
-    if ('padding' in newSpec && typeof newSpec.padding !== 'undefined') {
-      changes.padding = newSpec.padding;
-    } else {
-      changes.isExpensive = true;
-    }
-  }
-
   // Delete cheap fields
   fieldNames.delete('width');
   fieldNames.delete('height');
-  fieldNames.delete('padding');
 
   if (
     [...fieldNames].some(
@@ -78,10 +56,7 @@ export default function computeSpecChanges(newSpec: VisualizationSpec, oldSpec: 
     changes.isExpensive = true;
   }
 
-  return changes.width !== false ||
-    changes.height !== false ||
-    changes.padding !== false ||
-    changes.isExpensive
+  return changes.width !== false || changes.height !== false || changes.isExpensive
     ? changes
     : false;
 }

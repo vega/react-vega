@@ -56,9 +56,6 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
             if (specChanges.height !== false) {
               view.height(specChanges.height);
             }
-            if (specChanges.padding !== false) {
-              view.padding(specChanges.padding);
-            }
             if (areSignalListenersChanged) {
               if (oldSignalListeners) {
                 removeSignalListenersFromView(view, oldSignalListeners);
