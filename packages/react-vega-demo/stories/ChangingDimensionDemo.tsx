@@ -1,6 +1,15 @@
 import React from "react";
 import { VegaLite } from "../../react-vega/src";
 
+const values = [];
+
+for (let i = 0; i< 100 ;i++ ) {
+  values.push({
+    a: `X${i}`,
+    b: Math.round(Math.random() * 1000)
+  })
+}
+
 export default class ChangingDimensionDemo extends React.Component<{}, {
   width: number;
   height: number;
@@ -47,17 +56,7 @@ export default class ChangingDimensionDemo extends React.Component<{}, {
       height,
       padding,
       data: {
-        values: [
-          { a: "A", b: 28 },
-          { a: "B", b: 55 },
-          { a: "C", b: 43 },
-          { a: "D", b: 91 },
-          { a: "E", b: 81 },
-          { a: "F", b: 53 },
-          { a: "G", b: 19 },
-          { a: "H", b: 87 },
-          { a: "I", b: 52 }
-        ],
+        values,
         name: "source"
       },
       selection: {
