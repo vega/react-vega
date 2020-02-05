@@ -48,7 +48,10 @@ export default {
     },
   ],
 
-  axes: [{ orient: 'bottom', scale: 'xscale' }, { orient: 'left', scale: 'yscale' }],
+  axes: [
+    { orient: 'bottom', scale: 'xscale' },
+    { orient: 'left', scale: 'yscale' },
+  ],
 
   marks: [
     {
