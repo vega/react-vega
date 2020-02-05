@@ -62,8 +62,7 @@ export default class Vega extends React.PureComponent<VegaProps> {
           datasetNames.forEach(name => {
             updateData(view, name, data[name]);
           });
-          view.resize();
-          view.run();
+          view.resize().run();
         });
       }
     }
