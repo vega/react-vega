@@ -15,7 +15,7 @@ http://vega.github.io/react-vega/
 | Package | Version | |
 |--|--|--|
 | [react-vega](https://github.com/vega/react-vega/tree/master/packages/react-vega) | [![Version](https://img.shields.io/npm/v/react-vega.svg?style=flat-square)](https://npmjs.org/package/react-vega) | [Documentation](https://github.com/vega/react-vega/tree/master/packages/react-vega) |
-| [react-vega-lite](https://github.com/vega/react-vega/tree/master/packages/react-vega-lite) (deprecated) | [![Version](https://img.shields.io/npm/v/react-vega-lite.svg?style=flat-square)](https://npmjs.org/package/react-vega-lite) | Use `react-vega` instead.
+| ~~[react-vega-lite](https://github.com/vega/react-vega/tree/master/packages/react-vega-lite)~~ (deprecated) | [![Version](https://img.shields.io/npm/v/react-vega-lite.svg?style=flat-square)](https://npmjs.org/package/react-vega-lite) | Use `react-vega` instead.
 
 ### Migration
 
