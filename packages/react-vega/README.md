@@ -119,7 +119,52 @@ ReactDOM.render(
 );
 ```
 
-There is also a `<VegaLite>` component that behaves like `<Vega>` but always assume that the spec is `vega-lite` spec (`mode` is fixed to `vega-lite`).
+
+
+### Approach#3 Use `<VegaLite>` generic class and pass in `spec` for dynamic component.
+
+Provides a bit more flexibility, but at the cost of extra checks for spec changes.
+
+Also see packages/react-vega-demo/stories/ReactVegaLiteDemo.jsx for details
+
+#### main.js
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { VegaLite } from 'react-vega'
+
+const spec = {
+  width: 400,
+  height: 200,
+  mark: 'bar',
+  encoding: {
+    x: { field: 'a', type: 'ordinal' },
+    y: { field: 'b', type: 'quantitative' },
+  },
+  data: { name: 'table' }, // note: vega-lite data attribute is a plain object instead of an array
+}
+
+const barData = {
+  table: [
+    { a: 'A', b: 28 },
+    { a: 'B', b: 55 },
+    { a: 'C', b: 43 },
+    { a: 'D', b: 91 },
+    { a: 'E', b: 81 },
+    { a: 'F', b: 53 },
+    { a: 'G', b: 19 },
+    { a: 'H', b: 87 },
+    { a: 'I', b: 52 },
+  ],
+}
+
+ReactDOM.render(
+  <VegaLite spec={spec} data={barData} />,
+  document.getElementById('bar-container')
+);
+```
+
 
 ## API
 
