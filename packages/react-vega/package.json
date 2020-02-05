@@ -19,7 +19,8 @@
   ],
   "dependencies": {
     "@types/react": "^16.9.19",
-    "vega-embed": "^6.2.2"
+    "vega-embed": "^6.2.2",
+    "fast-deep-equal": "^3.1.1"
   },
   "peerDependencies": {
     "react": "^16.10.0",
