@@ -1,3 +1,26 @@
+# [7.2.0](https://github.com/vega/react-vega/compare/v7.1.2...v7.2.0) (2020-02-06)
+
+
+### Features
+
+* avoid creating new view when only width or height in spec changes ([#95](https://github.com/vega/react-vega/issues/95)) ([d4a87e7](https://github.com/vega/react-vega/commit/d4a87e785d795e1cf3f08a77c36ee6fefcb2d995))
+
+
+
+## [7.1.2](https://github.com/vega/react-vega/compare/v7.1.1...v7.1.2) (2020-02-05)
+
+
+### Bug Fixes
+
+* autosize fail sometimes([#78](https://github.com/vega/react-vega/issues/78)) ([#80](https://github.com/vega/react-vega/issues/80)) ([f580611](https://github.com/vega/react-vega/commit/f580611101bc898bb2ce70936c82776c5f3b2d84))
+* replace any type with unknown ([#93](https://github.com/vega/react-vega/issues/93)) ([0f16622](https://github.com/vega/react-vega/commit/0f16622aadcdcc949188bf967abe97dc3bc3e0f8))
+* use chaining ([1d78394](https://github.com/vega/react-vega/commit/1d783943963f4212f82a38e971a594c873fb6503))
+
+
+
+## [7.1.1](https://github.com/vega/react-vega/compare/v7.1.0...v7.1.1) (2019-11-19)
+
+
 # [7.1.0](https://github.com/vega/react-vega/compare/v7.0.1...v7.1.0) (2019-10-18)
 
 
