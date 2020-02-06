@@ -1,30 +1,13 @@
 import React from 'react';
-import { vega } from 'vega-embed';
-import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
-import isFunction from './utils/isFunction';
-import { PlainObject, View, ViewListener } from './types';
 import shallowEqual from './utils/shallowEqual';
+import updateMultipleDatasetsInView from './utils/updateMultipleDatasetsInView';
+import VegaEmbed, { VegaEmbedProps } from './VegaEmbed';
+import { PlainObject, View, ViewListener } from './types';
 import { NOOP } from './constants';
 
 export type VegaProps = VegaEmbedProps & {
   data?: PlainObject;
 };
-
-function updateData(view: View, name: string, value: unknown) {
-  if (value) {
-    if (isFunction(value)) {
-      value(view.data(name));
-    } else {
-      view.change(
-        name,
-        vega
-          .changeset()
-          .remove(() => true)
-          .insert(value),
-      );
-    }
-  }
-}
 
 const EMPTY = {};
 
@@ -55,13 +38,9 @@ export default class Vega extends React.PureComponent<VegaProps> {
     const { data } = this.props;
 
     if (data) {
-      const datasetNames = Object.keys(data);
-
-      if (this.vegaEmbed.current && datasetNames.length > 0) {
+      if (this.vegaEmbed.current && Object.keys(data).length > 0) {
         this.vegaEmbed.current.modifyView(view => {
-          datasetNames.forEach(name => {
-            updateData(view, name, data[name]);
-          });
+          updateMultipleDatasetsInView(view, data);
           view.resize().run();
         });
       }
