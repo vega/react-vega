@@ -26,7 +26,7 @@
     "prettier": "nimbus prettier",
     "test": "yarn jest",
     "test:watch": "yarn lint:fix && yarn jest --watch",
-    "type:dts": "nimbus typescript --build --reference-workspaces",
+    "type:dts": "nimbus typescript --build --workspaces=\"(react-vega)\"",
     "prepare-release": "git checkout master && git pull --rebase origin master && yarn && yarn test",
     "prerelease": "yarn build",
     "pretest": "yarn lint",
