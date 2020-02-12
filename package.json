@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "postpublish": "git push; git push --tags",
-    "build": "yarn babel && yarn type:dts",
+    "build": "yarn babel && yarn type",
     "babel": "yarn babel:cjs && yarn babel:esm",
     "babel:cjs": "nimbus babel --clean --workspaces=\"(react-vega)\"",
     "babel:esm": "nimbus babel --clean --workspaces=\"(react-vega)\" --esm",
@@ -26,7 +26,7 @@
     "prettier": "nimbus prettier",
     "test": "yarn jest",
     "test:watch": "yarn lint:fix && yarn jest --watch",
-    "type:dts": "nimbus typescript --build --reference-workspaces",
+    "type": "nimbus typescript --build --reference-workspaces",
     "prepare-release": "git checkout master && git pull --rebase origin master && yarn && yarn test",
     "prerelease": "yarn build",
     "pretest": "yarn lint",
@@ -41,13 +41,12 @@
     "@airbnb/config-prettier": "^2.1.1",
     "@airbnb/config-typescript": "^2.2.2",
     "@airbnb/nimbus": "^2.2.3",
-    "@babel/runtime-corejs3": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
     "@superset-ui/commit-config": "^0.0.9",
     "@types/enzyme": "^3.10.4",
     "@types/jest": "^25.1.0",
     "@types/jsdom": "^12.2.4",
     "@types/react-test-renderer": "^16.9.2",
+    "canvas": "^2.6.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.3",
@@ -56,9 +55,9 @@
     "husky": "^4.2.1",
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.3",
-    "react-test-renderer": "^16.12.0",
+    "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react": "^16.12.0"
+    "react-test-renderer": "^16.12.0"
   },
   "engines": {
     "node": ">=10.10.0",
@@ -85,9 +84,6 @@
         "useBuiltIns": "usage"
       }
     },
-    "babel": {
-      "plugins": [["@babel/plugin-transform-runtime", { "corejs": 3 }]]
-    },
     "jest": {
       "timers": "real",
       "setupFilesAfterEnv": [
@@ -105,9 +101,22 @@
     "eslint": {
       "overrides": [
         {
+          "files": "*.test.{js,jsx,ts,tsx}",
+          "rules": {
+            "import/no-extraneous-dependencies": "off",
+            "jest/no-test-return-statement": "off",
+            "promise/param-names": "off"
+          }
+        },
+        {
           "files": "*.{js,jsx,ts,tsx}",
           "rules": {
-            "@typescript-eslint/no-explicit-any": ["warn", { "fixToUnknown": false }]
+            "@typescript-eslint/no-explicit-any": [
+              "warn",
+              {
+                "fixToUnknown": false
+              }
+            ]
           }
         }
       ]
