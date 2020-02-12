@@ -42,4 +42,4 @@ export default {
       type: 'quantitative',
     },
   },
-};
+} as const;
