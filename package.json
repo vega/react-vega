@@ -41,8 +41,6 @@
     "@airbnb/config-prettier": "^2.1.1",
     "@airbnb/config-typescript": "^2.2.2",
     "@airbnb/nimbus": "^2.2.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/runtime-corejs3": "^7.8.3",
     "@superset-ui/commit-config": "^0.0.9",
     "@types/enzyme": "^3.10.4",
     "@types/jest": "^25.1.0",
@@ -85,16 +83,6 @@
         "corejs": 3,
         "useBuiltIns": "usage"
       }
-    },
-    "babel": {
-      "plugins": [
-        [
-          "@babel/plugin-transform-runtime",
-          {
-            "corejs": 3
-          }
-        ]
-      ]
     },
     "jest": {
       "timers": "real",
