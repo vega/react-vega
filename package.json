@@ -67,6 +67,12 @@
   "workspaces": [
     "./packages/*"
   ],
+  "browserslist": [
+    "last 3 chrome versions",
+    "last 3 firefox versions",
+    "last 3 safari versions",
+    "last 3 edge versions"
+  ],
   "nimbus": {
     "drivers": [
       "babel",
@@ -80,8 +86,7 @@
       "react": true,
       "next": true,
       "env": {
-        "corejs": 3,
-        "useBuiltIns": "usage"
+        "targets": false
       }
     },
     "jest": {
