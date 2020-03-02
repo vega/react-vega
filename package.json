@@ -37,7 +37,7 @@
   "devDependencies": {
     "@airbnb/config-babel": "^2.2.2",
     "@airbnb/config-eslint": "^2.5.1",
-    "@airbnb/config-jest": "^2.2.2",
+    "@airbnb/config-jest": "^3.0.0",
     "@airbnb/config-prettier": "^2.1.1",
     "@airbnb/config-typescript": "^2.2.2",
     "@airbnb/nimbus": "^2.2.3",
