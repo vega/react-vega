@@ -35,12 +35,12 @@
     "storybook": "cd packages/react-vega-demo && yarn storybook"
   },
   "devDependencies": {
-    "@airbnb/config-babel": "^2.2.2",
-    "@airbnb/config-eslint": "^2.5.1",
-    "@airbnb/config-jest": "^2.2.2",
-    "@airbnb/config-prettier": "^2.1.1",
-    "@airbnb/config-typescript": "^2.2.2",
-    "@airbnb/nimbus": "^2.2.3",
+    "@airbnb/config-babel": "^3.0.0",
+    "@airbnb/config-eslint": "^3.0.0",
+    "@airbnb/config-jest": "^3.0.0",
+    "@airbnb/config-prettier": "^3.0.0",
+    "@airbnb/config-typescript": "^3.0.0",
+    "@airbnb/nimbus": "^3.0.0",
     "@superset-ui/commit-config": "^0.0.9",
     "@types/enzyme": "^3.10.4",
     "@types/jest": "^25.1.0",
