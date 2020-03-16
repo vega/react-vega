@@ -15259,9 +15259,9 @@ vega-hierarchy@~4.0.3:
     vega-util "^1.11.0"
 
 vega-lite@^4.0.2:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.5.1.tgz#e5d3a5080890870025e788659f6935c9dea398b8"
-  integrity sha512-onC8RwSN4hEW9IyyMdfh+V0MThQg4Gi/LFtLwrz/ZxLPzreeZL/Qtj0ea7ysz7VzN4RkBmAcUioeV6ggZ5e8nA==
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.7.0.tgz#a5afbdcef8ef6662f1464f2f6fef1aed0fdcd6c4"
+  integrity sha512-vKWVP5tgRpdUzQYulqJbNBBF6zn0H1f6bCyVIJA9MLVBFqSLLS8mq7tpC5gXorShJz/yTgZhwWHu6knuz15E8g==
   dependencies:
     "@types/clone" "~0.1.30"
     "@types/fast-json-stable-stringify" "^2.0.0"
@@ -15275,7 +15275,7 @@ vega-lite@^4.0.2:
     vega-expression "~2.6.3"
     vega-scale "^6.0.0"
     vega-util "~1.13.0"
-    yargs "~15.1.0"
+    yargs "~15.3.0"
 
 vega-loader@^4.0.0, vega-loader@^4.2.0, vega-loader@~4.2.0:
   version "4.2.0"
@@ -15936,6 +15936,14 @@ yargs-parser@^17.1.0:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
+yargs-parser@^18.1.1:
+  version "18.1.1"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-18.1.1.tgz#bf7407b915427fc760fcbbccc6c82b4f0ffcbd37"
+  integrity sha512-KRHEsOM16IX7XuLnMOqImcPNbLVXMNHYAoFc3BKR8Ortl5gzDbtXvvEoGx9imk5E+X1VeNKNlcHr8B8vi+7ipA==
+  dependencies:
+    camelcase "^5.0.0"
+    decamelize "^1.2.0"
+
 yargs-parser@^4.2.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-4.2.1.tgz#29cceac0dc4f03c6c87b4a9f217dd18c9f74871c"
@@ -15979,10 +15987,10 @@ yargs@^14.2.2:
     y18n "^4.0.0"
     yargs-parser "^15.0.0"
 
-yargs@^15.0.0, yargs@^15.1.0, yargs@~15.1.0:
-  version "15.1.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.1.0.tgz#e111381f5830e863a89550bd4b136bb6a5f37219"
-  integrity sha512-T39FNN1b6hCW4SOIk1XyTOWxtXdcen0t+XYrysQmChzSipvhBO8Bj0nK1ozAasdk24dNWuMZvr4k24nz+8HHLg==
+yargs@^15.0.0, yargs@^15.1.0, yargs@~15.3.0:
+  version "15.3.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.3.1.tgz#9505b472763963e54afe60148ad27a330818e98b"
+  integrity sha512-92O1HWEjw27sBfgmXiixJWT5hRBp2eobqXicLtPBIDBhYB+1HpwZlXmbW2luivBJHBzki+7VyCLRtAkScbTBQA==
   dependencies:
     cliui "^6.0.0"
     decamelize "^1.2.0"
@@ -15994,4 +16002,4 @@ yargs@^15.0.0, yargs@^15.1.0, yargs@~15.1.0:
     string-width "^4.2.0"
     which-module "^2.0.0"
     y18n "^4.0.0"
-    yargs-parser "^16.1.0"
+    yargs-parser "^18.1.1"
