@@ -163,9 +163,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   render() {
     const { className, style } = this.props;
 
-    return (
-      // Create the container Vega draws inside
-      <div ref={this.containerRef} className={className} style={style} />
-    );
+    // Create the container Vega draws inside
+    return <div ref={this.containerRef} className={className} style={style} />;
   }
 }
