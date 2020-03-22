@@ -57,7 +57,9 @@
     "lint-staged": "^10.0.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-test-renderer": "^16.12.0"
+    "react-test-renderer": "^16.12.0",
+    "vega": "^5.10.0",
+    "vega-lite": "^4.8.0"
   },
   "engines": {
     "node": ">=10.16.0",
