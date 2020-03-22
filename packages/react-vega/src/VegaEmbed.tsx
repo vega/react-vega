@@ -43,7 +43,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   }
 
   componentDidUpdate(prevProps: VegaEmbedProps) {
-    const fieldSet = getUniqueFieldNames([this.props, prevProps]);
+    const fieldSet = getUniqueFieldNames([this.props, prevProps]) as Set<keyof VegaEmbedProps>;
     fieldSet.delete('className');
     fieldSet.delete('signalListeners');
     fieldSet.delete('spec');

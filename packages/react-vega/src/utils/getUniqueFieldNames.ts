@@ -1,8 +1,8 @@
 export default function getUniqueFieldNames<T>(objects: T[]) {
-  const fields = new Set<keyof T>();
+  const fields = new Set<string>();
   objects.forEach(o => {
     Object.keys(o).forEach(field => {
-      fields.add(field as keyof T);
+      fields.add(field);
     });
   });
 
