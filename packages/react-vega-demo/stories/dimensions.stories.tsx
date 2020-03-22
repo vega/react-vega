@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { storiesOf } from '@storybook/react';
@@ -33,7 +32,7 @@ const SPEC = {
 };
 
 storiesOf('react-vega', module).add('width=300', () => (
-    <VegaLite spec={SPEC} data={DATA} width={300} />
+  <VegaLite spec={SPEC} data={DATA} width={300} />
 )).add('height=300', () => (
   <VegaLite spec={SPEC} data={DATA} height={300} />
 ));
