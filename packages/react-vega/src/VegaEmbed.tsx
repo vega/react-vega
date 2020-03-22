@@ -7,6 +7,7 @@ import { NOOP } from './constants';
 import addSignalListenersToView from './utils/addSignalListenersToView';
 import computeSpecChanges from './utils/computeSpecChanges';
 import removeSignalListenersFromView from './utils/removeSignalListenersFromView';
+import combineSpecWithDimension from './utils/combineSpecWithDimension';
 
 export type VegaEmbedProps = {
   className?: string;
@@ -32,13 +33,18 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     fieldSet.delete('signalListeners');
     fieldSet.delete('spec');
     fieldSet.delete('style');
+    fieldSet.delete('width');
+    fieldSet.delete('height');
 
     // Only create a new view if necessary
     if (Array.from(fieldSet).some(f => this.props[f] !== prevProps[f])) {
       this.clearView();
       this.createView();
     } else {
-      const specChanges = computeSpecChanges(this.props.spec, prevProps.spec);
+      const specChanges = computeSpecChanges(
+        combineSpecWithDimension(this.props),
+        combineSpecWithDimension(prevProps),
+      );
 
       const { signalListeners: newSignalListeners } = this.props;
       const { signalListeners: oldSignalListeners } = prevProps;
@@ -68,18 +74,14 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
             view.run();
           });
         }
-      } else {
-        const areSignalListenersChanged = !shallowEqual(newSignalListeners, oldSignalListeners);
+      } else if (!shallowEqual(newSignalListeners, oldSignalListeners)) {
         this.modifyView(view => {
-          if (areSignalListenersChanged) {
-            if (oldSignalListeners) {
-              removeSignalListenersFromView(view, oldSignalListeners);
-            }
-            if (newSignalListeners) {
-              addSignalListenersToView(view, newSignalListeners);
-            }
+          if (oldSignalListeners) {
+            removeSignalListenersFromView(view, oldSignalListeners);
           }
-
+          if (newSignalListeners) {
+            addSignalListenersToView(view, newSignalListeners);
+          }
           view.run();
         });
       }
@@ -114,9 +116,10 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   };
 
   createView() {
-    const { spec, onNewView, signalListeners = {}, ...options } = this.props;
+    const { spec, onNewView, signalListeners = {}, width, height, ...options } = this.props;
     if (this.containerRef.current) {
-      this.viewPromise = vegaEmbed(this.containerRef.current, spec, options)
+      const finalSpec = combineSpecWithDimension(this.props);
+      this.viewPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
         .then(({ view }) => {
           if (addSignalListenersToView(view, signalListeners)) {
             view.run();
@@ -143,9 +146,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   render() {
     const { className, style } = this.props;
 
-    return (
-      // Create the container Vega draws inside
-      <div ref={this.containerRef} className={className} style={style} />
-    );
+    // Create the container Vega draws inside
+    return <div ref={this.containerRef} className={className} style={style} />;
   }
 }
