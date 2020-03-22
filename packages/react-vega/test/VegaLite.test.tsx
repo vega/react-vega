@@ -3,16 +3,14 @@ import { mount } from 'enzyme';
 import { VegaLite } from '../src';
 import spec from './mock/vegaLiteSpec';
 
-describe('<Vega>', () => {
-  it('renders', () => {
-    const wrapper = mount(<VegaLite spec={spec} />);
+describe('<VegaLite>', () => {
+  it('renders', async () => {
+    const wrapper = mount(<VegaLite spec={spec} renderer="svg" />);
 
-    return new Promise(done => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
+    await new Promise(done => {
+      setTimeout(done, 0);
     });
+    const renderedWrapper = wrapper.render();
+    expect(renderedWrapper.find('svg')).toHaveLength(2);
   });
 });

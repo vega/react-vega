@@ -1,18 +1,16 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Vega } from '../src';
 import spec from './mock/vegaLiteSpec';
 
 describe('<Vega>', () => {
-  it('renders', () => {
-    const wrapper = mount(<Vega mode="vega-lite" spec={spec} />);
+  it('renders', async () => {
+    const wrapper = shallow(<Vega mode="vega-lite" spec={spec} renderer="svg" />);
 
-    return new Promise(done => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
+    await new Promise(done => {
+      setTimeout(done, 0);
     });
+    const renderedWrapper = wrapper.render();
+    expect(renderedWrapper.find('svg')).toHaveLength(2);
   });
 });
