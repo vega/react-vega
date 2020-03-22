@@ -7,6 +7,7 @@ import { NOOP } from './constants';
 import addSignalListenersToView from './utils/addSignalListenersToView';
 import computeSpecChanges from './utils/computeSpecChanges';
 import removeSignalListenersFromView from './utils/removeSignalListenersFromView';
+import combineSpecWithDimension from './utils/combineSpecWithDimension';
 
 export type VegaEmbedProps = {
   className?: string;
@@ -16,22 +17,6 @@ export type VegaEmbedProps = {
   onNewView?: ViewListener;
   onError?: (error: Error) => void;
 } & EmbedOptions & {};
-
-export function combineSpecWithDimension(props: VegaEmbedProps): VisualizationSpec {
-  const { spec, width, height } = props;
-
-  if (typeof width !== 'undefined' && typeof height !== 'undefined') {
-    return { ...spec, width, height };
-  }
-  if (typeof width !== 'undefined') {
-    return { ...spec, width };
-  }
-  if (typeof height !== 'undefined') {
-    return { ...spec, height };
-  }
-
-  return spec;
-}
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
