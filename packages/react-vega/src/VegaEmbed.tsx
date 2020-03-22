@@ -17,6 +17,22 @@ export type VegaEmbedProps = {
   onError?: (error: Error) => void;
 } & EmbedOptions & {};
 
+export function combineSpecWithDimension(props: VegaEmbedProps): VisualizationSpec {
+  const { spec, width, height } = props;
+
+  if (typeof width !== 'undefined' && typeof height !== 'undefined') {
+    return { ...spec, width, height };
+  }
+  if (typeof width !== 'undefined') {
+    return { ...spec, width };
+  }
+  if (typeof height !== 'undefined') {
+    return { ...spec, height };
+  }
+
+  return spec;
+}
+
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
 
@@ -27,7 +43,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   }
 
   componentDidUpdate(prevProps: VegaEmbedProps) {
-    const fieldSet = getUniqueFieldNames([this.props, prevProps]) as Set<keyof VegaEmbedProps>;
+    const fieldSet = getUniqueFieldNames([this.props, prevProps]);
     fieldSet.delete('className');
     fieldSet.delete('signalListeners');
     fieldSet.delete('spec');
@@ -38,7 +54,10 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
       this.clearView();
       this.createView();
     } else {
-      const specChanges = computeSpecChanges(this.props.spec, prevProps.spec);
+      const specChanges = computeSpecChanges(
+        combineSpecWithDimension(this.props),
+        combineSpecWithDimension(prevProps),
+      );
 
       const { signalListeners: newSignalListeners } = this.props;
       const { signalListeners: oldSignalListeners } = prevProps;
@@ -116,7 +135,8 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   createView() {
     const { spec, onNewView, signalListeners = {}, ...options } = this.props;
     if (this.containerRef.current) {
-      this.viewPromise = vegaEmbed(this.containerRef.current, spec, options)
+      const finalSpec = combineSpecWithDimension(this.props);
+      this.viewPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
         .then(({ view }) => {
           if (addSignalListenersToView(view, signalListeners)) {
             view.run();

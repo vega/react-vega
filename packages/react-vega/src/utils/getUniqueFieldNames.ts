@@ -1,11 +1,8 @@
-import { VisualizationSpec } from 'vega-embed';
-import { PlainObject } from '../types';
-
-export default function getUniqueFieldNames(objects: (PlainObject | VisualizationSpec)[]) {
-  const fields = new Set<string>();
+export default function getUniqueFieldNames<T>(objects: T[]) {
+  const fields = new Set<keyof T>();
   objects.forEach(o => {
     Object.keys(o).forEach(field => {
-      fields.add(field);
+      fields.add(field as keyof T);
     });
   });
 
