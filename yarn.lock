@@ -15289,9 +15289,9 @@ vega-hierarchy@~4.0.3:
     vega-util "^1.11.0"
 
 vega-lite@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.8.0.tgz#f1214fcf0ec7f803a186979a7a0c1b389f406d1d"
-  integrity sha512-rLwdMRC1iLr555Masref8qxBPNTi8Bo8W9NAizmbgDhAROKsM+dJwNTspRawFjT8pO3qt32KrDo8AOFH5go6hg==
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.8.1.tgz#cbe3c00ecad2d6f649d474dc02f09477a90c3109"
+  integrity sha512-NHt0f4eyxmtRtwulpKMEiw3jByTd2blcGNDPi9JQObOOJAASk4c0PiNc7lU1gW5lLsDaey1oD/YxxdZwpgqN9w==
   dependencies:
     "@types/clone" "~0.1.30"
     "@types/fast-json-stable-stringify" "^2.0.0"
