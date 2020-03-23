@@ -37,13 +37,11 @@ export default class Vega extends React.PureComponent<VegaProps> {
   update() {
     const { data } = this.props;
 
-    if (data) {
-      if (this.vegaEmbed.current && Object.keys(data).length > 0) {
-        this.vegaEmbed.current.modifyView(view => {
-          updateMultipleDatasetsInView(view, data);
-          view.resize().run();
-        });
-      }
+    if (this.vegaEmbed.current && data && Object.keys(data).length > 0) {
+      this.vegaEmbed.current.modifyView(view => {
+        updateMultipleDatasetsInView(view, data);
+        view.resize().run();
+      });
     }
   }
 
