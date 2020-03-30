@@ -80,24 +80,25 @@
     "@beemo/driver-typescript" "^1.3.2"
     typescript "^3.8.2"
 
-"@airbnb/nimbus-common@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@airbnb/nimbus-common/-/nimbus-common-3.0.0.tgz#724da97075d5fd15ade6951b8eb5064bc6242a4f"
-  integrity sha512-ewXnt/qlwSUQ/mDeS/+TuFaRJOWsmZHalkdqhgxbmnztNYKhoTDBwkU3Za/BLFGGkPypDA4spM2rVu/KpOFqlg==
+"@airbnb/nimbus-common@^3.0.0", "@airbnb/nimbus-common@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@airbnb/nimbus-common/-/nimbus-common-3.0.1.tgz#3f7d2f340b510995ebed17898c9447dad264330c"
+  integrity sha512-Qa/cPOcFktW36UL1RScVvrX06Ybv5/EJ1UBPtLHPi9POMAtq7bV0xe0Q3qSdAHrUp+4a1K4Gt3pjk3OnDAcbBg==
   dependencies:
-    "@beemo/core" "^1.1.4"
-    "@boost/common" "^1.8.2"
+    "@beemo/core" "^1.1.6"
+    "@boost/common" "^1.8.3"
     execa "^4.0.0"
     fast-glob "^3.2.2"
 
 "@airbnb/nimbus@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@airbnb/nimbus/-/nimbus-3.0.0.tgz#266f325bacd32417b0132d93e867cbb79f5e35ff"
-  integrity sha512-claZh9rq14Na/OTUmLB9mbiw2K4rdIXUkhttyVVozsUDZytG9OpSxvgWbqo2WSozhzPKFyT5pnmNmbeCnK/HCQ==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@airbnb/nimbus/-/nimbus-3.1.1.tgz#25ad3b6f33a04a1b6f774e54ce69a0ba5cd7d8c1"
+  integrity sha512-1YPKbf0KWMy3mUGHSADJnnCdypYQU1aY/Z3KeWeV81kkCn+rsSxSWurr14kBiJtn2pshbGi560a9kuKvCB1/Sw==
   dependencies:
-    "@airbnb/nimbus-common" "^3.0.0"
-    "@beemo/cli" "^1.0.9"
-    "@beemo/core" "^1.1.4"
+    "@airbnb/nimbus-common" "^3.0.1"
+    "@beemo/cli" "^1.0.10"
+    "@beemo/core" "^1.1.6"
+    "@octokit/rest" "^17.1.2"
     chalk "^3.0.0"
     check-node-version "^4.0.2"
     conventional-changelog-beemo "^1.6.0"
@@ -1125,19 +1126,19 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@beemo/cli@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@beemo/cli/-/cli-1.0.9.tgz#705dbb851c9b61832ce8a70323a6677b1da53d12"
-  integrity sha512-9TE3iOqpfgnhGZMpe4rs/ql8LoO8vI3VaJx2BM0AFftK5yxabW2t/0M3/Q2J6dsel2WlUQRZn+JMSguxWibSKg==
+"@beemo/cli@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@beemo/cli/-/cli-1.0.10.tgz#8600a1dca69cbd48605621702fc7a791a9bd16c8"
+  integrity sha512-qFTPLpr06FppHR+OGMTolVR+j85Xb157NtQsxv3Id276rWQPfyw9j7CNoe/GqtX9KzxRd1f+6bCnrbqMM5AfEA==
   dependencies:
     chalk "^3.0.0"
     semver "^6.3.0"
-    yargs "^15.1.0"
+    yargs "^15.3.1"
 
-"@beemo/core@^1.1.4":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@beemo/core/-/core-1.1.5.tgz#1418905c67be040373923f4e732ebfe9da64722e"
-  integrity sha512-pAaCWGY9Y3O0Jz55prIz6qjZ9Stjg1PoyhQdXljy7zoo+cZBamzjpTu4s7jt1L99RJa+/C+y/4+FO/R05wbwjw==
+"@beemo/core@^1.1.4", "@beemo/core@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@beemo/core/-/core-1.1.6.tgz#6a3462681f6a0af76216992f185235ba431c952a"
+  integrity sha512-/ZIPnXH754FgOcS4boDLJljhVDCDDSNqn6T5Ul/hBdfnTcR6dj1j8ZQ3QsQGG6kQ0N70xn5WNz/rABiFtQZ9Mg==
   dependencies:
     "@beemo/dependency-graph" "^1.1.0"
     "@boost/common" "^1.8.2"
@@ -1155,8 +1156,8 @@
     lodash "^4.17.15"
     micromatch "^4.0.2"
     optimal "^4.2.0"
-    yargs "^15.1.0"
-    yargs-parser "^17.1.0"
+    yargs "^15.3.1"
+    yargs-parser "^18.1.1"
 
 "@beemo/dependency-graph@^1.1.0":
   version "1.1.0"
@@ -1208,6 +1209,17 @@
     "@boost/internal" "^1.1.0"
     js-yaml "^3.13.1"
     json5 "^2.1.1"
+    optimal "^4.2.0"
+    pretty-ms "^5.1.0"
+
+"@boost/common@^1.8.3":
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/@boost/common/-/common-1.8.3.tgz#ea491c50c40f54f3eb094aa26c5134f0d759e206"
+  integrity sha512-3R0hfJ1eoiBcybCdvqZirKpXebNWHJ0GSNwwXEmQlEVWfS+8BTnE8Qg/+U8oZNhBS6DeA44Lh2AWEDNbHTZ2KA==
+  dependencies:
+    "@boost/internal" "^1.1.0"
+    js-yaml "^3.13.1"
+    json5 "^2.1.2"
     optimal "^4.2.0"
     pretty-ms "^5.1.0"
 
@@ -2545,6 +2557,18 @@
   dependencies:
     "@octokit/types" "^2.0.0"
 
+"@octokit/core@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@octokit/core/-/core-2.4.3.tgz#f51c0c228e6aa01253f9452ba5a25dc20aee8577"
+  integrity sha512-9T91nYeBB7+PNK3oxOuA+6DXCPRvhJ80ke+NqhXirBjVtNepTKFJXoWPqguRSBQ+dkEVA8dZJMxfFzjz9yhiuA==
+  dependencies:
+    "@octokit/auth-token" "^2.4.0"
+    "@octokit/graphql" "^4.3.1"
+    "@octokit/request" "^5.3.1"
+    "@octokit/types" "^2.0.0"
+    before-after-hook "^2.1.0"
+    universal-user-agent "^5.0.0"
+
 "@octokit/endpoint@^5.5.0":
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-5.5.2.tgz#ed19d01fe85ac58bc2b774661658f9e5429b8164"
@@ -2552,6 +2576,24 @@
   dependencies:
     "@octokit/types" "^2.0.0"
     is-plain-object "^3.0.0"
+    universal-user-agent "^4.0.0"
+
+"@octokit/endpoint@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-6.0.0.tgz#4c7acd79ab72df78732a7d63b09be53ec5a2230b"
+  integrity sha512-3nx+MEYoZeD0uJ+7F/gvELLvQJzLXhep2Az0bBSXagbApDvDW0LWwpnAIY/hb0Jwe17A0fJdz0O12dPh05cj7A==
+  dependencies:
+    "@octokit/types" "^2.0.0"
+    is-plain-object "^3.0.0"
+    universal-user-agent "^5.0.0"
+
+"@octokit/graphql@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@octokit/graphql/-/graphql-4.3.1.tgz#9ee840e04ed2906c7d6763807632de84cdecf418"
+  integrity sha512-hCdTjfvrK+ilU2keAdqNBWOk+gm1kai1ZcdjRfB30oA3/T6n53UVJb7w0L5cR3/rhU91xT3HSqCd+qbvH06yxA==
+  dependencies:
+    "@octokit/request" "^5.3.0"
+    "@octokit/types" "^2.0.0"
     universal-user-agent "^4.0.0"
 
 "@octokit/plugin-enterprise-rest@^3.6.1":
@@ -2563,6 +2605,13 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-1.1.2.tgz#004170acf8c2be535aba26727867d692f7b488fc"
   integrity sha512-jbsSoi5Q1pj63sC16XIUboklNw+8tL9VOnJsWycWYR78TKss5PVpIPb1TUUcMQ+bBh7cY579cVAWmf5qG+dw+Q==
+  dependencies:
+    "@octokit/types" "^2.0.1"
+
+"@octokit/plugin-paginate-rest@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-2.0.2.tgz#fee7a81a4cc7d03784aaf9225499dd6e27f6d01e"
+  integrity sha512-HzODcSUt9mjErly26TlTOGZrhf9bmF/FEDQ2zln1izhgmIV6ulsjsHmgmR4VZ0wzVr/m52Eb6U2XuyS8fkcR1A==
   dependencies:
     "@octokit/types" "^2.0.1"
 
@@ -2579,10 +2628,27 @@
     "@octokit/types" "^2.0.1"
     deprecation "^2.3.1"
 
+"@octokit/plugin-rest-endpoint-methods@3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-3.4.0.tgz#27b1dac7fba4d0d6e488967919b6a5bd3595ffbc"
+  integrity sha512-Tvctk0u5SVrSLAzi8SLo0KrLSBl5biAHBgWy3L65vsbO/2fjzr62HVkoDPyr+WRT+eHhhqpKAERF3dQWOIUOvQ==
+  dependencies:
+    "@octokit/types" "^2.0.1"
+    deprecation "^2.3.1"
+
 "@octokit/request-error@^1.0.1", "@octokit/request-error@^1.0.2":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@octokit/request-error/-/request-error-1.2.1.tgz#ede0714c773f32347576c25649dc013ae6b31801"
   integrity sha512-+6yDyk1EES6WK+l3viRDElw96MvwfJxCt45GvmjDUKWjYIb3PJZQkq3i46TwGwoPD4h8NmTrENmtyA1FwbmhRA==
+  dependencies:
+    "@octokit/types" "^2.0.0"
+    deprecation "^2.0.0"
+    once "^1.4.0"
+
+"@octokit/request-error@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@octokit/request-error/-/request-error-2.0.0.tgz#94ca7293373654400fbb2995f377f9473e00834b"
+  integrity sha512-rtYicB4Absc60rUv74Rjpzek84UbVHGHJRu4fNVlZ1mCcyUPPuzFfG9Rn6sjHrd95DEsmjSt1Axlc699ZlbDkw==
   dependencies:
     "@octokit/types" "^2.0.0"
     deprecation "^2.0.0"
@@ -2601,6 +2667,20 @@
     node-fetch "^2.3.0"
     once "^1.4.0"
     universal-user-agent "^4.0.0"
+
+"@octokit/request@^5.3.0", "@octokit/request@^5.3.1":
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/@octokit/request/-/request-5.3.4.tgz#fbc950bf785d59da3b0399fc6d042c8cf52e2905"
+  integrity sha512-qyj8G8BxQyXjt9Xu6NvfvOr1E0l35lsXtwm3SopsYg/JWXjlsnwqLc8rsD2OLguEL/JjLfBvrXr4az7z8Lch2A==
+  dependencies:
+    "@octokit/endpoint" "^6.0.0"
+    "@octokit/request-error" "^2.0.0"
+    "@octokit/types" "^2.0.0"
+    deprecation "^2.0.0"
+    is-plain-object "^3.0.0"
+    node-fetch "^2.3.0"
+    once "^1.4.0"
+    universal-user-agent "^5.0.0"
 
 "@octokit/rest@^16.28.4":
   version "16.43.1"
@@ -2623,6 +2703,16 @@
     octokit-pagination-methods "^1.1.0"
     once "^1.4.0"
     universal-user-agent "^4.0.0"
+
+"@octokit/rest@^17.1.2":
+  version "17.1.4"
+  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-17.1.4.tgz#b03eb97635de62b48428f998ad1cb9244edd2d10"
+  integrity sha512-LGghhepxoXyvi7ew0OdedrlwXQog8gvTbcdXoQ6RDKnzoYW2rBpcqeWC4fTuPUp9K0UEykcMix8kFnQ5b+64JQ==
+  dependencies:
+    "@octokit/core" "^2.4.3"
+    "@octokit/plugin-paginate-rest" "^2.0.0"
+    "@octokit/plugin-request-log" "^1.0.0"
+    "@octokit/plugin-rest-endpoint-methods" "3.4.0"
 
 "@octokit/types@^2.0.0", "@octokit/types@^2.0.1":
   version "2.1.1"
@@ -4604,7 +4694,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-before-after-hook@^2.0.0:
+before-after-hook@^2.0.0, before-after-hook@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.1.0.tgz#b6c03487f44e24200dd30ca5e6a1979c5d2fb635"
   integrity sha512-IWIbu7pMqyw3EAJHzzHbWa85b6oud/yfKYg5rqB5hNE8CeMi3nX+2C2sj0HswfblST86hpVEOAb9x34NZd6P7A==
@@ -14997,6 +15087,13 @@ universal-user-agent@^4.0.0:
   dependencies:
     os-name "^3.1.0"
 
+universal-user-agent@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/universal-user-agent/-/universal-user-agent-5.0.0.tgz#a3182aa758069bf0e79952570ca757de3579c1d9"
+  integrity sha512-B5TPtzZleXyPrUMKCpEHFmVhMN6EhmJYjG5PQna9s7mXeSqGTLap4OpqLl5FCEFUI3UBmllkETwKf/db66Y54Q==
+  dependencies:
+    os-name "^3.1.0"
+
 universalify@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
@@ -15965,14 +16062,6 @@ yargs-parser@^16.1.0:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-parser@^17.1.0:
-  version "17.1.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-17.1.0.tgz#b95ff3201e98b89e86070f92bef636016a0b0766"
-  integrity sha512-67zLl4/kWtp9eyVuxX+fHZ2Ey4ySWh0awDJlk/EtT0vzspsXbzrFsh76WjYSP3L++zhSwHQRUE3MCBe754RuEg==
-  dependencies:
-    camelcase "^5.0.0"
-    decamelize "^1.2.0"
-
 yargs-parser@^18.1.1:
   version "18.1.1"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-18.1.1.tgz#bf7407b915427fc760fcbbccc6c82b4f0ffcbd37"
@@ -16024,7 +16113,7 @@ yargs@^14.2.2:
     y18n "^4.0.0"
     yargs-parser "^15.0.0"
 
-yargs@^15.0.0, yargs@^15.1.0, yargs@~15.3.1:
+yargs@^15.0.0, yargs@^15.3.1, yargs@~15.3.1:
   version "15.3.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-15.3.1.tgz#9505b472763963e54afe60148ad27a330818e98b"
   integrity sha512-92O1HWEjw27sBfgmXiixJWT5hRBp2eobqXicLtPBIDBhYB+1HpwZlXmbW2luivBJHBzki+7VyCLRtAkScbTBQA==
