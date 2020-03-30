@@ -62,14 +62,14 @@
     jest "^25.1.0"
 
 "@airbnb/config-prettier@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@airbnb/config-prettier/-/config-prettier-3.0.0.tgz#526ce4dad4160f3af5e7bf02666b28df4a80efff"
-  integrity sha512-hla74uLsYeKIlc+m9L2BYI8b00x6km3b/iYKs+BaXZGlmq77sWDaDL+T69/H2rM9d6nRdwVNuBl6yk5qHR8q3w==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@airbnb/config-prettier/-/config-prettier-3.1.0.tgz#de8ea05cb705f60c5fce794d4110903387773654"
+  integrity sha512-qpPoPFK7wRK/xK0NzhoSNj8C6zSRtvoon1eSjtFJyEhk7ZL8pe62lZxqyn4jFO0uBBie/+YlVD+orY1zIJfeiA==
   dependencies:
-    "@airbnb/nimbus-common" "^3.0.0"
-    "@beemo/core" "^1.1.4"
-    "@beemo/driver-prettier" "^1.2.2"
-    prettier "^1.19.1"
+    "@airbnb/nimbus-common" "^3.0.1"
+    "@beemo/core" "^1.1.6"
+    "@beemo/driver-prettier" "^1.3.0"
+    prettier "^2.0.2"
 
 "@airbnb/config-typescript@^3.0.0":
   version "3.0.0"
@@ -1185,10 +1185,10 @@
   dependencies:
     "@jest/types" "^25.1.0"
 
-"@beemo/driver-prettier@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@beemo/driver-prettier/-/driver-prettier-1.2.2.tgz#c922dba66f20075ecd7b7051486e43684a841268"
-  integrity sha512-LJbmxdD1fRTnUMj8Zm3QXeMOSexWDW2pN6VQe9/5Ntp6lfnV3zmffntEtuvFS0GXIm9xkiX669uUBHOicKnraA==
+"@beemo/driver-prettier@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@beemo/driver-prettier/-/driver-prettier-1.3.0.tgz#df8f9b9f7aea2204ec42dd1094ad52bbd283e34f"
+  integrity sha512-SxYfiCCBEaIQtDZ2TlAJpa84d6NUVtUh0hoSdzsq5RUFNblzI/rxLIQJOkC8mKM4lIKprJ7WZ3fh6QXB+sr6Ug==
   dependencies:
     "@boost/event" "^1.3.0"
     "@types/prettier" "*"
@@ -12339,10 +12339,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^1.19.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
-  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
+prettier@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.2.tgz#1ba8f3eb92231e769b7fcd7cb73ae1b6b74ade08"
+  integrity sha512-5xJQIPT8BraI7ZnaDwSbu5zLrB6vvi8hVV58yHQ+QK64qrY40dULy0HSRlQ2/2IdzeBpjhDkqdcFBnFeDEMVdg==
 
 pretty-error@^2.1.1:
   version "2.1.1"
