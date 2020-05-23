@@ -1,14 +1,140 @@
 # react-vega [![NPM version][npm-image]][npm-url]
 
-> Use `vega` or `vega-lite` in `react` application smoothly!
+> Easily add `vega` or `vega-lite` visualizations to your `react` application!
 
 **DEMO**: http://vega.github.io/react-vega/
 
 ## Install
 
 ```bash
-npm install react vega vega-lite react-vega --save
+npm install vega vega-lite react-vega --save
 ```
+
+## Usage
+
+Let's say you have a [Vega specification](https://vega.github.io/vega/docs/specification/) for a bar chart that you want to display in your React application. Create a new file, `BarChart.js`, add your spec, and convert it into a React component with `createClassFromSpec`.
+
+```js
+// BarChart.js
+import { createClassFromSpec } from "react-vega";
+
+const spec = {
+  width: 400,
+  height: 200,
+  data: [{ name: "table" }],
+  signals: [
+    {
+      name: "tooltip",
+      value: {},
+      on: [
+        { events: "rect:mouseover", update: "datum" },
+        { events: "rect:mouseout", update: "{}" }
+      ]
+    }
+  ],
+  scales: [
+    {
+      name: "xscale",
+      type: "band",
+      domain: { data: "table", field: "category" },
+      range: "width"
+    },
+    {
+      name: "yscale",
+      domain: { data: "table", field: "amount" },
+      nice: true,
+      range: "height"
+    }
+  ],
+  axes: [
+    { orient: "bottom", scale: "xscale" },
+    { orient: "left", scale: "yscale" }
+  ],
+  marks: [
+    {
+      type: "rect",
+      from: { data: "table" },
+      encode: {
+        enter: {
+          x: { scale: "xscale", field: "category", offset: 1 },
+          width: { scale: "xscale", band: 1, offset: -1 },
+          y: { scale: "yscale", field: "amount" },
+          y2: { scale: "yscale", value: 0 }
+        },
+        update: {
+          fill: { value: "steelblue" }
+        },
+        hover: {
+          fill: { value: "red" }
+        }
+      }
+    },
+    {
+      type: "text",
+      encode: {
+        enter: {
+          align: { value: "center" },
+          baseline: { value: "bottom" },
+          fill: { value: "#333" }
+        },
+        update: {
+          x: { scale: "xscale", signal: "tooltip.category", band: 0.5 },
+          y: { scale: "yscale", signal: "tooltip.amount", offset: -2 },
+          text: { signal: "tooltip.amount" },
+          fillOpacity: [{ test: "datum === tooltip", value: 0 }, { value: 1 }]
+        }
+      }
+    }
+  ]
+};
+
+const BarChart = createClassFromSpec({
+  spec
+});
+
+export default BarChart;
+```
+
+Now import and use `BarChart` like any other React component:
+
+```js
+import React from "react";
+import BarChart from "./BarChart.js";
+
+const barData = {
+  table: [
+    { category: "A", amount: 28 },
+    { category: "B", amount: 55 },
+    { category: "C", amount: 43 },
+    { category: "D", amount: 91 },
+    { category: "E", amount: 81 },
+    { category: "F", amount: 53 },
+    { category: "G", amount: 19 },
+    { category: "H", amount: 89 }
+  ]
+};
+
+// Optional.
+// signalListeners is only needed if you want to listen for chart interactions.
+function handleHover(name, data) {
+  console.log({ name, data });
+  // {
+  //   name: "tooltip",
+  //   data: {
+  //     amount: 28,
+  //     category: "A",
+  //     Symbol(vega_id): 810
+  //   }
+  // }
+}
+const signalListeners = { tooltip: handleHover };
+
+export default function App() {
+  return <BarChart data={barData} signalListeners={signalListeners} />;
+}
+```
+
+Check out the result in this [CodeSandbox](https://codesandbox.io/s/react-vega-bar-chart-qecmh?file=/src/App.js)!
 
 ## Versions
 
@@ -20,64 +146,13 @@ npm install react vega vega-lite react-vega --save
 * If you are looking to use `react` with `vega@2.x`, please use `react-vega@2.3.1`.
 
 
-## Example code
+## Additional examples
 
-There are two approaches to use this library.
+The BarChart example took the approach of creating a React class from a spec, but there are two other options.
 
-### Approach#1 Create class from spec, then get a React class to use
+### `<Vega>`
 
-#### BarChart.js
-
-See the rest of the spec in [spec1.js](https://github.com/vega/react-vega/blob/master/packages/react-vega-demo/stories/vega/spec1.js).
-
-```js
-import React, { PropTypes } from 'react';
-import { createClassFromSpec } from 'react-vega';
-
-export default createClassFromSpec('BarChart', {
-  "width": 400,
-  "height": 200,
-  "data": [{ "name": "table" }],
-  "signals": [
-    {
-      "name": "tooltip",
-      "value": {},
-      "on": [
-        {"events": "rect:mouseover", "update": "datum"},
-        {"events": "rect:mouseout",  "update": "{}"}
-      ]
-    }
-  ],
-  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.js
-});
-```
-
-#### main.js
-
-```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import BarChart from './BarChart.js';
-
-const barData = {
-  table: [...]
-};
-
-function handleHover(...args){
-  console.log(args);
-}
-
-const signalListeners = { hover: handleHover };
-
-ReactDOM.render(
-  <BarChart data={barData} signalListeners={signalListeners} />,
-  document.getElementById('bar-container')
-);
-```
-
-### Approach#2 Use `<Vega>` generic class and pass in `spec` for dynamic component.
-
-Provides a bit more flexibility, but at the cost of extra checks for spec changes.
+One alternative is to use the generic `<Vega>` component; this provides a bit more flexibility, but at the cost of extra checks for spec changes.
 
 #### main.js
 
@@ -107,11 +182,10 @@ const barData = {
   table: [...]
 };
 
-function handleHover(...args){
-  console.log(args);
+function handleHover(name, data){
+  console.log({name, data});
 }
-
-const signalListeners = { hover: handleHover };
+const signalListeners = { tooltip: handleHover };
 
 ReactDOM.render(
   <Vega spec={spec} data={barData} signalListeners={signalListeners} />,
@@ -119,11 +193,9 @@ ReactDOM.render(
 );
 ```
 
+### `<VegaLite>`
 
-
-### Approach#3 Use `<VegaLite>` generic class and pass in `spec` for dynamic component.
-
-Provides a bit more flexibility, but at the cost of extra checks for spec changes.
+The last option is to use the generic `<VegaLite>` component and pass in a `spec`; this provides a bit more flexibility, but at the cost of extra checks for spec changes.
 
 Also see packages/react-vega-demo/stories/ReactVegaLiteDemo.jsx for details
 
@@ -164,7 +236,6 @@ ReactDOM.render(
   document.getElementById('bar-container')
 );
 ```
-
 
 ## API
 
@@ -208,11 +279,11 @@ In the example above, `vis.data('table')` will be passed as `dataset`.
 - **signalListeners**:Object
 
 All signals defined in the spec can be listened to via `signalListeners`.
-For example, to listen to signal *hover*, attach a listener like this
+For example, to listen to signal *tooltip*, attach a listener like this
 
 ```js
 // better declare outside of render function
-const signalListeners = { hover: handleHover };
+const signalListeners = { tooltip: handleHover };
 
 <Vega spec={spec} data={barData} signalListeners={signalListeners} />
 ```
