@@ -15086,10 +15086,15 @@ ts-pnp@^1.1.2:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.5.tgz#840e0739c89fce5f3abd9037bb091dbff16d9dec"
   integrity sha512-ti7OGMOUOzo66wLF3liskw6YQIaSsBgc4GOAlWRnIEj8htCxJUxskanMUoJOD6MDCRAXo36goXJZch+nOS0VMA==
 
-tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3, tslib@~1.11.2:
+tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.11.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.2.tgz#9c79d83272c9a7aaf166f73915c9667ecdde3cc9"
   integrity sha512-tTSkux6IGPnUGUd1XAZHcpu85MOkIl5zX49pO+jfsie3eP0B6pyhOlLXm3cAC6T7s+euSDDUUV+Acop5WmtkVg==
+
+tslib@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.0.tgz#18d13fc2dce04051e20f074cc8387fd8089ce4f3"
+  integrity sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
 
 tsutils@^3.17.1:
   version "3.17.1"
@@ -15510,7 +15515,7 @@ vega-event-selector@^2.0.3, vega-event-selector@~2.0.3:
   resolved "https://registry.yarnpkg.com/vega-event-selector/-/vega-event-selector-2.0.3.tgz#760c61af7ab5c325d3274fd3ab284d067ff16f8c"
   integrity sha512-rUnAvBSy5tkk+0MELY7qICTgjMNjH/DDNIH603q3GRi+bBRCd4MlJxWrPYBhwZIYpmr6XCe130lZ90/F5SgVfA==
 
-vega-expression@^2.6.4, vega-expression@^2.6.5, vega-expression@~2.6.4, vega-expression@~2.6.5:
+vega-expression@^2.6.4, vega-expression@^2.6.5, vega-expression@~2.6.5:
   version "2.6.5"
   resolved "https://registry.yarnpkg.com/vega-expression/-/vega-expression-2.6.5.tgz#7bda7524b9223cbbf9034071695c7c2a9bd81971"
   integrity sha512-3hJts0gKomu3ePXYeIb+VAw7yNKoHJ6VqSKsHHFPyoEGNdwmlgI5d9IBblelPCiMCHK4sMt7h1OTWB33cfxZGA==
@@ -15578,9 +15583,9 @@ vega-hierarchy@~4.0.6:
     vega-util "^1.13.2"
 
 vega-lite@^4.8.0:
-  version "4.12.1"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.12.1.tgz#6c98a7aaf816091a5676583f698d77e250f70035"
-  integrity sha512-HUftERcz09CazsOWZTT7Xmrn6N/ckQTUafdsSugwlj8e6E5gQr8uMx6r9G9/BVPJ2nW7wCuizUCaTvQyK4KjqQ==
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-4.13.0.tgz#282146ccf5cc41fccc24f4f6569cd1f4ba97748c"
+  integrity sha512-qywlC6C6ybjjC4G/u/cL9pcYhZ10iXIh2KZKx7EdDBSS5zUI4CAaffV7kpl0VdlQzliYoDsFuKVztyHkaKNwmA==
   dependencies:
     "@types/clone" "~0.1.30"
     "@types/fast-json-stable-stringify" "^2.0.0"
@@ -15589,10 +15594,10 @@ vega-lite@^4.8.0:
     fast-deep-equal "~3.1.1"
     fast-json-stable-stringify "~2.1.0"
     json-stringify-pretty-compact "~2.0.0"
-    tslib "~1.11.2"
+    tslib "~2.0.0"
     vega-event-selector "~2.0.3"
-    vega-expression "~2.6.4"
-    vega-util "~1.13.2"
+    vega-expression "~2.6.5"
+    vega-util "~1.14.0"
     yargs "~15.3.1"
 
 vega-loader@^4.3.0, vega-loader@~4.3.0:
@@ -15729,11 +15734,6 @@ vega-util@^1.13.0, vega-util@^1.13.2, vega-util@^1.14.0, vega-util@~1.14.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/vega-util/-/vega-util-1.14.0.tgz#56180bf09c28acc2b4c17c38e16d6673f45d9331"
   integrity sha512-j7Gdeasf9C4yUgjlTFJ8P5RpV6n5UxFRzxWkNx4tbMir6f7YM6vGd7vzGWgFdJ3oJy/cmXHzNZw5lw4gnjQAog==
-
-vega-util@~1.13.2:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/vega-util/-/vega-util-1.13.2.tgz#d9fe2378f0e780290e231d128d8c125407fb3559"
-  integrity sha512-cN/VaO8CjPb3ELfQb+IVi5NGoQpYhWSUFfH7K2ibwagO8obZlUFa9ze8fYiexi2Txf78HFgWm9MXNdV6PROrkw==
 
 vega-view-transforms@~4.5.5:
   version "4.5.5"
