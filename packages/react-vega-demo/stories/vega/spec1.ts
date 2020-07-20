@@ -1,5 +1,7 @@
 // From https://vega.github.io/vega/examples/bar-chart/
 
+import { VisualizationSpec } from "../../../react-vega/src";
+
 export default {
   $schema: 'https://vega.github.io/schema/vega/v5.json',
   width: 400,
@@ -59,16 +61,16 @@ export default {
       from: { data: 'table' },
       encode: {
         enter: {
-          x: { scale: 'xscale', field: 'category', offset: 10 },
-          width: { scale: 'xscale', band: 0.5, offset: -1 },
+          x: { scale: 'xscale', field: 'category', offset: 1 },
+          width: { scale: 'xscale', band: 1, offset: -1 },
           y: { scale: 'yscale', field: 'amount' },
           y2: { scale: 'yscale', value: 0 },
         },
         update: {
-          fill: { value: 'green' },
+          fill: { value: 'steelblue' },
         },
         hover: {
-          fill: { value: 'yellow' },
+          fill: { value: 'red' },
         },
       },
     },
@@ -89,4 +91,4 @@ export default {
       },
     },
   ],
-};
+} as VisualizationSpec;

@@ -1,4 +1,4 @@
-import { VisualizationSpec } from 'vega-embed';
+import { VisualizationSpec } from '../types';
 import { VegaEmbedProps } from '../VegaEmbed';
 
 export default function combineSpecWithDimension(props: VegaEmbedProps): VisualizationSpec {

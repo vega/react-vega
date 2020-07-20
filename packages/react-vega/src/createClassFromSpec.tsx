@@ -1,5 +1,5 @@
 import React from 'react';
-import { VisualizationSpec, Mode } from 'vega-embed';
+import { VisualizationSpec, Mode } from './types';
 import Vega, { VegaProps } from './Vega';
 
 interface Constructor<T> {

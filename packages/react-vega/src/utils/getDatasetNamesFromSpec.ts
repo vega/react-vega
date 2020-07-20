@@ -1,4 +1,4 @@
-import { VisualizationSpec } from 'vega-embed';
+import { VisualizationSpec } from '../types';
 
 export default function getDatasetNamesFromSpec(spec: VisualizationSpec) {
   const { data } = spec;

@@ -1,5 +1,6 @@
 import { Result } from 'vega-embed';
 
+/** Vega View object */
 export type View = Result['view'];
 
 export type PlainObject = {
@@ -12,4 +13,7 @@ export type SignalListeners = {
   [key: string]: SignalListener;
 };
 
+/** Handler of view actions */
 export type ViewListener = (view: View) => void;
+
+export * from './reExport';
