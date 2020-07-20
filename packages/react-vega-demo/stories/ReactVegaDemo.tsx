@@ -1,8 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { VisualizationSpec } from 'vega-embed';
-import { Vega, createClassFromSpec } from '../../react-vega/src';
+import { Vega, createClassFromSpec, VisualizationSpec } from '../../react-vega/src';
 import data1 from './vega/data1.json';
 import spec1 from './vega/spec1';
 import spec2 from './vega/spec2';

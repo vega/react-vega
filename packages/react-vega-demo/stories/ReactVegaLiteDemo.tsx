@@ -1,7 +1,6 @@
 import React from 'react';
-import { VisualizationSpec } from 'vega-embed';
 import { action } from '@storybook/addon-actions';
-import { VegaLite, createClassFromSpec } from '../../react-vega/src';
+import { VegaLite, createClassFromSpec, VisualizationSpec } from '../../react-vega/src';
 
 const data1 = {
   myData: [

@@ -1,8 +1,8 @@
-import { VisualizationSpec } from 'vega-embed';
-
 // From https://vega.github.io/vega/examples/bar-chart/
 
-const spec: VisualizationSpec = {
+import { VisualizationSpec } from "../../../react-vega/src";
+
+export default {
   $schema: 'https://vega.github.io/schema/vega/v5.json',
   width: 400,
   height: 200,
@@ -91,6 +91,4 @@ const spec: VisualizationSpec = {
       },
     },
   ],
-};
-
-export default spec;
+} as VisualizationSpec;
