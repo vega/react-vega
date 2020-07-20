@@ -1,4 +1,5 @@
 import React from 'react';
+import { VisualizationSpec } from 'vega-embed';
 import { action } from '@storybook/addon-actions';
 import { VegaLite, createClassFromSpec } from '../../react-vega/src';
 
@@ -30,7 +31,7 @@ const data2 = {
   ],
 };
 
-const spec1 = {
+const spec1: VisualizationSpec = {
   data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
@@ -40,7 +41,7 @@ const spec1 = {
   mark: 'bar',
 };
 
-const spec2 = {
+const spec2: VisualizationSpec = {
   data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
@@ -57,7 +58,17 @@ const code1 = `<VegaLite data={this.state.data} spec={this.state.spec} />`;
 const code2 = `const BarChart = ReactVegaLite.createClassFromLiteSpec(spec1);
 <BarChart data={this.state.data} />`;
 
-export default class Demo extends React.Component {
+type State = {
+  data: Record<string, any>;
+  info: string;
+  spec: VisualizationSpec;
+};
+
+export default class Demo extends React.PureComponent<{}, State> {
+  handlers: {
+    hover: (...args: unknown[]) => void;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
