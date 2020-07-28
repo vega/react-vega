@@ -7,7 +7,7 @@ describe('<Vega>', () => {
   it('renders', () => {
     const wrapper = mount(<Vega mode="vega-lite" spec={spec} />);
 
-    return new Promise(done => {
+    return new Promise((done) => {
       setTimeout(() => {
         const renderedWrapper = wrapper.render();
         expect(renderedWrapper.find('svg')).toHaveLength(1);
@@ -27,7 +27,7 @@ describe('<Vega>', () => {
       />,
     );
 
-    return new Promise(done => {
+    return new Promise((done) => {
       setTimeout(() => {
         const renderedWrapper = wrapper.render();
         expect(renderedWrapper.find('svg')).toHaveLength(1);
@@ -49,7 +49,7 @@ describe('<Vega>', () => {
 
     wrapper.setProps({ data: { source: [{ a: 'B', b: 29 }] } });
 
-    return new Promise(done => {
+    return new Promise((done) => {
       setTimeout(() => {
         const renderedWrapper = wrapper.render();
         expect(renderedWrapper.find('svg')).toHaveLength(1);
@@ -65,7 +65,7 @@ describe('<Vega>', () => {
 
     wrapper.setProps({ data: { source } });
 
-    return new Promise(done => {
+    return new Promise((done) => {
       setTimeout(() => {
         const renderedWrapper = wrapper.render();
         expect(renderedWrapper.find('svg')).toHaveLength(1);

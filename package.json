@@ -35,12 +35,12 @@
     "storybook": "cd packages/react-vega-demo && yarn storybook"
   },
   "devDependencies": {
-    "@airbnb/config-babel": "^3.0.0",
-    "@airbnb/config-eslint": "^3.0.0",
-    "@airbnb/config-jest": "^3.0.0",
-    "@airbnb/config-prettier": "^3.0.0",
-    "@airbnb/config-typescript": "^3.0.0",
-    "@airbnb/nimbus": "^3.0.0",
+    "@airbnb/config-babel": "^3.1.0",
+    "@airbnb/config-eslint": "^3.1.0",
+    "@airbnb/config-jest": "^3.0.2",
+    "@airbnb/config-prettier": "^3.1.0",
+    "@airbnb/config-typescript": "^3.0.1",
+    "@airbnb/nimbus": "^3.1.4",
     "@superset-ui/commit-config": "^0.0.9",
     "@types/enzyme": "^3.10.4",
     "@types/jest": "^25.1.0",
@@ -55,9 +55,11 @@
     "husky": "^4.2.1",
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.3",
+    "parse5": "^6.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.12.0",
+    "typescript": "^3.9.7",
     "vega": "^5.10.0",
     "vega-lite": "^4.8.0"
   },
@@ -112,12 +114,14 @@
           "rules": {
             "import/no-extraneous-dependencies": "off",
             "jest/no-test-return-statement": "off",
-            "promise/param-names": "off"
+            "promise/param-names": "off",
+            "react/jsx-no-literals": "off"
           }
         },
         {
           "files": "*.{js,jsx,ts,tsx}",
           "rules": {
+            "react/jsx-no-literals": "off",
             "@typescript-eslint/no-explicit-any": [
               "warn",
               {
@@ -130,6 +134,7 @@
     },
     "typescript": {
       "compilerOptions": {
+        "resolveJsonModule": true,
         "emitDeclarationOnly": true
       },
       "include": [

@@ -16,7 +16,7 @@ export type VegaEmbedProps = {
   style?: CSSProperties;
   onNewView?: ViewListener;
   onError?: (error: Error) => void;
-} & EmbedOptions & {};
+} & EmbedOptions;
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
@@ -37,7 +37,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     fieldSet.delete('height');
 
     // Only create a new view if necessary
-    if (Array.from(fieldSet).some(f => this.props[f] !== prevProps[f])) {
+    if (Array.from(fieldSet).some((f) => this.props[f] !== prevProps[f])) {
       this.clearView();
       this.createView();
     } else {
@@ -55,7 +55,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           this.createView();
         } else {
           const areSignalListenersChanged = !shallowEqual(newSignalListeners, oldSignalListeners);
-          this.modifyView(view => {
+          this.modifyView((view) => {
             if (specChanges.width !== false) {
               view.width(specChanges.width);
             }
@@ -75,7 +75,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           });
         }
       } else if (!shallowEqual(newSignalListeners, oldSignalListeners)) {
-        this.modifyView(view => {
+        this.modifyView((view) => {
           if (oldSignalListeners) {
             removeSignalListenersFromView(view, oldSignalListeners);
           }
@@ -104,7 +104,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   modifyView = (action: ViewListener) => {
     if (this.viewPromise) {
       this.viewPromise
-        .then(view => {
+        .then((view) => {
           if (view) {
             action(view);
           }
@@ -135,7 +135,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   }
 
   clearView() {
-    this.modifyView(view => {
+    this.modifyView((view) => {
       view.finalize();
     });
     this.viewPromise = undefined;

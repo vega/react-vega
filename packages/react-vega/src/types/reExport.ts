@@ -1,3 +1,3 @@
-// List of types to re-export from dependencies
+// Types to re-export from dependencies
 
-export { VisualizationSpec, Mode } from 'vega-embed';
+export type { VisualizationSpec, Mode } from 'vega-embed';

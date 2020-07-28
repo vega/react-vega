@@ -7,7 +7,7 @@ describe('<Vega>', () => {
   it('renders', () => {
     const wrapper = mount(<VegaLite spec={spec} />);
 
-    return new Promise(done => {
+    return new Promise((done) => {
       setTimeout(() => {
         const renderedWrapper = wrapper.render();
         expect(renderedWrapper.find('svg')).toHaveLength(1);

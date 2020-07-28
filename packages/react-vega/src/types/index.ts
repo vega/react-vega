@@ -1,4 +1,4 @@
-import { Result } from 'vega-embed';
+import type { Result } from 'vega-embed';
 
 /** Vega View object */
 export type View = Result['view'];
