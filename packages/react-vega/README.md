@@ -28,7 +28,7 @@ There are two approaches to use this library.
 
 #### BarChart.js
 
-See the rest of the spec in [spec1.js](https://github.com/vega/react-vega/blob/master/packages/react-vega-demo/stories/vega/spec1.js).
+See the rest of the spec in [spec1.ts](https://github.com/vega/react-vega/blob/master/packages/react-vega-demo/stories/vega/spec1.ts).
 
 ```js
 import React, { PropTypes } from 'react';
@@ -48,7 +48,7 @@ export default createClassFromSpec('BarChart', {
       ]
     }
   ],
-  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.js
+  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.ts
 });
 ```
 
@@ -100,7 +100,7 @@ const spec = {
       ]
     }
   ],
-  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.js
+  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.ts
 }
 
 const barData = {
