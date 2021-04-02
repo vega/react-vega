@@ -45,7 +45,7 @@
     "@types/enzyme": "^3.10.4",
     "@types/jest": "^26.0.8",
     "@types/jsdom": "^16.1.0",
-    "@types/react-test-renderer": "^16.9.2",
+    "@types/react-test-renderer": "^17.0.1",
     "canvas": "^2.6.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
