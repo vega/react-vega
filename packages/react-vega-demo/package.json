@@ -1,6 +1,6 @@
 {
   "name": "react-vega-demo",
-  "version": "7.4.3",
+  "version": "7.4.0",
   "description": "Convert Vega spec into React class conveniently",
   "author": "Krist Wongsuphasawat <krist.wongz@gmail.com> (http://kristw.yellowpigz.com)",
   "keywords": [],
@@ -31,8 +31,8 @@
     "react-timeout": "^2.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.14.0",
+    "babel-loader": "^8.2.2",
     "gh-pages": "^3.1.0",
     "react-dom": "^16.12.0"
   },

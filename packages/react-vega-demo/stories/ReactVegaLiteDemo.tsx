@@ -31,6 +31,7 @@ const data2 = {
 };
 
 const spec1: VisualizationSpec = {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
@@ -41,6 +42,7 @@ const spec1: VisualizationSpec = {
 };
 
 const spec2: VisualizationSpec = {
+  $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
   data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {

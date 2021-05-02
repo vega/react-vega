@@ -119,18 +119,18 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     const { spec, onNewView, signalListeners = {}, width, height, ...options } = this.props;
     if (this.containerRef.current) {
       const finalSpec = combineSpecWithDimension(this.props);
-      this.viewPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
-        .then(({ view }) => {
-          if (addSignalListenersToView(view, signalListeners)) {
-            view.run();
-          }
-          return view;
-        })
-        .catch(this.handleError);
+      this.viewPromise = vegaEmbed(this.containerRef.current, finalSpec, options);
+      //   .then(({ view }) => {
+      //     if (addSignalListenersToView(view, signalListeners)) {
+      //       view.run();
+      //     }
+      //     return view;
+      //   })
+      //   .catch(this.handleError);
 
-      if (onNewView) {
-        this.modifyView(onNewView);
-      }
+      // if (onNewView) {
+      //   this.modifyView(onNewView);
+      // }
     }
   }
 

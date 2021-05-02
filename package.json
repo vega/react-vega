@@ -41,12 +41,16 @@
     "@airbnb/config-prettier": "^3.1.0",
     "@airbnb/config-typescript": "^3.0.1",
     "@airbnb/nimbus": "^3.1.4",
+    "@babel/preset-env": "^7.14.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.13.8",
+    "@babel/plugin-syntax-optional-chaining": "^7.8.3",
     "@superset-ui/commit-config": "^0.0.9",
     "@types/enzyme": "^3.10.4",
     "@types/jest": "^26.0.8",
     "@types/jsdom": "^16.1.0",
     "@types/react-test-renderer": "^16.9.2",
     "canvas": "^2.6.1",
+    "core-js": "^3.11.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.3",
@@ -60,8 +64,9 @@
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.12.0",
     "typescript": "^3.9.7",
-    "vega": "^5.10.0",
+    "vega": "^5.20.2",
     "vega-lite": "^5.1.0"
+
   },
   "engines": {
     "node": ">=10.16.0",
@@ -79,7 +84,10 @@
   ],
   "nimbus": {
     "drivers": [
-      "babel",
+      {
+        "driver": "babel",
+        "strategy": "none"
+      },
       "eslint",
       "jest",
       "prettier",

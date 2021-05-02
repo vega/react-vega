@@ -51,7 +51,7 @@ export default class ChangingDimensionDemo extends React.Component<{}, {
     const { width, height, padding } = this.state;
 
     const SPEC = {
-      $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
       width,
       height,
       padding,
