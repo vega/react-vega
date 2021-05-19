@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
-import vegaEmbed, { EmbedOptions, VisualizationSpec } from 'vega-embed';
-import { ViewListener, View, SignalListeners } from './types';
+import vegaEmbed, { EmbedOptions, Result, VisualizationSpec } from 'vega-embed';
+import { ViewListener, SignalListeners } from './types';
 import shallowEqual from './utils/shallowEqual';
 import getUniqueFieldNames from './utils/getUniqueFieldNames';
 import { NOOP } from './constants';
@@ -21,9 +21,7 @@ export type VegaEmbedProps = {
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
 
-  viewPromise?: Promise<View | undefined>;
-
-  finalize?: () => void;
+  result?: Result | undefined;
 
   componentDidMount() {
     this.createView();
@@ -104,49 +102,46 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   };
 
   modifyView = (action: ViewListener) => {
-    if (this.viewPromise) {
-      this.viewPromise
-        .then((view) => {
-          if (view) {
-            action(view);
-          }
-
-          return true;
-        })
-        .catch(this.handleError);
+    try {
+      if (this.result) {
+        const { view } = this.result;
+        if (view) {
+          action(view);
+        }
+        return true;
+      }
+    } catch (err) {
+      this.handleError(err);
     }
   };
 
-  createView() {
+  createView = async () => {
     const { spec, onNewView, signalListeners = {}, width, height, ...options } = this.props;
-    if (this.containerRef.current) {
-      const finalSpec = combineSpecWithDimension(this.props);
+    try {
+      if (this.containerRef.current) {
+        const finalSpec = combineSpecWithDimension(this.props);
+        this.result = await vegaEmbed(this.containerRef.current, finalSpec, options);
 
-      this.viewPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
-        .then(({ view, finalize }) => {
-          this.finalize = finalize;
-          if (addSignalListenersToView(view, signalListeners)) {
-            view.run();
-          }
-          return view;
-        })
-        .catch(this.handleError);
-
-      if (onNewView) {
-        this.modifyView(onNewView);
+        if (addSignalListenersToView(this.result.view, signalListeners)) {
+          this.result.view.run();
+        }
+        if (onNewView) {
+          this.modifyView(onNewView);
+        }
       }
+    } catch (err) {
+      this.handleError(err);
     }
-  }
+  };
 
-  clearView() {
-    if (this.finalize) {
-      this.finalize();
+  clearView = () => {
+    if (this.result) {
+      this.result.finalize();
     }
-    this.finalize = undefined;
-    this.viewPromise = undefined;
+    this.result = undefined;
 
     return this;
-  }
+  };
 
   render() {
     const { className, style } = this.props;
