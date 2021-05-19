@@ -20,7 +20,9 @@ export type VegaEmbedProps = {
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
+
   viewPromise?: Promise<View | undefined>;
+
   finalize?: () => void;
 
   componentDidMount() {
@@ -115,13 +117,13 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     }
   };
 
-  createView = async () => {
+  createView() {
     const { spec, onNewView, signalListeners = {}, width, height, ...options } = this.props;
     if (this.containerRef.current) {
       const finalSpec = combineSpecWithDimension(this.props);
 
       this.viewPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
-        .then(({ view, spec, vgSpec, finalize }) => {
+        .then(({ view, finalize }) => {
           this.finalize = finalize;
           if (addSignalListenersToView(view, signalListeners)) {
             view.run();
@@ -134,7 +136,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
         this.modifyView(onNewView);
       }
     }
-  };
+  }
 
   clearView() {
     if (this.finalize) {
