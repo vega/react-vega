@@ -52,7 +52,7 @@
     "enzyme-to-json": "^3.4.3",
     "fast-glob": "^3.2.2",
     "fs-extra": "^9.0.1",
-    "husky": "^4.3.0",
+    "husky": "^7.0.0",
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.3",
     "parse5": "^6.0.1",
