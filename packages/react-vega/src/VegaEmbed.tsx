@@ -143,7 +143,6 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           if (result) {
             result.finalize();
           }
-          return true;
         })
         .catch(this.handleError);
     }
