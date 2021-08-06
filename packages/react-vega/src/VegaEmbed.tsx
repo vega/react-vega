@@ -106,8 +106,8 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     if (this.resultPromise) {
       this.resultPromise
         .then((result) => {
-          if (result?.view) {
-            action(result?.view);
+          if (result) {
+            action(result.view);
           }
 
           return true;
