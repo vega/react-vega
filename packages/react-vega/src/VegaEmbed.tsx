@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import vegaEmbed, { EmbedOptions, VisualizationSpec } from 'vega-embed';
-import { ViewListener, View, SignalListeners } from './types';
+import type { Result } from 'vega-embed';
+import { ViewListener, SignalListeners } from './types';
 import shallowEqual from './utils/shallowEqual';
 import getUniqueFieldNames from './utils/getUniqueFieldNames';
 import { NOOP } from './constants';
@@ -21,7 +22,7 @@ export type VegaEmbedProps = {
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   containerRef = React.createRef<HTMLDivElement>();
 
-  viewPromise?: Promise<View | undefined>;
+  resultPromise?: Promise<Result | undefined>;
 
   componentDidMount() {
     this.createView();
@@ -102,9 +103,9 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   };
 
   modifyView = (action: ViewListener) => {
-    if (this.viewPromise) {
-      this.viewPromise
-        .then((view) => {
+    if (this.resultPromise) {
+      this.resultPromise
+        .then(({ view }) => {
           if (view) {
             action(view);
           }
@@ -119,12 +120,13 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     const { spec, onNewView, signalListeners = {}, width, height, ...options } = this.props;
     if (this.containerRef.current) {
       const finalSpec = combineSpecWithDimension(this.props);
-      this.viewPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
-        .then(({ view }) => {
+      this.resultPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
+        .then((result) => {
+          const { view } = result;
           if (addSignalListenersToView(view, signalListeners)) {
             view.run();
           }
-          return view;
+          return result;
         })
         .catch(this.handleError);
 
@@ -135,10 +137,15 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   }
 
   clearView() {
-    this.modifyView((view) => {
-      view.finalize();
-    });
-    this.viewPromise = undefined;
+    if (this.resultPromise) {
+      this.resultPromise
+        .then(({ finalize }) => {
+          finalize();
+          return true;
+        })
+        .catch(this.handleError);
+    }
+    this.resultPromise = undefined;
 
     return this;
   }
