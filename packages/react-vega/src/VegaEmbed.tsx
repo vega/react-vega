@@ -105,9 +105,9 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   modifyView = (action: ViewListener) => {
     if (this.resultPromise) {
       this.resultPromise
-        .then(({ view }) => {
-          if (view) {
-            action(view);
+        .then((result) => {
+          if (result?.view) {
+            action(result?.view);
           }
 
           return true;
@@ -139,8 +139,10 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   clearView() {
     if (this.resultPromise) {
       this.resultPromise
-        .then(({ finalize }) => {
-          finalize();
+        .then((result) => {
+          if (result) {
+            result.finalize();
+          }
           return true;
         })
         .catch(this.handleError);
