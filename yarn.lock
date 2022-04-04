@@ -3659,9 +3659,9 @@
     "@types/react" "*"
 
 "@types/react-timeout@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@types/react-timeout/-/react-timeout-1.1.1.tgz#2489fef576e40bb9023d4f244e5f1cc9eaca6547"
-  integrity sha512-A5fbsL1ytPCbR39sZ/1CW8GQ7lkN8Yo3q665Wq1KUGZbAOC8Nq/ggK3ZoiLB89SZbdCjtYuhDSj/kdICzGOR4Q==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@types/react-timeout/-/react-timeout-1.1.3.tgz#99635dd668d4912d4970d575ca5de4adebc00b5a"
+  integrity sha512-+jzohBvumYChNlGkK28J8ssd/sQQ8Q5hlwTum+dK9FvBuPrpo3rIPpheY6e83JrjipsXOekdugN0tnmPxNHxOQ==
   dependencies:
     "@types/node" "*"
     "@types/react" "*"
