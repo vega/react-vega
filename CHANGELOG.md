@@ -1,4 +1,40 @@
-# [0.0.0](https://github.com/vega/react-vega/compare/v7.3.0...v0.0.0) (2020-03-22)
+## [7.4.4](https://github.com/vega/react-vega/compare/v7.4.3...v7.4.4) (2021-08-27)
+
+
+### Bug Fixes
+
+* call embed finalize instead of view ([#421](https://github.com/vega/react-vega/issues/421)) ([20efe38](https://github.com/vega/react-vega/commit/20efe3844df09d754938382e981070f340f2c972))
+
+
+
+## [7.4.3](https://github.com/vega/react-vega/compare/v7.4.2...v7.4.3) (2021-05-01)
+
+
+### Features
+
+* support react 17 ([#354](https://github.com/vega/react-vega/issues/354)) ([4843a7f](https://github.com/vega/react-vega/commit/4843a7ff54e4099e180c25b56554fb2d511ff4e8))
+
+
+
+## [7.4.2](https://github.com/vega/react-vega/compare/v7.4.1...v7.4.2) (2020-11-10)
+
+
+
+## [7.4.1](https://github.com/vega/react-vega/compare/v7.4.0...v7.4.1) (2020-07-28)
+
+
+### Bug Fixes
+
+* reexport types ([dd4f409](https://github.com/vega/react-vega/commit/dd4f409952a4799905163b01c7e75b377c077072))
+
+
+
+# [7.4.0](https://github.com/vega/react-vega/compare/v7.3.0...v7.4.0) (2020-07-20)
+
+
+### Features
+
+* export types ([#242](https://github.com/vega/react-vega/issues/242)) ([5baea7c](https://github.com/vega/react-vega/commit/5baea7c424fa77ffdc9967e38f645f44756b42a0))
 
 
 
