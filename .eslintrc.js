@@ -50,8 +50,8 @@ module.exports = {
       plugins: ['@typescript-eslint/eslint-plugin', 'prettier', 'react'],
       rules: {
         '@typescript-eslint/ban-ts-ignore': 0,
-        '@typescript-eslint/ban-ts-comment': 0, // disabled temporarily
-        '@typescript-eslint/ban-types': 0, // disabled temporarily
+        '@typescript-eslint/ban-ts-comment': 0,
+        '@typescript-eslint/ban-types': 0,
         '@typescript-eslint/no-empty-function': 0,
         '@typescript-eslint/no-use-before-define': 1,
         '@typescript-eslint/no-non-null-assertion': 0,
@@ -66,17 +66,17 @@ module.exports = {
             '.json': 'always',
           },
         ],
-        'no-use-before-define': 0, // disabled temporarily
+        'no-use-before-define': 0,
         'prettier/prettier': 'error',
-        'react/destructuring-assignment': 0, // re-enable up for discussion
+        'react/destructuring-assignment': 0,
         'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
         'react/jsx-fragments': 1,
         'react/jsx-no-bind': 0,
         'react/jsx-no-literals': 'off',
-        'react/jsx-props-no-spreading': 0, // re-enable up for discussion
+        'react/jsx-props-no-spreading': 0,
         'react/require-default-props': 0,
         'react/sort-comp': 0,
-        'react/static-property-placement': 0, // re-enable up for discussion
+        'react/static-property-placement': 0,
       },
       settings: {
         'import/resolver': {
