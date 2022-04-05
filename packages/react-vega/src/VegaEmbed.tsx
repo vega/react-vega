@@ -16,7 +16,7 @@ export type VegaEmbedProps = {
   signalListeners?: SignalListeners;
   style?: CSSProperties;
   onNewView?: ViewListener;
-  onError?: (error: Error) => void;
+  onError?: (error: Error, containerRef: HTMLDivElement) => void;
 } & EmbedOptions;
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
@@ -95,7 +95,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
 
   handleError = (error: Error): undefined => {
     const { onError = NOOP } = this.props;
-    onError(error);
+    onError(error, this.containerRef.current as HTMLDivElement);
     // eslint-disable-next-line no-console
     console.warn(error);
 

@@ -35,6 +35,7 @@ export default class Demo extends React.PureComponent<{}, State> {
     this.handleHover = this.handleHover.bind(this);
     this.handleToggleSpec = this.handleToggleSpec.bind(this);
     this.handleUpdateData = this.handleUpdateData.bind(this);
+    this.handleErrorSpec = this.handleErrorSpec.bind(this);
     this.handlers = { tooltip: this.handleHover };
   }
 
@@ -45,6 +46,17 @@ export default class Demo extends React.PureComponent<{}, State> {
     this.setState({
       info: JSON.stringify(args),
     });
+  }
+
+  handleErrorSpec() {
+    const spec: VisualizationSpec = {
+      signals: [
+        { name: "foo" },
+        { name: "foo" },  //create error: Duplicate signal name
+      ]
+    };
+    action('error spec')(spec);
+    this.setState({ spec });
   }
 
   handleToggleSpec() {
@@ -90,12 +102,15 @@ export default class Demo extends React.PureComponent<{}, State> {
         <button type="button" onClick={this.handleUpdateData}>
           Update data
         </button>
+        <button type="button" onClick={this.handleErrorSpec}>
+          Spec Error
+        </button>
         <h3>
           <code>&lt;Vega&gt;</code> React Component
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={data} spec={spec} signalListeners={this.handlers} />
+        <Vega data={data} spec={spec} signalListeners={this.handlers} onError={(e, div) => div.innerText = `${e.name}: ${e.message}`} />
         <h3>
           <code>ReactVega.createClassFromSpec()</code>
         </h3>
