@@ -16,7 +16,7 @@ export type VegaEmbedProps = {
   signalListeners?: SignalListeners;
   style?: CSSProperties;
   onNewView?: ViewListener;
-  onError?: (error: Error, containerRef?: HTMLDivElement) => void;
+  onError?: (error: Error, containerRef: HTMLDivElement) => void;
 } & EmbedOptions;
 
 export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
