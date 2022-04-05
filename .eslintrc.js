@@ -1,58 +1,33 @@
 module.exports = {
-  "root": true,
-  "parser": "@babel/eslint-parser",
+  root: true,
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaFeatures: {
       experimentalObjectRestSpread: true,
     },
   },
-  "extends": [
-    "airbnb",
-    "prettier",
-    'prettier/react',
-    'plugin:react-hooks/recommended',
-  ],
-  "plugins": [
-    "babel",
-    "compat",
-    "promise",
-    "prettier",
-    "react"
-  ],
-  "env": {
-    "browser": true
+  extends: ['airbnb', 'prettier', 'prettier/react', 'plugin:react-hooks/recommended'],
+  plugins: ['babel', 'compat', 'promise', 'prettier', 'react'],
+  env: {
+    browser: true,
   },
-  "globals": {
-    "__DEV__": true
+  globals: {
+    __DEV__: true,
   },
-  "settings": {
-    "polyfills": [
-      "promises"
-    ],
-    "import/extensions": [
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx",
-      ".json"
-    ],
+  settings: {
+    polyfills: ['promises'],
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx', '.json'],
     'import/resolver': {
       webpack: {},
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
-    },    "react": {
-      "version": "detect"
-    }
+    },
+    react: {
+      version: 'detect',
+    },
   },
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2018,
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "rules": {
+  rules: {
     camelcase: [
       'error',
       {
@@ -95,8 +70,7 @@ module.exports = {
         paths: [
           {
             name: 'antd',
-            message:
-              'Please import Ant components from the index of common/components',
+            message: 'Please import Ant components from the index of common/components',
           },
         ],
       },
@@ -121,7 +95,7 @@ module.exports = {
     'react/static-property-placement': 0, // disabled temporarily
     'prettier/prettier': 'error',
   },
-  "overrides": [
+  overrides: [
     {
       files: ['*.ts', '*.tsx'],
       parser: '@typescript-eslint/parser',
@@ -210,10 +184,7 @@ module.exports = {
       rules: {
         // this is to keep eslint from complaining about storybook addons,
         // since they are included as dev dependencies rather than direct dependencies.
-        'import/no-extraneous-dependencies': [
-          'error',
-          { devDependencies: true },
-        ],
+        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       },
     },
     {
@@ -223,13 +194,7 @@ module.exports = {
       },
     },
     {
-      files: [
-        '*.test.ts',
-        '*.test.tsx',
-        '*.test.js',
-        '*.test.jsx',
-        'fixtures.*',
-      ],
+      files: ['*.test.ts', '*.test.tsx', '*.test.js', '*.test.jsx', 'fixtures.*'],
       plugins: ['jest', 'jest-dom', 'no-only-tests', 'testing-library'],
       env: {
         'jest/globals': true,
@@ -255,5 +220,5 @@ module.exports = {
         },
       },
     },
-  ]
+  ],
 };

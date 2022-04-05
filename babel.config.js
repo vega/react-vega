@@ -1,38 +1,38 @@
 module.exports = {
-  "ignore": [
-    "coverage/",
-    "node_modules/",
-    "public/",
-    "esm/",
-    "lib/",
-    "tmp/",
-    "dist/",
-    "*.d.ts",
-    "__tests__",
-    "__mocks__"
+  ignore: [
+    'coverage/',
+    'node_modules/',
+    'public/',
+    'esm/',
+    'lib/',
+    'tmp/',
+    'dist/',
+    '*.d.ts',
+    '__tests__',
+    '__mocks__',
   ],
-  "plugins": [
+  plugins: [
     [
-      "babel-plugin-transform-dev",
+      'babel-plugin-transform-dev',
       {
-        "evaluate": false
-      }
+        evaluate: false,
+      },
     ],
-    "babel-plugin-typescript-to-proptypes",
-    "@babel/plugin-proposal-class-properties"
+    'babel-plugin-typescript-to-proptypes',
+    '@babel/plugin-proposal-class-properties',
   ],
-  "presets": [
+  presets: [
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
-        "loose": true,
-        "modules": false,
-        "shippedProposals": true,
-        "targets": false,
-        "bugfixes": false
-      }
+        loose: true,
+        modules: false,
+        shippedProposals: true,
+        targets: false,
+        bugfixes: false,
+      },
     ],
-    "@babel/preset-react",
-    "@babel/preset-typescript"
-  ]
+    '@babel/preset-react',
+    '@babel/preset-typescript',
+  ],
 };

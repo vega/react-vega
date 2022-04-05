@@ -1,23 +1,16 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { Vega } from '../src';
 import spec from './mock/vegaLiteSpec';
 
 describe('<Vega>', () => {
   it('renders', () => {
-    const wrapper = mount(<Vega mode="vega-lite" spec={spec} />);
-
-    return new Promise(done => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
-    });
+    render(<Vega mode="vega-lite" spec={spec} />);
+    expect(screen.getByRole('svg')).toHaveLength(1);
   });
 
   it('renders with data', () => {
-    const wrapper = mount(
+    render(
       <Vega
         mode="vega-lite"
         spec={spec}
@@ -27,17 +20,11 @@ describe('<Vega>', () => {
       />,
     );
 
-    return new Promise(done => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
-    });
+    expect(screen.getByRole('svg')).toHaveLength(1);
   });
 
   it('updates data if changed', () => {
-    const wrapper = mount(
+    const { rerender } = render(
       <Vega
         mode="vega-lite"
         spec={spec}
@@ -47,30 +34,32 @@ describe('<Vega>', () => {
       />,
     );
 
-    wrapper.setProps({ data: { source: [{ a: 'B', b: 29 }] } });
+    expect(screen.getByRole('rect')).toHaveLength(1);
 
-    return new Promise(done => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
-    });
+    rerender(
+      <Vega
+        mode="vega-lite"
+        spec={spec}
+        data={{
+          data: {
+            source: [
+              { a: 'B', b: 29 },
+              { a: 'C', b: 20 },
+            ],
+          },
+        }}
+      />,
+    );
+
+    expect(screen.getByRole('rect')).toHaveLength(2);
   });
 
   it('does not update data if does not changed', () => {
     const source = [{ a: 'A', b: 28 }];
 
-    const wrapper = mount(<Vega mode="vega-lite" spec={spec} data={{ source }} />);
+    const { rerender } = render(<Vega mode="vega-lite" spec={spec} data={{ source }} />);
+    rerender(<Vega mode="vega-lite" spec={spec} data={{ source }} />);
 
-    wrapper.setProps({ data: { source } });
-
-    return new Promise(done => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
-    });
+    expect(screen.getByRole('rect')).toHaveLength(1);
   });
 });
