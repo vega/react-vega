@@ -168,6 +168,14 @@ module.exports = {
         'react/static-property-placement': 0, // re-enable up for discussion
         'react/sort-comp': 0,
         'prettier/prettier': 'error',
+        "react/jsx-no-literals": "off",
+        "@typescript-eslint/no-explicit-any": [
+          "warn",
+          {
+            "fixToUnknown": false
+          }
+        ]
+
       },
       settings: {
         'import/resolver': {

@@ -14,8 +14,8 @@
     "postpublish": "git push; git push --tags",
     "build": "yarn babel && yarn type",
     "babel": "yarn babel:cjs && yarn babel:esm",
-    "babel:cjs": "nimbus babel --clean --workspaces=\"(react-vega)\"",
-    "babel:esm": "nimbus babel --clean --workspaces=\"(react-vega)\" --esm",
+    "babel:cjs": "lerna exec --stream --concurrency 10 --scope 'react-vega' -- babel --config-file='../../babel.config.js' src --extensions '.ts,.tsx,.js,.jsx' --copy-files --out-dir lib",
+    "babel:esm": "BABEL_OUTPUT=esm lerna exec --stream --concurrency 10 --scope 'react-vega' -- babel --config-file='../../babel.config.js' src --extensions '.ts,.tsx,.js,.jsx' --copy-files --out-dir esm",
     "clean": "rm -rf ./packages/**/{lib,esm}",
     "commit": "superset-commit",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 20",
@@ -49,8 +49,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.8.6",
     "@superset-ui/commit-config": "^0.0.9",
-    "@testing-library/react": "^13.0.0",
-    "@types/enzyme": "^3.10.4",
+    "@testing-library/react": "^12.1.4",
     "@types/jest": "^26.0.8",
     "@types/jsdom": "^16.1.0",
     "@types/react-test-renderer": "^16.9.2",
@@ -108,35 +107,6 @@
     "last 3 edge versions"
   ],
   "nimbus": {
-    "drivers": [
-      "babel",
-      "eslint",
-      "jest",
-      "prettier",
-      "typescript"
-    ],
-    "settings": {
-      "library": true,
-      "react": true,
-      "next": true,
-      "env": {
-        "targets": false
-      }
-    },
-    "jest": {
-      "timers": "real",
-      "setupFilesAfterEnv": [
-        "@airbnb/config-jest/enzyme"
-      ],
-      "coverageThreshold": {
-        "global": {
-          "branches": 5,
-          "functions": 5,
-          "lines": 5,
-          "statements": 5
-        }
-      }
-    },
     "eslint": {
       "overrides": [
         {
@@ -146,18 +116,6 @@
             "jest/no-test-return-statement": "off",
             "promise/param-names": "off",
             "react/jsx-no-literals": "off"
-          }
-        },
-        {
-          "files": "*.{js,jsx,ts,tsx}",
-          "rules": {
-            "react/jsx-no-literals": "off",
-            "@typescript-eslint/no-explicit-any": [
-              "warn",
-              {
-                "fixToUnknown": false
-              }
-            ]
           }
         }
       ]
@@ -180,7 +138,7 @@
   },
   "lint-staged": {
     "./packages/*/{src,test,storybook}/**/*.{js,jsx,ts,tsx,json,md}": [
-      "yarn prettier --write",
+      "yarn prettier",
       "git add"
     ]
   }
