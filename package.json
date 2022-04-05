@@ -16,7 +16,7 @@
     "babel": "yarn babel:cjs && yarn babel:esm",
     "babel:cjs": "lerna exec --stream --concurrency 10 --scope 'react-vega' -- babel --config-file='../../babel.config.js' src --extensions '.ts,.tsx,.js,.jsx' --copy-files --out-dir lib",
     "babel:esm": "BABEL_OUTPUT=esm lerna exec --stream --concurrency 10 --scope 'react-vega' -- babel --config-file='../../babel.config.js' src --extensions '.ts,.tsx,.js,.jsx' --copy-files --out-dir esm",
-    "clean": "rm -rf ./packages/**/{lib,esm}",
+    "clean": "rm -rf ./packages/**/{lib,esm,tsconfig.tsbuildinfo}",
     "commit": "superset-commit",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 20",
     "format": "yarn prettier",
