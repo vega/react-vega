@@ -4,29 +4,22 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-    
     steps:
     - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-    - uses: borales/actions-yarn@v2.3.0
-      with:
-        cmd: install # will run `yarn install` command
-    - uses: borales/actions-yarn@v2.3.0
-      with:
-        cmd: build # will run `yarn build` command
-    - uses: borales/actions-yarn@v2.3.0
-      with:
-        cmd: test # will run `yarn test` command
+        node-version: 16.10
+        cache: 'yarn'
+    - name: Install dependencies
+      run: yarn install
+    - name: Build
+      run: yarn build
+    - name: Test
+      run: yarn test
