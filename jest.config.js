@@ -7,10 +7,6 @@ module.exports = {
   },
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
   roots: ['<rootDir>/packages'],
-  // setupFiles: [
-  //   '/Users/krist_wongsuphasawat/workspace/react-vega/node_modules/@superset-ui/build-config/configs/jest/enzyme.js',
-  // ],
-  // snapshotSerializers: ['enzyme-to-json/serializer'],
   testEnvironment: 'jest-environment-jsdom',
   testMatch: ['**/?(*.)+(spec|test).{js,jsx,ts,tsx}'],
   testURL: 'http://localhost/',
