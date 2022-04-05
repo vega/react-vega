@@ -21,6 +21,7 @@ docker-compose.yml
 # Logs
 logs/
 *.log
+*.tsbuildinfo
 
 # Cache
 tmp
