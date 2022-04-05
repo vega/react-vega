@@ -31,11 +31,7 @@ const config = {
     'babel-plugin-typescript-to-proptypes',
     '@babel/plugin-proposal-class-properties',
   ],
-  presets: [
-    ['@babel/preset-env',envOptions],
-    '@babel/preset-react',
-    '@babel/preset-typescript',
-  ],
+  presets: [['@babel/preset-env', envOptions], '@babel/preset-react', '@babel/preset-typescript'],
 };
 
 // Override to allow transpile es modules inside vega-lite

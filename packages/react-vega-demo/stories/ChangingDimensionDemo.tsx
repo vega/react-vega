@@ -3,7 +3,7 @@ import { VegaLite } from '../../react-vega/src';
 
 const values = [];
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 100; i += 1) {
   values.push({
     a: `X${i}`,
     b: Math.round(Math.random() * 1000),
@@ -40,7 +40,7 @@ export default class ChangingDimensionDemo extends React.Component<
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      this.setState(({ width, height, padding, grow }) => ({
+      this.setState(({ width, height, grow }) => ({
         width: width + (grow ? 1 : -1),
         height: height + (grow ? 1 : -1),
         grow: (grow && width < 400) || (!grow && width === 100),

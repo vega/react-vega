@@ -1,7 +1,10 @@
 import { VisualizationSpec } from '../types';
-import { VegaEmbedProps } from '../VegaEmbed';
 
-export default function combineSpecWithDimension(props: VegaEmbedProps): VisualizationSpec {
+export default function combineSpecWithDimension(props: {
+  spec: VisualizationSpec;
+  width?: number;
+  height?: number;
+}): VisualizationSpec {
   const { spec, width, height } = props;
   if (typeof width !== 'undefined' && typeof height !== 'undefined') {
     return { ...spec, width, height };
