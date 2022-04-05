@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { createClassFromSpec } from '../src';
 import spec from './mock/vegaLiteSpec';
 
@@ -13,14 +13,7 @@ describe('createClassFromSpec', () => {
   });
 
   it('renders', () => {
-    const wrapper = mount(<Component />);
-
-    return new Promise(done => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
-    });
+    render(<Component />);
+    expect(screen.getByRole('svg')).toHaveLength(1);
   });
 });
