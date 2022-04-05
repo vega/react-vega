@@ -22,7 +22,7 @@ type State = {
 export default class Demo extends React.PureComponent<{}, State> {
   handlers: {
     tooltip: (...args: unknown[]) => void;
-  }
+  };
 
   constructor(props) {
     super(props);

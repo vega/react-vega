@@ -38,7 +38,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     fieldSet.delete('height');
 
     // Only create a new view if necessary
-    if (Array.from(fieldSet).some((f) => this.props[f] !== prevProps[f])) {
+    if (Array.from(fieldSet).some(f => this.props[f] !== prevProps[f])) {
       this.clearView();
       this.createView();
     } else {
@@ -56,7 +56,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           this.createView();
         } else {
           const areSignalListenersChanged = !shallowEqual(newSignalListeners, oldSignalListeners);
-          this.modifyView((view) => {
+          this.modifyView(view => {
             if (specChanges.width !== false) {
               view.width(specChanges.width);
             }
@@ -76,7 +76,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
           });
         }
       } else if (!shallowEqual(newSignalListeners, oldSignalListeners)) {
-        this.modifyView((view) => {
+        this.modifyView(view => {
           if (oldSignalListeners) {
             removeSignalListenersFromView(view, oldSignalListeners);
           }
@@ -105,7 +105,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   modifyView = (action: ViewListener) => {
     if (this.resultPromise) {
       this.resultPromise
-        .then((result) => {
+        .then(result => {
           if (result) {
             action(result.view);
           }
@@ -121,7 +121,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
     if (this.containerRef.current) {
       const finalSpec = combineSpecWithDimension(this.props);
       this.resultPromise = vegaEmbed(this.containerRef.current, finalSpec, options)
-        .then((result) => {
+        .then(result => {
           if (result) {
             const { view } = result;
             if (addSignalListenersToView(view, signalListeners)) {
@@ -141,7 +141,7 @@ export default class VegaEmbed extends React.PureComponent<VegaEmbedProps> {
   clearView() {
     if (this.resultPromise) {
       this.resultPromise
-        .then((result) => {
+        .then(result => {
           if (result) {
             result.finalize();
           }

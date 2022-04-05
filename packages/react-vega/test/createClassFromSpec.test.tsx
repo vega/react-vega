@@ -15,7 +15,7 @@ describe('createClassFromSpec', () => {
   it('renders', () => {
     const wrapper = mount(<Component />);
 
-    return new Promise((done) => {
+    return new Promise(done => {
       setTimeout(() => {
         const renderedWrapper = wrapper.render();
         expect(renderedWrapper.find('svg')).toHaveLength(1);

@@ -31,8 +31,6 @@ const SPEC = {
   ],
 };
 
-storiesOf('react-vega', module).add('width=300', () => (
-  <VegaLite spec={SPEC} data={DATA} width={300} />
-)).add('height=300', () => (
-  <VegaLite spec={SPEC} data={DATA} height={300} />
-));
+storiesOf('react-vega', module)
+  .add('width=300', () => <VegaLite spec={SPEC} data={DATA} width={300} />)
+  .add('height=300', () => <VegaLite spec={SPEC} data={DATA} height={300} />);

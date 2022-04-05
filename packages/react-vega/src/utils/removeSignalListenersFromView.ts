@@ -5,7 +5,7 @@ export default function removeSignalListenersFromView(
   signalListeners: SignalListeners,
 ) {
   const signalNames = Object.keys(signalListeners);
-  signalNames.forEach((signalName) => {
+  signalNames.forEach(signalName => {
     try {
       view.removeSignalListener(signalName, signalListeners[signalName]);
     } catch (error) {

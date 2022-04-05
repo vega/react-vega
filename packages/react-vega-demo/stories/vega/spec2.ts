@@ -1,6 +1,6 @@
 // From https://vega.github.io/vega/examples/bar-chart/
 
-import { VisualizationSpec } from "../../../react-vega/src";
+import { VisualizationSpec } from '../../../react-vega/src';
 
 export default {
   $schema: 'https://vega.github.io/schema/vega/v5.json',

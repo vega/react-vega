@@ -1,26 +1,31 @@
-import React from "react";
-import { VegaLite } from "../../react-vega/src";
+import React from 'react';
+import { VegaLite } from '../../react-vega/src';
 
 const values = [];
 
-for (let i = 0; i< 100 ;i++ ) {
+for (let i = 0; i < 100; i++) {
   values.push({
     a: `X${i}`,
-    b: Math.round(Math.random() * 1000)
-  })
+    b: Math.round(Math.random() * 1000),
+  });
 }
 
-export default class ChangingDimensionDemo extends React.Component<{}, {
-  width: number;
-  height: number;
-  padding: number | {
-    top?: number;
-    bottom?: number;
-    left?: number;
-    right?: number;
-  };
-  grow: boolean;
-}> {
+export default class ChangingDimensionDemo extends React.Component<
+  {},
+  {
+    width: number;
+    height: number;
+    padding:
+      | number
+      | {
+          top?: number;
+          bottom?: number;
+          left?: number;
+          right?: number;
+        };
+    grow: boolean;
+  }
+> {
   interval: NodeJS.Timeout;
 
   constructor(props) {
@@ -35,10 +40,10 @@ export default class ChangingDimensionDemo extends React.Component<{}, {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      this.setState(({width, height, padding, grow}) => ({
+      this.setState(({ width, height, padding, grow }) => ({
         width: width + (grow ? 1 : -1),
         height: height + (grow ? 1 : -1),
-        grow: grow && width < 400 || !grow && width === 100
+        grow: (grow && width < 400) || (!grow && width === 100),
       }));
     }, 10);
   }
@@ -51,27 +56,27 @@ export default class ChangingDimensionDemo extends React.Component<{}, {
     const { width, height, padding } = this.state;
 
     const SPEC = {
-      $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+      $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
       width,
       height,
       padding,
       data: {
         values,
-        name: "source"
+        name: 'source',
       },
       selection: {
-        a: { type: "single" }
+        a: { type: 'single' },
       },
-      mark: "bar",
+      mark: 'bar',
       encoding: {
-        x: { field: "a", type: "ordinal" },
-        y: { field: "b", type: "quantitative" },
-        tooltip: { field: "b", type: "quantitative" },
+        x: { field: 'a', type: 'ordinal' },
+        y: { field: 'b', type: 'quantitative' },
+        tooltip: { field: 'b', type: 'quantitative' },
         color: {
-          condition: { selection: "a", value: "steelblue" },
-          value: "grey"
-        }
-      }
+          condition: { selection: 'a', value: 'steelblue' },
+          value: 'grey',
+        },
+      },
     } as const;
 
     return <VegaLite spec={SPEC} />;
