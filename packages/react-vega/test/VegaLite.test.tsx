@@ -1,18 +1,14 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { VegaLite } from '../src';
 import spec from './mock/vegaLiteSpec';
 
-describe('<Vega>', () => {
-  it('renders', () => {
-    const wrapper = mount(<VegaLite spec={spec} />);
+describe('<VegaLite>', () => {
+  it('renders', async () => {
+    const { container } = render(<VegaLite spec={spec} renderer="svg" />);
 
-    return new Promise((done) => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
-    });
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(container.querySelector('svg')).toBeDefined();
+    expect(container.querySelectorAll('g.mark-rect path')).toHaveLength(5);
   });
 });

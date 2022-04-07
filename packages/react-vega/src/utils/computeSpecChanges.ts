@@ -47,7 +47,7 @@ export default function computeSpecChanges(newSpec: VisualizationSpec, oldSpec: 
 
   if (
     [...fieldNames].some(
-      (field) =>
+      field =>
         !(field in newSpec) ||
         !(field in oldSpec) ||
         !equal(newSpec[field as keyof typeof newSpec], oldSpec[field as keyof typeof oldSpec]),

@@ -6,7 +6,6 @@
 * call embed finalize instead of view ([#421](https://github.com/vega/react-vega/issues/421)) ([20efe38](https://github.com/vega/react-vega/commit/20efe3844df09d754938382e981070f340f2c972))
 
 
-
 ## [7.4.3](https://github.com/vega/react-vega/compare/v7.4.2...v7.4.3) (2021-05-01)
 
 

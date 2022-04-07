@@ -2,7 +2,7 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { Vega, createClassFromSpec, VisualizationSpec } from '../../react-vega/src';
-import data1 from './vega/data1.json';
+import data1 from './vega/data1';
 import spec1 from './vega/spec1';
 import spec2 from './vega/spec2';
 
@@ -14,7 +14,7 @@ const code2 = `const BarChart = ReactVega.createClassFromSpec(barSpec);
 <BarChart data={this.state.data} onSignalHover={this.handleHover} />`;
 
 type State = {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   info: string;
   spec: VisualizationSpec;
 };
@@ -22,7 +22,7 @@ type State = {
 export default class Demo extends React.PureComponent<{}, State> {
   handlers: {
     tooltip: (...args: unknown[]) => void;
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -51,9 +51,9 @@ export default class Demo extends React.PureComponent<{}, State> {
   handleErrorSpec() {
     const spec: VisualizationSpec = {
       signals: [
-        { name: "foo" },
-        { name: "foo" },  //create error: Duplicate signal name
-      ]
+        { name: 'foo' },
+        { name: 'foo' }, // create error: Duplicate signal name
+      ],
     };
     action('error spec')(spec);
     this.setState({ spec });
@@ -110,7 +110,15 @@ export default class Demo extends React.PureComponent<{}, State> {
         </h3>
         Will recompile when spec changes and update when data changes.
         <pre>{code1}</pre>
-        <Vega data={data} spec={spec} signalListeners={this.handlers} onError={(e, div) => div.innerText = `${e.name}: ${e.message}`} />
+        <Vega
+          data={data}
+          spec={spec}
+          signalListeners={this.handlers}
+          onError={(e, div) => {
+            /* eslint-disable-next-line no-param-reassign */
+            div.innerText = `${e.name}: ${e.message}`;
+          }}
+        />
         <h3>
           <code>ReactVega.createClassFromSpec()</code>
         </h3>

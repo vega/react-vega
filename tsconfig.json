@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/react-vega"
+    },
+    {
+      "path": "packages/react-vega/test"
+    }
+  ],
+  "extends": "./tsconfig.options.json"
+}

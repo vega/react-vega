@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { createClassFromSpec } from '../src';
 import spec from './mock/vegaLiteSpec';
 
@@ -12,15 +12,11 @@ describe('createClassFromSpec', () => {
     });
   });
 
-  it('renders', () => {
-    const wrapper = mount(<Component />);
+  it('renders', async () => {
+    const { container } = render(<Component renderer="svg" width={100} height={100} />);
 
-    return new Promise((done) => {
-      setTimeout(() => {
-        const renderedWrapper = wrapper.render();
-        expect(renderedWrapper.find('svg')).toHaveLength(1);
-      });
-      done();
-    });
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(container.querySelector('svg')).toBeDefined();
+    expect(container.querySelectorAll('g.mark-rect path')).toHaveLength(5);
   });
 });

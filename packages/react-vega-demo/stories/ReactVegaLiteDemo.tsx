@@ -58,7 +58,7 @@ const code2 = `const BarChart = ReactVegaLite.createClassFromLiteSpec(spec1);
 <BarChart data={this.state.data} />`;
 
 type State = {
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   info: string;
   spec: VisualizationSpec;
 };
@@ -66,7 +66,7 @@ type State = {
 export default class Demo extends React.PureComponent<{}, State> {
   handlers: {
     hover: (...args: unknown[]) => void;
-  }
+  };
 
   constructor(props) {
     super(props);
