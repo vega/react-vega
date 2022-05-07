@@ -59,3 +59,6 @@ package-lock.json
 
 # Storybook output
 storybook-static
+
+# publishing credentials
+.npmrc

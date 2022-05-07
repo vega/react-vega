@@ -19,9 +19,10 @@ jobs:
       - name: Prepare repository
         run: git fetch --unshallow --tags
 
-      - uses: actions/setup-node@v2.4.0
+      - uses: actions/setup-node@v1
         with:
           registry-url: 'https://registry.npmjs.org'
+          node-version: 16.3.0
 
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
@@ -30,8 +31,14 @@ jobs:
         run: |
           yarn build
 
+      # https://github.com/lerna/lerna/issues/3026#issuecomment-1079901176
+      - name: Add auth credentials for npm
+        run: npm config set //registry.npmjs.org/:_authToken=${NPM_TOKEN}
+        env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Create Release
         run: npm run release-auto
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

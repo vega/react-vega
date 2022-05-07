@@ -1,6 +1,3 @@
-[![Build Status](https://img.shields.io/travis/com/vega/react-vega/master.svg)](https://travis-ci.org/vega/react-vega)
-[![David](https://img.shields.io/david/dev/vega/react-vega.svg)](https://david-dm.org/vega/react-vega?type=dev)
-
 # react-vega
 
 > `react` + `vega`|`vega-lite`

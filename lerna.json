@@ -4,5 +4,10 @@
     "packages/*"
   ],
   "useWorkspaces": true,
-  "version": "7.5.1"
+  "version": "7.5.1",
+  "command": {
+    "publish": {
+      "verifyAccess": false
+    }
+  }
 }
