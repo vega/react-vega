@@ -10,6 +10,7 @@ import computeSpecChanges from './utils/computeSpecChanges';
 import removeSignalListenersFromView from './utils/removeSignalListenersFromView';
 import combineSpecWithDimension from './utils/combineSpecWithDimension';
 
+// test comment to trigger an auto deploy
 export type VegaEmbedProps = {
   className?: string;
   spec: VisualizationSpec;
