@@ -112,5 +112,9 @@
       "yarn prettier",
       "git add"
     ]
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
