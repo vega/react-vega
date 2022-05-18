@@ -82,7 +82,7 @@
     "lerna": "^3.20.2",
     "lint-staged": "^10.0.3",
     "prettier": "^2.4.1",
-    "react": "^17",
+    "react": "^18",
     "react-dom": "^17",
     "typescript": "^4.6.3",
     "vega": "^5.10.0",
