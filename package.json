@@ -52,7 +52,7 @@
     "@superset-ui/commit-config": "^0.0.9",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^27.4.1",
-    "@types/react-test-renderer": "^16.9.2",
+    "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "babel-jest": "^27.5.1",
