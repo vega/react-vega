@@ -86,7 +86,7 @@
     "react-dom": "^18",
     "typescript": "^4.6.3",
     "vega": "^5.10.0",
-    "vega-lite": "^4.8.0",
+    "vega-lite": "^5.2.0",
     "webpack": "^4.42.0"
   },
   "engines": {
