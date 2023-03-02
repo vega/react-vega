@@ -24,17 +24,17 @@
     "@storybook/addons": "^6.2.1",
     "@storybook/react": "^5.3.9",
     "@types/react": "^16.9.43",
-    "@types/react-dom": "^17.0.3",
+    "@types/react-dom": "^18.0.11",
     "@types/react-timeout": "^1.1.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react-dom": "^18.2.0",
     "react-timeout": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "babel-loader": "^8.0.6",
     "gh-pages": "^3.1.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^18.2.0"
   },
   "license": "Apache-2.0",
   "publishConfig": {
