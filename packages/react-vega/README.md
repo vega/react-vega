@@ -34,21 +34,23 @@ See the rest of the spec in [spec1.ts](https://github.com/vega/react-vega/blob/m
 import React, { PropTypes } from 'react';
 import { createClassFromSpec } from 'react-vega';
 
-export default createClassFromSpec('BarChart', {
-  "width": 400,
-  "height": 200,
-  "data": [{ "name": "table" }],
-  "signals": [
-    {
-      "name": "tooltip",
-      "value": {},
-      "on": [
-        {"events": "rect:mouseover", "update": "datum"},
-        {"events": "rect:mouseout",  "update": "{}"}
-      ]
-    }
-  ],
-  ... // See the rest in packages/react-vega-demo/stories/vega/spec1.ts
+export default createClassFromSpec({ mode: 'vega', spec: 
+  {
+    "width": 400,
+    "height": 200,
+    "data": [{ "name": "table" }],
+    "signals": [
+      {
+        "name": "tooltip",
+        "value": {},
+        "on": [
+          {"events": "rect:mouseover", "update": "datum"},
+          {"events": "rect:mouseout",  "update": "{}"}
+        ]
+      }
+    ],
+    ... // See the rest in packages/react-vega-demo/stories/vega/spec1.ts
+  }
 });
 ```
 
