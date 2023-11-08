@@ -174,7 +174,7 @@ React class `Vega` and any output class from `createClassFromSpec` have these pr
 
 #### Props from [vega-embed's API](https://github.com/vega/vega-embed)
 
-`mode`, `theme`, `defaultStyle`, `renderer`, `logLovel`, `tooltip`, `loader`, `patch`, `width`, `height`, `padding`, `actions`, `scaleFactor`, `config`, `editorUrl`, `sourceHeader`, `sourceFooter`, `hover`, `i18n`, `downloadFileName`, `expressionFunctions`
+`mode`, `theme`, `defaultStyle`, `renderer`, `logLevel`, `tooltip`, `loader`, `patch`, `width`, `height`, `padding`, `actions`, `scaleFactor`, `config`, `editorUrl`, `sourceHeader`, `sourceFooter`, `hover`, `i18n`, `downloadFileName`, `expressionFunctions`
 
 #### CSS
 
