@@ -86,7 +86,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Vega } from 'react-vega';
 
-const spec = {
+const spec: VisualizationSpec = {
   "width": 400,
   "height": 200,
   "data": [{ "name": "table" }],
@@ -134,7 +134,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { VegaLite } from 'react-vega'
 
-const spec = {
+const spec: VisualizationSpec = {
   width: 400,
   height: 200,
   mark: 'bar',
