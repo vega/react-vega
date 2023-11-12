@@ -79,7 +79,7 @@
     "eslint-plugin-unicorn": "^40.1.0",
     "husky": "^7.0.0",
     "jest": "^27.5.1",
-    "lerna": "^3.20.2",
+    "lerna": "^6.5.1",
     "lint-staged": "^13.0.0",
     "prettier": "^2.4.1",
     "react": "^18",
