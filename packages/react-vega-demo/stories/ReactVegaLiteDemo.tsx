@@ -1,5 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { TopLevelSpec, compile } from 'vega-lite';
 import { VegaLite, createClassFromSpec, VisualizationSpec } from '../../react-vega/src';
 
 const data1 = {
@@ -30,7 +31,22 @@ const data2 = {
   ],
 };
 
-const spec1: VisualizationSpec = {
+const convertToVegaSpec = (spec: TopLevelSpec) => {
+  const vegaSpec = compile(spec).spec;
+
+  vegaSpec.signals = (vegaSpec.signals || []).concat({
+    name: 'hover',
+    value: {},
+    on: [
+      { events: 'rect:mouseover', update: 'datum' },
+      { events: 'rect:mouseout', update: '{}' },
+    ],
+  });
+
+  return vegaSpec;
+};
+
+const spec1: VisualizationSpec = convertToVegaSpec({
   data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
@@ -38,9 +54,9 @@ const spec1: VisualizationSpec = {
     y: { field: 'b', type: 'quantitative' },
   },
   mark: 'bar',
-};
+});
 
-const spec2: VisualizationSpec = {
+const spec2: VisualizationSpec = convertToVegaSpec({
   data: { name: 'myData' },
   description: 'A simple bar chart with embedded data.',
   encoding: {
@@ -48,14 +64,14 @@ const spec2: VisualizationSpec = {
     y: { field: 'a', type: 'ordinal' },
   },
   mark: 'bar',
-};
+});
 
 const BarChart = createClassFromSpec({ mode: 'vega-lite', spec: spec1 });
 
-const code1 = `<VegaLite data={this.state.data} spec={this.state.spec} />`;
+const code1 = `<VegaLite data={this.state.data} spec={this.state.spec} signalListeners={this.handlers} />`;
 
 const code2 = `const BarChart = ReactVegaLite.createClassFromLiteSpec(spec1);
-<BarChart data={this.state.data} />`;
+<BarChart data={this.state.data} signalListeners={this.handlers} />`;
 
 type State = {
   data: Record<string, unknown>;

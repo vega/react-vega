@@ -8,10 +8,10 @@ import spec2 from './vega/spec2';
 
 const BarChart = createClassFromSpec({ spec: spec1 });
 
-const code1 = `<Vega data={this.state.data} spec={this.state.spec} onSignalHover={this.handleHover} />`;
+const code1 = `<Vega data={this.state.data} spec={this.state.spec} signalListeners={this.handlers} />`;
 
 const code2 = `const BarChart = ReactVega.createClassFromSpec(barSpec);
-<BarChart data={this.state.data} onSignalHover={this.handleHover} />`;
+<BarChart data={this.state.data} signalListeners={this.handlers} />`;
 
 type State = {
   data: Record<string, unknown>;
