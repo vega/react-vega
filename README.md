@@ -1,5 +1,4 @@
-[![Build Status](https://img.shields.io/travis/com/vega/react-vega/master.svg)](https://travis-ci.org/vega/react-vega)
-[![David](https://img.shields.io/david/dev/vega/react-vega.svg)](https://david-dm.org/vega/react-vega?type=dev)
+[![Build and test](https://github.com/vega/react-vega/actions/workflows/test.yml/badge.svg)](https://github.com/vega/react-vega/actions/workflows/test.yml)
 
 # react-vega
 
