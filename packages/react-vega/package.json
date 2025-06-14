@@ -22,7 +22,7 @@
     "@types/react": "*",
     "fast-deep-equal": "^3.1.1",
     "prop-types": "^15.8.1",
-    "vega-embed": "^6.5.1"
+    "vega-embed": "^6.26.0"
   },
   "peerDependencies": {
     "react": "^16 || ^17 || ^18",
