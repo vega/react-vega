@@ -68,7 +68,7 @@ Returns the current [`Result`](https://vega.github.io/vega-embed/interfaces/Resu
 
 ## Recipes
 
-See [storybook](https://jakeadler.github.io/react-vega) for live examples.
+See [storybook](https://vega.github.io/react-vega) for live examples.
 
 ### 1. Updating data in place
 
