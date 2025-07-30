@@ -30,6 +30,18 @@ const BasicSpec: VisualizationSpec = {
   },
 };
 
+function makeRandomData() {
+  const values: { a: string; b: number }[] = [];
+  const chars = "ABCDEFGHI";
+  for (let i = 0; i < 9; i++) {
+    values.push({
+      a: chars[i],
+      b: Math.floor(Math.random() * 100),
+    });
+  }
+  return values;
+}
+
 export const Basic = () => {
   return <VegaEmbed spec={BasicSpec} />;
 };
@@ -55,9 +67,8 @@ export const Responsive = () => {
   React.useEffect(() => {
     if (!ref.current || !embed) return;
     const observer = new ResizeObserver(() => {
-      if (!embed) return;
       window.dispatchEvent(new Event("resize"));
-      embed.view.runAsync();
+      embed?.view.runAsync();
     });
 
     observer.observe(ref.current);
@@ -171,7 +182,6 @@ export const Growing = () => {
   });
 
   React.useEffect(() => {
-    if (!vegaEmbed) return;
     const FLOOR = 200;
     const CEILING = 600;
 
@@ -188,7 +198,7 @@ export const Growing = () => {
       width = width + (direction === "up" ? 1 : -1);
       height = height + (direction === "up" ? 1 : -1);
 
-      vegaEmbed.view.width(width).height(height).runAsync();
+      vegaEmbed?.view.width(width).height(height).runAsync();
     }, 10);
     return () => clearInterval(interval);
   }, [vegaEmbed]);
@@ -196,10 +206,12 @@ export const Growing = () => {
   return <div ref={ref} />;
 };
 
-export const UpdatingData = () => {
+export const DynamicData = () => {
+  const [data, setData] = React.useState<any>(makeRandomData());
+
   const ref = React.useRef<HTMLDivElement>(null);
 
-  const vegaEmbed = useVegaEmbed({
+  const embed = useVegaEmbed({
     ref,
     spec: {
       ...BasicSpec,
@@ -207,35 +219,22 @@ export const UpdatingData = () => {
         name: "values",
       },
     },
-    onEmbed: (embed) => {
-      makeRandomData(embed);
-    },
+    options: { mode: "vega-lite" },
   });
 
-  function makeRandomData(embed: typeof vegaEmbed) {
-    if (!embed) return;
-    const values: { a: string; b: number }[] = [];
-    const chars = "ABCDEFGHI";
-    for (let i = 0; i < 9; i++) {
-      values.push({
-        a: chars[i],
-        b: Math.floor(Math.random() * 100),
-      });
-    }
-    embed.view.data("values", values).runAsync();
-  }
+  React.useEffect(() => {
+    embed?.view.data("values", data).runAsync();
+  }, [embed, data]);
 
-  return (
-    <div>
-      <button
-        style={{ display: "block", marginTop: "8px" }}
-        onClick={() => makeRandomData(vegaEmbed)}
-      >
-        Randomize Data
-      </button>
-      <div ref={ref} />
-    </div>
-  );
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setData(makeRandomData());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return <div ref={ref} />;
 };
 
 export const SignalListeners = () => {
@@ -246,26 +245,24 @@ export const SignalListeners = () => {
     spec: BasicSpec,
   });
 
-  const [selection, setSelection] = React.useState<number>();
+  const [selection, setSelection] = React.useState<string>();
 
   React.useEffect(() => {
-    if (!embed) return;
-
-    const listener = (_event: string, value: { b: number }) => {
-      setSelection(value.b);
+    const listener = (_event, { a }: { a: string }) => {
+      setSelection(a);
     };
 
-    embed.view.addSignalListener("selection", listener);
+    embed?.view.addSignalListener("selection", listener);
 
     return () => {
-      embed.view.removeSignalListener("selection", listener);
+      embed?.view.removeSignalListener("selection", listener);
     };
   }, [embed]);
 
   return (
     <div>
       <p>Click on a bar</p>
-      {selection && <p>You selected {selection}</p>}
+      {selection && <p>You selected column {selection}</p>}
       <div ref={ref} />
     </div>
   );
