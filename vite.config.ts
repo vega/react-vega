@@ -22,7 +22,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, "src/VegaEmbed.tsx"),
       name: "VegaEmbed",
       fileName: "react-vega",
-      formats: ["es", "umd"],
+      formats: ["es"],
     },
     rollupOptions: {
       external: [

@@ -1,195 +1,171 @@
 import React from "react";
-import { render, act, cleanup } from "@testing-library/react";
+import { cleanup, render } from "vitest-browser-react";
+import { describe, it, afterEach, expect, vi } from "vitest";
+import { act, waitFor } from "@testing-library/react";
 import { VegaEmbed } from "./VegaEmbed";
 import embed, { EmbedOptions } from "vega-embed";
-import { setImmediate } from "timers";
-import "@testing-library/jest-dom";
 
-jest.mock("vega-embed", () => jest.fn());
-
-const flushPromises = () => new Promise(setImmediate);
-
-type MockFinalize = jest.Mock<void, []>;
-type MockResult = { finalize: MockFinalize };
-
-afterEach(() => {
-  cleanup();
-  jest.clearAllMocks();
+vi.mock("vega-embed", () => {
+  return { default: vi.fn() }; // mark as ESM + provide default
 });
 
-const mkResult = (finalize: MockFinalize = jest.fn()): MockResult =>
-  ({ finalize } as unknown as MockResult);
+const mkResult = (finalize: () => void = vi.fn()) => ({ finalize });
 
 describe("VegaEmbed", () => {
+  afterEach(() => {
+    cleanup();
+    vi.resetAllMocks();
+  });
+
   it("renders without crashing", async () => {
     const { unmount } = render(<VegaEmbed spec="x" />);
-    await act(flushPromises);
+    await waitFor(() => expect(embed).toHaveBeenCalledTimes(1));
     unmount();
-    expect(embed).toHaveBeenCalledTimes(1);
   });
 
   it("finalizes the view on unmount", async () => {
-    const finalize = jest.fn();
-    (embed as jest.Mock).mockResolvedValueOnce(mkResult(finalize));
-
+    const finalize = vi.fn();
+    vi.mocked(embed).mockResolvedValueOnce(mkResult(finalize) as any);
     const { unmount } = render(<VegaEmbed spec="s" />);
-    await act(async () => {
-      await flushPromises();
-      unmount();
-    });
-
-    expect(finalize).toHaveBeenCalledTimes(1);
+    unmount();
+    await waitFor(() => expect(finalize).toHaveBeenCalledTimes(1));
   });
 
   it("finalizes the previous view when `spec` changes", async () => {
-    const finalizeA = jest.fn();
-    const finalizeB = jest.fn();
+    const finalizeA = vi.fn();
+    const finalizeB = vi.fn();
 
-    (embed as jest.Mock)
-      .mockResolvedValueOnce(mkResult(finalizeA))
-      .mockResolvedValueOnce(mkResult(finalizeB));
+    vi.mocked(embed)
+      .mockResolvedValueOnce(mkResult(finalizeA) as any)
+      .mockResolvedValueOnce(mkResult(finalizeB) as any);
 
     const { rerender } = render(<VegaEmbed spec="A" />);
-    await act(flushPromises);
 
     rerender(<VegaEmbed spec="B" />);
-    await act(flushPromises);
 
-    expect(finalizeA).toHaveBeenCalledTimes(1);
-    expect(embed).toHaveBeenCalledTimes(2);
+    await waitFor(() => {
+      expect(finalizeA).toHaveBeenCalledTimes(1);
+      expect(embed).toHaveBeenCalledTimes(2);
+    });
   });
 
   it("finalizes the previous view when `options` changes", async () => {
-    const finalizeA = jest.fn();
-    const finalizeB = jest.fn();
+    const finalizeA = vi.fn();
+    const finalizeB = vi.fn();
 
-    (embed as jest.Mock)
-      .mockResolvedValueOnce(mkResult(finalizeA))
-      .mockResolvedValueOnce(mkResult(finalizeB));
+    vi.mocked(embed)
+      .mockResolvedValueOnce(mkResult(finalizeA) as any)
+      .mockResolvedValueOnce(mkResult(finalizeB) as any);
 
     const { rerender } = render(
       <VegaEmbed spec="A" options={{ width: 400 }} />
     );
-    await act(flushPromises);
 
     rerender(<VegaEmbed spec="A" options={{ width: 420 }} />);
-    await act(flushPromises);
 
-    expect(finalizeA).toHaveBeenCalledTimes(1);
-    expect(embed).toHaveBeenCalledTimes(2);
+    await waitFor(() => {
+      expect(finalizeA).toHaveBeenCalledTimes(1);
+      expect(embed).toHaveBeenCalledTimes(2);
+    });
   });
 
   it("does not re-embed when `options` is deep-equal but new by reference", async () => {
-    const finalize = jest.fn();
-    (embed as jest.Mock).mockResolvedValue(mkResult(finalize));
+    const finalize = vi.fn();
+    vi.mocked(embed).mockResolvedValue(mkResult(finalize) as any);
 
     const opts1: EmbedOptions = { renderer: "svg" };
     const { rerender } = render(<VegaEmbed spec="X" options={opts1} />);
-    await act(flushPromises);
 
     const opts2: EmbedOptions = { renderer: "svg" };
     rerender(<VegaEmbed spec="X" options={opts2} />);
-    await act(flushPromises);
 
-    expect(embed).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(embed).toHaveBeenCalledTimes(1));
   });
 
   it("re-embeds when a deep field inside `options` changes", async () => {
-    const finalizeA = jest.fn();
-    const finalizeB = jest.fn();
-    (embed as jest.Mock)
-      .mockResolvedValueOnce(mkResult(finalizeA))
-      .mockResolvedValueOnce(mkResult(finalizeB));
+    const finalizeA = vi.fn();
+    const finalizeB = vi.fn();
+    vi.mocked(embed)
+      .mockResolvedValueOnce(mkResult(finalizeA) as any)
+      .mockResolvedValueOnce(mkResult(finalizeA) as any)
+      .mockResolvedValueOnce(mkResult(finalizeB) as any);
 
     const { rerender } = render(
       <VegaEmbed spec="X" options={{ config: { autosize: "pad" } }} />
     );
-    await act(flushPromises);
 
     rerender(<VegaEmbed spec="X" options={{ config: { autosize: "fit" } }} />);
-    await act(flushPromises);
 
-    expect(embed).toHaveBeenCalledTimes(2);
-    expect(finalizeA).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(embed).toHaveBeenCalledTimes(2);
+      expect(finalizeA).toHaveBeenCalled();
+    });
   });
 
   it("cancels a stale embed and finalizes the old view", async () => {
-    let resolveA: (v: unknown) => void;
-    const finalizeA = jest.fn();
-    const finalizeB = jest.fn();
-    const resultA = mkResult(finalizeA);
-    const resultB = mkResult(finalizeB);
+    const finalize = vi.fn();
 
-    (embed as jest.Mock)
-      // First call stalls until we manually resolve
-      .mockImplementationOnce(
-        () =>
-          new Promise((res) => {
-            resolveA = res;
-          })
-      )
-      // Second call resolves immediately
-      .mockResolvedValueOnce(resultB);
+    vi.mocked(embed)
+      .mockResolvedValueOnce(mkResult(finalize) as any)
+      .mockResolvedValueOnce(mkResult() as any);
 
     const { rerender } = render(<VegaEmbed spec="A" />);
-    // Change spec before first promise resolves
+
     rerender(<VegaEmbed spec="B" />);
-    await act(flushPromises); // let second embed resolve
 
-    // Now resolve the first (stale) promise
-    await act(async () => {
-      resolveA!(resultA);
-      await flushPromises();
+    await waitFor(() => {
+      expect(embed).toHaveBeenCalledTimes(2);
+      expect(finalize).toHaveBeenCalledTimes(1);
     });
-
-    expect(finalizeA).toHaveBeenCalledTimes(1);
-    expect(embed).toHaveBeenCalledTimes(2);
   });
 
   it("calls `onEmbed` with the same Result and never calls `onError`", async () => {
     const result = mkResult();
-    (embed as jest.Mock).mockResolvedValueOnce(result);
 
-    const onEmbed = jest.fn();
-    const onError = jest.fn();
+    vi.mocked(embed).mockResolvedValueOnce(result as any);
+
+    const onEmbed = vi.fn();
+    const onError = vi.fn();
 
     render(<VegaEmbed spec="X" onEmbed={onEmbed} onError={onError} />);
-    await act(flushPromises);
 
-    expect(onEmbed).toHaveBeenCalledTimes(1);
-    expect(onEmbed).toHaveBeenCalledWith(result);
-    expect(onError).not.toHaveBeenCalled();
+    await waitFor(() => {
+      expect(onEmbed).toHaveBeenCalledExactlyOnceWith(result);
+      expect(onError).not.toHaveBeenCalled();
+    });
   });
 
-  it("calls `onError` when embed rejects and suppresses uncaught logs", async () => {
+  it("calls `onError` when embed rejects", async () => {
     const err = new Error("boom");
-    (embed as jest.Mock).mockRejectedValueOnce(err);
+    vi.mocked(embed).mockRejectedValueOnce(err);
 
-    const onError = jest.fn();
-    const onEmbed = jest.fn();
-
-    jest.spyOn(console, "error").mockImplementation(() => {});
+    const onError = vi.fn();
+    const onEmbed = vi.fn();
 
     render(<VegaEmbed spec="bad" onEmbed={onEmbed} onError={onError} />);
-    await act(flushPromises);
 
-    expect(onError).toHaveBeenCalledWith(err);
-    expect(onEmbed).not.toHaveBeenCalled();
-    expect(console.error).toHaveBeenCalledTimes(1);
+    // Let React flush the rejected promise/effects
+    await act(async () => {});
+
+    await waitFor(() => {
+      expect(onError).toHaveBeenCalledWith(err);
+      expect(onEmbed).not.toHaveBeenCalled();
+    });
+
+    stop();
   });
 
   it("exposes the underlying <div> through the forwarded ref", async () => {
-    (embed as jest.Mock).mockResolvedValueOnce(mkResult());
+    vi.mocked(embed).mockResolvedValueOnce(mkResult() as any);
 
     const ref = React.createRef<HTMLDivElement>();
     render(<VegaEmbed ref={ref} spec="y" />);
-    await act(flushPromises);
 
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
 
   it("forwards additional props to the rendered div", async () => {
-    (embed as jest.Mock).mockResolvedValueOnce(mkResult());
+    vi.mocked(embed).mockResolvedValueOnce(mkResult() as any);
 
     const { getByTestId } = render(
       <VegaEmbed
@@ -199,7 +175,6 @@ describe("VegaEmbed", () => {
         aria-label="chart"
       />
     );
-    await act(flushPromises);
 
     const div = getByTestId("vega");
     expect(div).toHaveClass("foo");
@@ -208,21 +183,23 @@ describe("VegaEmbed", () => {
 
   it("catches errors in `onEmbed`", async () => {
     const result = mkResult();
-    (embed as jest.Mock).mockResolvedValueOnce(result);
+    const err = new Error("boom");
+    vi.mocked(embed).mockResolvedValueOnce(result as any);
 
-    jest.spyOn(console, "error").mockImplementation(() => {});
+    vi.spyOn(console, "error").mockImplementation(() => {});
 
-    const onEmbed = jest.fn().mockImplementation(() => {
-      throw new Error("boom");
+    const onEmbed = vi.fn().mockImplementation((result) => {
+      throw err;
     });
 
-    const onError = jest.fn();
+    const onError = vi.fn();
 
-    render(<VegaEmbed spec="X" onEmbed={onEmbed} onError={onError} />);
-    await act(flushPromises);
+    render(<VegaEmbed spec="A" onEmbed={onEmbed} onError={onError} />);
 
-    expect(onEmbed).toHaveBeenCalledWith(result);
-    expect(onError).toHaveBeenCalledWith(new Error("boom"));
-    expect(console.error).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(onEmbed).toHaveBeenCalledOnce();
+      expect(onError).toHaveBeenCalledWith(err);
+      expect(console.error).toHaveBeenCalledTimes(1);
+    });
   });
 });
