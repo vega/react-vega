@@ -33,7 +33,6 @@ export function useVegaEmbed(params: UseVegaEmbedParams): Result | null {
         setResult(currentResult);
 
         onEmbed?.(currentResult);
-
       } catch (error) {
         console.error(`[react-vega] Error creating view: ${error}`);
         onError?.(error);
@@ -52,7 +51,7 @@ export function useVegaEmbed(params: UseVegaEmbedParams): Result | null {
 
 function useDeepEffect(
   effect: React.EffectCallback,
-  deps: React.DependencyList
+  deps: React.DependencyList,
 ) {
   const ref = React.useRef<React.DependencyList | null>(null);
   const signalRef = React.useRef<number>(0);
@@ -88,7 +87,7 @@ export const VegaEmbed = React.forwardRef<HTMLDivElement, VegaEmbedProps>(
     });
 
     return <div ref={ref} {...divProps} />;
-  }
+  },
 );
 
 VegaEmbed.displayName = "VegaEmbed";

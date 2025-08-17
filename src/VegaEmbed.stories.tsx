@@ -207,7 +207,8 @@ export const Growing = () => {
 };
 
 export const DynamicData = () => {
-  const [data, setData] = React.useState<any>(makeRandomData());
+  const [data, setData] =
+    React.useState<{ a: string; b: number }[]>(makeRandomData());
 
   const ref = React.useRef<HTMLDivElement>(null);
 

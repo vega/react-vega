@@ -58,7 +58,7 @@ describe("VegaEmbed", () => {
       .mockResolvedValueOnce(mkResult(finalizeB) as any);
 
     const { rerender } = render(
-      <VegaEmbed spec="A" options={{ width: 400 }} />
+      <VegaEmbed spec="A" options={{ width: 400 }} />,
     );
 
     rerender(<VegaEmbed spec="A" options={{ width: 420 }} />);
@@ -91,7 +91,7 @@ describe("VegaEmbed", () => {
       .mockResolvedValueOnce(mkResult(finalizeB) as any);
 
     const { rerender } = render(
-      <VegaEmbed spec="X" options={{ config: { autosize: "pad" } }} />
+      <VegaEmbed spec="X" options={{ config: { autosize: "pad" } }} />,
     );
 
     rerender(<VegaEmbed spec="X" options={{ config: { autosize: "fit" } }} />);
@@ -173,7 +173,7 @@ describe("VegaEmbed", () => {
         className="foo"
         data-testid="vega"
         aria-label="chart"
-      />
+      />,
     );
 
     const div = getByTestId("vega");

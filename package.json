@@ -15,7 +15,6 @@
     ".": "./dist/react-vega.js"
   },
   "scripts": {
-    "precommit": "npm run lint && pretty-quick --staged",
     "dev": "ladle serve",
     "build": "del dist && tsc -b && vite build",
     "build-demo": "ladle build",
@@ -41,10 +40,10 @@
     "eslint": "^9.30.1",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.3.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "playwright": "^1.54.2",
     "prettier": "^3.6.2",
-    "pretty-quick": "^4.2.2",
     "ts-node": "^10.9.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
