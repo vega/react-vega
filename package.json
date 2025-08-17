@@ -11,6 +11,9 @@
   "main": "dist/react-vega.js",
   "module": "dist/react-vega.js",
   "types": "dist/react-vega.d.ts",
+  "exports": {
+    ".": "./dist/react-vega.js"
+  },
   "scripts": {
     "precommit": "npm run lint && pretty-quick --staged",
     "dev": "ladle serve",
