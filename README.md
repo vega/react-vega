@@ -16,7 +16,7 @@ npm i vega
 
 In v8, the `data` prop was removed. Additionally, you can no longer update data by changing `spec.data` without the view being re-embedded. Instead use the [View API](https://vega.github.io/vega/docs/api/view) to update data. See the [Dynamic data](#1-dynamic-data) recipe for an example.
 
-The `height` and `width` props were removed. Addiotinally, you can no longer resize the view by changing `spec.width` or `spec.height` without the view being re-embedded. Instead use the [View API](https://vega.github.io/vega/docs/api/view) to resize the view. See the [Programmatically changing width & height](#2-programmatically-changing-width--height) recipe for an example.
+The `height` and `width` props were removed. Additionally, you can no longer resize the view by changing `spec.width` or `spec.height` without the view being re-embedded. Instead use the [View API](https://vega.github.io/vega/docs/api/view) to resize the view. See the [Programmatically changing width & height](#2-programmatically-changing-width--height) recipe for an example.
 
 The `signalListeners` prop was removed. Instead use the [View API](https://vega.github.io/vega/docs/api/view) to subscribe to signal events. See the [Subscribe to signal events](#3-subscribe-to-signal-events) recipe for an example.
 
