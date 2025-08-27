@@ -7,11 +7,13 @@ A lightweight React wrapper around [`vega-embed`](https://github.com/vega/vega-e
 ```bash
 npm i react-vega vega-embed vega-lite
 ```
-If you need to use Vega (not Vega-Lite), you will also need to install `vega`.
+
+If you only need to use Vega (not Vega-Lite), you can install `vega`.
 
 ```bash
-npm i vega
+npm i react-vega vega-embed vega
 ```
+
 ## Migrating to v8
 
 In v8, the `data` prop was removed. Additionally, you can no longer update data by changing `spec.data` without the view being re-embedded. Instead use the [View API](https://vega.github.io/vega/docs/api/view) to update data. See the [Dynamic data](#1-dynamic-data) recipe for an example.
