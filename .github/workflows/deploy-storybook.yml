@@ -19,7 +19,7 @@ jobs:
     steps:
       - id: "checkout"
         name: "Check out Git repository"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v5"
 
       - id: "setup-node"
         name: "Set up Node.js"
