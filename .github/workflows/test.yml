@@ -1,27 +1,19 @@
-name: Build and test
+name: Node.js CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
+on: [push]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.10
-        cache: 'yarn'
-    - name: Install dependencies
-      run: yarn install
-    - name: Build
-      run: yarn build
-    - name: Test
-      run: yarn test
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3.1.0
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm test

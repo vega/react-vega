@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "verbatimModuleSyntax": false,
+        "isolatedModules": true
+    },
+    "exclude": ["jest.config.ts"]
+}
