@@ -1,8 +1,6 @@
 # `react-vega`
 
 [![npm version](https://img.shields.io/npm/v/react-vega.svg)](https://www.npmjs.com/package/react-vega)
-[![](https://data.jsdelivr.com/v1/package/npm/react-vega/badge?style=rounded)](https://www.jsdelivr.com/package/npm/react-vega)
-
 
 A lightweight React wrapper around [`vega-embed`](https://github.com/vega/vega-embed)
 
