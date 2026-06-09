@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     browser: {
       enabled: true,
-      provider: "playwright",
+      provider: () => import("@vitest/browser-playwright"),
       instances: [{ browser: "chromium" }],
     },
   },

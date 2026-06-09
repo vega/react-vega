@@ -39,6 +39,7 @@
     "@types/react": "^18.0.0",
     "@vitejs/plugin-react": "^5.0.2",
     "@vitest/browser": "^4.1.8",
+    "@vitest/browser-playwright": "^4.1.8",
     "del-cli": "^7.0.0",
     "eslint": "^9.35.0",
     "eslint-plugin-react": "^7.37.5",
