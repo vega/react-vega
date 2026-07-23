@@ -55,7 +55,7 @@
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.43.0",
     "vega-embed": "^7.0.2",
-    "vite": "^7.1.5",
+    "vite": "^8.1.5",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.1.8",
     "vitest-browser-react": "^1.0.1"
